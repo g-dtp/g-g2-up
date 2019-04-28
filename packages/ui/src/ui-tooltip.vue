@@ -6,12 +6,14 @@
 </template>
 
 <script>
-	import Vue from 'vue/types'
-	import { Tooltip } from 'element-ui/types'
+	import Vue from 'vue'
+	import { Tooltip } from 'element-ui'
+	import GIcon from './g-icon'
 
 	Vue.use(Tooltip)
 	export default {
 		name: 'ui-tooltip',
+		components: { GIcon },
 		props: {
 			widget: {
 				type: Object,

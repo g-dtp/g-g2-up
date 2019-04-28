@@ -1,8 +1,8 @@
 import Chart from './chart'
 import Ui from './ui'
-
+import G2 from '@antv/g2'
 import { ChartConfig, UiConfig } from './config'
-import Theme from './theme/index'
+import Theme from './theme/index.js'
 
 const components = Object.values(Chart)
 const uiComponents = Object.values(Ui)
@@ -20,5 +20,6 @@ export default {
 export {
 	ChartConfig,
 	UiConfig,
-	Theme
+	Theme,
+	G2
 }
