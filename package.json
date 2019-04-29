@@ -1,8 +1,8 @@
 {
   "name": "g-g2-up",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "lib/g2-up.umd.min.js",
-  "private": true,
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
