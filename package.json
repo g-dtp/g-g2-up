@@ -1,14 +1,14 @@
 {
   "name": "g-g2-up",
-  "version": "0.1.5",
-  "main": "lib/g2-up.umd.min.js",
+  "version": "0.1.6",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lib": "vue-cli-service build --target lib --name g2-up --dest lib packages/index.js",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lib": "vue-cli-service build --target lib --name g2-up --dest lib packages/index.js"
   },
+  "main": "lib/g2-up.umd.min.js",
   "dependencies": {
     "@antv/data-set": "^0.10.2",
     "@antv/g2": "^3.5.3",
@@ -21,6 +21,7 @@
     "@vue/cli-service": "^3.7.0",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",
+    "babel-plugin-component": "^1.1.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.11.0",
@@ -29,6 +30,7 @@
     "pug-plain-loader": "^1.0.0",
     "sass-loader": "^7.1.0",
     "vue": "^2.6.10",
+    "vue-cli-plugin-element": "^1.0.1",
     "vue-router": "^3.0.6",
     "vue-template-compiler": "^2.5.21"
   }
