@@ -11,8 +11,7 @@
 				type: Array,
 				default: function () {
 					return {
-						data: [],
-						dv: null
+						data: []
 					}
 				}
 			},
@@ -37,7 +36,8 @@
 				type: String,
 				default: ''
 			},
-			coordType: {
+			/* 坐标系 默认直角坐标系 */
+			coord: {
 				type: String,
 				default: 'rect'
 			},
@@ -54,7 +54,8 @@
 		},
 		data () {
 			return {
-				chart: null
+				chart: null,
+				dv: null
 			}
 		},
 		computed: {
@@ -88,6 +89,7 @@
 			}
 		},
 		methods: {
+			/* dataset */
 			getTransformMapNull () {
 				return {
 					type: 'map',
@@ -99,6 +101,7 @@
 					}
 				}
 			},
+			/* dataset */
 			getTransformFold () {
 				return {
 					type: 'fold',
@@ -117,11 +120,11 @@
 					padding: this.padding,
 					autoPaddingAppend: 10
 				})
-				this.chart.coord(this.coordType)
+				this.chart.coord(this.coord)
 			},
-			initChartData (options) {
-				this.chart.source(this.chartData, options)
-			},
+			// initChartData (options) {
+			// 	this.chart.source(this.chartData, options)
+			// },
 			changeSize (w, h) {
 				this.chart.changeSize(w, h)
 			}
