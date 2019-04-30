@@ -15,7 +15,9 @@ const ChartConfig = [
 
 const UiConfig = [
 	{ id: 101, name: 'ui-label', icon: 'icon-ui-label', tooltip: '文本', width: 200, height: 40 },
-	{ id: 102, name: 'ui-tooltip', icon: 'icon-ui-remark', tooltip: '备注', width: 20, height: 20 }
+	{ id: 102, name: 'ui-tooltip', icon: 'icon-ui-remark', tooltip: '备注', width: 20, height: 20 },
+	{ id: 103, name: 'ui-image', icon: 'icon-ui-image', tooltip: '图片', width: 100, height: 100 }
+
 ]
 
 export {
