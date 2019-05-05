@@ -1,6 +1,4 @@
-<template>
 
-</template>
 <script>
 	import G2 from '@antv/g2'
 
@@ -118,6 +116,7 @@
 					width: this.w,
 					height: this.h,
 					padding: this.padding,
+					forceFit: true,
 					autoPaddingAppend: 10
 				})
 				this.chart.coord(this.coord)

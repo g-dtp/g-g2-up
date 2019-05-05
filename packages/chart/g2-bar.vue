@@ -1,5 +1,5 @@
 <template lang='pug'>
-	.chart.g2-bar(:style="style")
+	.chart.g2-bar
 </template>
 <script>
 	import G2Serie from './base/g2-serie'
@@ -42,4 +42,18 @@
 	}
 </script>
 <style lang="scss" scoped>
+	chart > div {
+		overflow: hidden !important;
+	}
+	.chart {
+		overflow: hidden;
+		flex: auto;
+		canvas {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
 </style>
