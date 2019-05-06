@@ -1,5 +1,5 @@
 <template lang='pug'>
-	.ui-box(:class="{active: active}" )
+	.ui-box
 		component(:is="uiName"
 		ref="content"
 		:widget='widget'

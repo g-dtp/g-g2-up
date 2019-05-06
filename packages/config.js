@@ -16,7 +16,8 @@ const ChartConfig = [
 const UiConfig = [
 	{ id: 101, name: 'ui-label', icon: 'icon-ui-label', tooltip: '文本', width: 200, height: 40 },
 	{ id: 102, name: 'ui-tooltip', icon: 'icon-ui-remark', tooltip: '备注', width: 20, height: 20 },
-	{ id: 103, name: 'ui-box', icon: 'icon-ui-box', tooltip: '布局容器', width: 20, height: 20 }
+	{ id: 103, name: 'ui-box-h', icon: 'icon-ui-HBox', tooltip: '水平布局容器', width: 100, height: 100 },
+	{ id: 103, name: 'ui-box-v', icon: 'icon-ui-VBox', tooltip: '垂直布局容器', width: 100, height: 100 }
 
 ]
 
