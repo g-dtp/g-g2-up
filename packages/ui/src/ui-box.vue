@@ -16,6 +16,7 @@
 </script>
 <style lang="scss" scoped>
 	.ui-box {
+		margin: 5px;
 		padding: 5px;
 		display: flex;
 		box-sizing: border-box;

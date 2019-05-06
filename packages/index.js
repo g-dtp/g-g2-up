@@ -4,6 +4,9 @@ import G2 from '@antv/g2'
 import { ChartConfig, UiConfig } from './config'
 import Theme from './theme/index.js'
 
+import ChartLayout from './up/chart-layout.vue'
+import UiLayout from './up/ui-layout.vue'
+
 const components = Object.values(Chart)
 const uiComponents = Object.values(Ui)
 const install = function (Vue) {
@@ -21,5 +24,7 @@ export {
 	ChartConfig,
 	UiConfig,
 	Theme,
-	G2
+	G2,
+	ChartLayout,
+	UiLayout
 }

@@ -42,10 +42,4 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.chart {
-		overflow: hidden;
-		min-width: 20px;
-		min-height: 20px;
-		flex: 1;
-	}
 </style>

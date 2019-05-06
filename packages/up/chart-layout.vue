@@ -1,25 +1,24 @@
 <template lang='pug'>
-	.chart-layout
-		component(
-			v-if="data && data.length > 0 && refresh"
-			:is="chartName"
-			ref="content"
-			:key="widget.id"
-			:chartData="data"
-			:name='widget.name'
-			:id="'uid_'+widget.id"
-			:w="widget.grid.width"
-			:h="widget.grid.height"
-			:dimension="dimension"
-			:measure="measure"
-			:legend="legend"
-			:titleHeight="titleHeight"
-			:showTitle="styleObject.showTitle"
-		)
+	component.chart-layout(
+		v-if="data && data.length > 0 && refresh"
+		:is="widget.typeName"
+		ref="content"
+		:key="widget.id"
+		:chartData="data"
+		:name='widget.name'
+		:id="widget.id+''"
+		:w="widget.grid.width"
+		:h="widget.grid.height"
+		:dimension="dimension"
+		:measure="measure"
+		:legend="legend"
+		:titleHeight="titleHeight"
+	)
 </template>
 <script>
 	export default {
 		name: 'chart-layout',
+		inject: ['axios', 'url'],
 		props: {
 			widget: {
 				type: Object,
@@ -32,7 +31,8 @@
 			return {
 				data: [],
 				refresh: true,
-				timer: null
+				timer: null,
+				titleHeight: 0
 			}
 		},
 		computed: {
@@ -59,6 +59,7 @@
 			}
 		},
 		mounted () {
+			this.load()
 		},
 		beforeDestroy () {
 			if (this.timer) {
@@ -76,17 +77,53 @@
 				if (this.$refs.content) {
 					this.$refs.content.changeSize(w, h)
 				}
+			},
+			load () {
+				console.log('render')
+				// 维度和度量都没有时不请求后台
+				if (this.widget.data.dimension.length === 0 && this.widget.data.measure.length === 0) {
+					this.data = []
+					return
+				}
+				// 根父容器注入 axios
+				if (!this.axios) {
+					console.error('根父容器需要注入axios')
+					return
+				}
+				// 根父容器注入 axios
+				if (!this.url) {
+					console.error('根父容器需要注入url')
+					return
+				}
+				this.loading = true
+				this.axios.post(this.url, {
+					dataModelId: this.widget.resourceId,
+					type: this.widget.resourceType,
+					dimensions: this.widget.data.dimension,
+					measures: this.widget.data.measure,
+					queryColumns: this.widget.data.queryColumns,
+					legends: this.widget.data.legend
+				})
+				.then(res => {
+					this.data = res.data.data || []
+					this.loading = false
+				})
+				.catch(() => {
+					this.loading = false
+				})
 			}
 		}
 	}
 </script>
 <style lang="scss" scoped>
-	.chart-box {
+	.chart-layout {
 		position: relative;
+		min-width: 20px;
+		min-height: 20px;
+		flex: 1;
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
-
 		&.active {
 			box-shadow: 0 0 0 1px #3D89FF;
 		}

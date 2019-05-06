@@ -4,13 +4,10 @@
 		ref="content"
 		:widget='widget'
 		:name='widget.name'
-		:id="'uid_'+widget.id")
+		:id="widget.id")
 </template>
 
 <script>
-	import Vue from 'vue'
-	import G2Up from 'g-g2-up'
-	Vue.use(G2Up)
 	export default {
 		name: 'ui-layout',
 		props: {

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import G2Up from '../packages/index'
+import G2Up from 'packages/index'
 import './plugins/element.js'
 Vue.use(G2Up)
 Vue.config.productionTip = false

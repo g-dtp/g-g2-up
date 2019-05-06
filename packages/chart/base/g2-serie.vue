@@ -13,6 +13,10 @@
 					}
 				}
 			},
+			forceFit: {
+				type: Boolean,
+				default: true
+			},
 			showTitle: {
 				type: Boolean,
 				default: false
