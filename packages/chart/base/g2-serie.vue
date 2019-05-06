@@ -117,7 +117,7 @@
 					height: this.h,
 					padding: this.padding,
 					forceFit: true,
-					autoPaddingAppend: 10
+					autoPaddingAppend: 20
 				})
 				this.chart.coord(this.coord)
 			},

@@ -1,5 +1,5 @@
 <template lang='pug'>
-	.chart-box(:class="{active: active}" :style='chartStyle')
+	.chart-layout
 		component(
 			v-if="data && data.length > 0 && refresh"
 			:is="chartName"
@@ -18,7 +18,6 @@
 		)
 </template>
 <script>
-	import { getDataByFeild } from '@/fetch/board'
 	export default {
 		name: 'chart-layout',
 		props: {
@@ -27,11 +26,6 @@
 				default: function () {
 					return {}
 				}
-			},
-			/* 当前被选中激活 */
-			active: {
-				type: Boolean,
-				default: false
 			}
 		},
 		data () {
@@ -65,14 +59,11 @@
 			}
 		},
 		mounted () {
-			this.loadData()
-			this.$root.$on('update-charts', this.updateChart)
 		},
 		beforeDestroy () {
 			if (this.timer) {
 				clearTimeout(this.timer)
 			}
-			this.$root.$off('update-charts', this.updateChart)
 		},
 		methods: {
 			onRefresh () {
@@ -85,32 +76,6 @@
 				if (this.$refs.content) {
 					this.$refs.content.changeSize(w, h)
 				}
-			},
-			updateChart (widget) {
-				if (widget && widget.id === this.widget.id) {
-					this.loadData()
-				}
-			},
-			async loadData () {
-				if (this.widget.data.dimension.length === 0 && this.widget.data.measure.length === 0) {
-					this.data = []
-					return
-				}
-				getDataByFeild(
-					{
-						dataModelId: this.widget.resourceId,
-						type: this.widget.resourceType,
-						dimensions: this.widget.data.dimension,
-						measures: this.widget.data.measure,
-						queryColumns: this.widget.data.queryColumns,
-						legends: this.widget.data.legend
-					}).then(data => {
-					this.data = data
-					if (data && data.length === 0) {
-					}
-				})
-					.catch(() => {
-					})
 			}
 		}
 	}

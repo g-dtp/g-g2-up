@@ -12,7 +12,7 @@
 	import G2Up from 'g-g2-up'
 	Vue.use(G2Up)
 	export default {
-		name: 'ui-box',
+		name: 'ui-layout',
 		props: {
 			widget: {
 				type: Object,

@@ -42,18 +42,10 @@
 	}
 </script>
 <style lang="scss" scoped>
-	chart > div {
-		overflow: hidden !important;
-	}
 	.chart {
 		overflow: hidden;
-		flex: auto;
-		canvas {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-		}
+		min-width: 20px;
+		min-height: 20px;
+		flex: 1;
 	}
 </style>

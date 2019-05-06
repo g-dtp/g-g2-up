@@ -1,11 +1,7 @@
 <template lang="pug">
 	.charts
 		ui-box()
-			.text-item x
-			.text-item x
-			.text-item x
-		ui-box()
-			g2-bar(
+			g2-area(
 				:chartData="data"
 				:dimension="dimension"
 				:measure="measure"
@@ -17,13 +13,19 @@
 				:measure="measure"
 				:key="2"
 			)
-			g2-bar(
-				:chartData="data"
-				:dimension="dimension"
-				:measure="measure"
-				:key="3"
-			)
-			.text-item xxx
+			ui-box.test(direction="column")
+				g2-bar(
+					:chartData="data"
+					:dimension="dimension"
+					:measure="measure"
+					:key="2"
+				)
+				g2-bar(
+					:chartData="data"
+					:dimension="dimension"
+					:measure="measure"
+					:key="4"
+				)
 </template>
 
 <script>
@@ -56,5 +58,9 @@
 <style>
 	.text-item {
 		flex: auto;
+		flex-direction: column;
+	}
+	.test {
+		width: 400px;
 	}
 </style>
