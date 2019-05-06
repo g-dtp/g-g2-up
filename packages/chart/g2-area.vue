@@ -8,7 +8,7 @@
 	const ds = new DataSet()
 	export default {
 		extends: G2Serie,
-		name: 'g2-line',
+		name: 'g2-area',
 		props: {
 			measure: {
 				type: Array,
