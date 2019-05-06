@@ -4,7 +4,7 @@
 
 <script>
 	import G2Serie from './base/g2-serie'
-	import {DataSet} from '@antv/data-set'
+	import { DataSet } from '@antv/data-set'
 
 	const ds = new DataSet()
 	export default {
