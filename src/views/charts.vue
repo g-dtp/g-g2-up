@@ -32,7 +32,16 @@
 							id: 1,
 							type: '105',
 							typeName: 'ui-box-v',
-							children: []
+							children: [
+								{
+									category: 1,
+									type: '102',
+									typeName: 'ui-tooltip',
+									data: {
+										content: '我得试试'
+									}
+								}
+							]
 						}, {
 							category: 0,
 							grid: { x: 0, y: 0, width: 380, height: 280, zIndex: null },

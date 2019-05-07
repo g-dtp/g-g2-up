@@ -5,19 +5,17 @@
 		:widget='widget'
 		:name='widget.name'
 		:id="widget.id")
-		template(v-for="subWidget in widget.children")
-			dv-chart(v-if="subWidget.category == 0" :widget ="subWidget")
-			dv-ui(v-else-if="subWidget.category == 1" :widget ="subWidget")
-			dv-layout(v-else-if="subWidget.category == 2" :widget ="subWidget")
 </template>
 
 <script>
 	import DvChart from './dv-chart'
 	import DvUi from './dv-ui'
 	import DvLayout from './dv-layout'
+	import Layout from '../layout/index'
+
 	export default {
 		name: 'dv-layout',
-		components: { DvChart, DvUi, DvLayout },
+		components: { DvChart, DvUi, DvLayout, ...Layout },
 		props: {
 			widget: {
 				type: Object,

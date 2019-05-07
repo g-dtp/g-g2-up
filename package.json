@@ -1,6 +1,6 @@
 {
   "name": "g-g2-up",
-  "version": "0.1.8",
+  "version": "0.1.13",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -13,7 +13,7 @@
     "@antv/data-set": "^0.10.2",
     "@antv/g2": "^3.5.3",
     "core-js": "^2.6.5",
-    "element-ui": "^2.8.2"
+    "vue-directive-tooltip": "^1.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.6.0",

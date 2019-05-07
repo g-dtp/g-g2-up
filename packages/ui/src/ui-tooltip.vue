@@ -1,19 +1,16 @@
 <template lang='pug'>
-	g-icon.icon-ui-tooltip(v-if='!content' iconClass="icon-ui-tooltip")
-	el-tooltip.ui-tooltip(v-else placement="right")
-		.ui-tooltip__content(slot="content" :style="{maxWidth: '300px', lineHeight:'1.5'}") {{content}}
-		g-icon.icon-ui-tooltip(iconClass="icon-ui-tooltip")
+	.icon-ui-tooltip(iconClass="icon-ui-tooltip" v-tooltip.right="content")
+		img(src='./icon-tooltip.png')
 </template>
 
 <script>
 	import Vue from 'vue'
-	import { Tooltip } from 'element-ui'
-	import GIcon from './g-icon'
+	import Tooltip from 'vue-directive-tooltip'
+	import 'vue-directive-tooltip/css/index.css'
 
 	Vue.use(Tooltip)
 	export default {
 		name: 'ui-tooltip',
-		components: { GIcon },
 		props: {
 			widget: {
 				type: Object,
@@ -35,18 +32,12 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.ui-tooltip {
-		background: transparent;
-		display: inline-block;
-		width: 100%;
-		height: 100%;
-
-		.ui-tooltip__content {
-			max-width: 300px;
-		}
-	}
-
 	.icon-ui-tooltip {
-		font-size: 20px;
+		width: 20px;
+		height: 20px;
+		img {
+			width: 20px;
+			height: 20px;
+		}
 	}
 </style>
