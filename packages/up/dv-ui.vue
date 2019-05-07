@@ -1,6 +1,5 @@
 <template lang='pug'>
-	.ui-box
-		component(:is="uiName"
+	component.dv-ui(:is="uiName"
 		ref="content"
 		:widget='widget'
 		:name='widget.name'
@@ -9,7 +8,7 @@
 
 <script>
 	export default {
-		name: 'ui-layout',
+		name: 'dv-ui',
 		props: {
 			widget: {
 				type: Object,
@@ -25,7 +24,7 @@
 				default: false
 			}
 		},
-		data() {
+		data () {
 			return {
 				edit: false
 			}
@@ -36,7 +35,7 @@
 			}
 		},
 		methods: {
-			openMenu() {
+			openMenu () {
 				this.edit = !this.edit
 			},
 			changeSize (w, h) {
@@ -49,7 +48,9 @@
 		position: relative;
 		width: 100%;
 		height: 100%;
+		flex: 1;
 		background: transparent;
+
 		&.active {
 			pointer-events: auto;
 			box-shadow: inset 0px 0px 0px 1px #3D89FF;

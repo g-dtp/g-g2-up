@@ -1,17 +1,11 @@
 <template lang='pug'>
-	.ui-box.ui-box-v(:style="{'flex-direction': direction}")
-		template(v-for='sub in widget.children')
-			chart-Layout(v-if="sub.category == 1" :widget ="sub")
-			ui-Layout(v-if="sub.category == 0" :widget ="sub")
+	.ui-box-v(:style="{'flex-direction': direction}")
+		slot
 </template>
 
 <script>
-	import ChartLayout from './chart-layout'
-	import UiLayout from './ui-layout'
-
 	export default {
 		name: 'ui-box-v',
-		components: { ChartLayout, UiLayout },
 		props: {
 			widget: {
 				type: Object,
@@ -27,7 +21,7 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.ui-box {
+	.ui-box-v {
 		margin: 5px;
 		padding: 5px;
 		display: flex;

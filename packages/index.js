@@ -1,6 +1,7 @@
 import Chart from './chart'
 import Ui from './ui'
 import Layout from './layout'
+import DvBox from './up/dv-box'
 import G2 from '@antv/g2'
 import { ChartConfig, UiConfig } from './config'
 import Theme from './theme/index.js'
@@ -24,5 +25,6 @@ export {
 	ChartConfig,
 	UiConfig,
 	Theme,
-	G2
+	G2,
+	DvBox
 }

@@ -1,5 +1,5 @@
 <template lang='pug'>
-	component.chart-layout(
+	component.dv-chart(
 		v-if="data && data.length > 0 && refresh"
 		:is="widget.typeName"
 		ref="content"
@@ -17,7 +17,7 @@
 </template>
 <script>
 	export default {
-		name: 'chart-layout',
+		name: 'dv-chart',
 		inject: ['axios', 'url'],
 		props: {
 			widget: {
@@ -116,7 +116,7 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.chart-layout {
+	.dv-chart {
 		position: relative;
 		min-width: 20px;
 		min-height: 20px;

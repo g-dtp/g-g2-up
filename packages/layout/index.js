@@ -1,13 +1,7 @@
-import UiBox from './ui-box'
-import UiVBox from './ui-box-v'
-import UiHBox from './ui-box-h'
-import UiLayout from './ui-layout'
-import ChartLayout from './chart-layout'
+import UiBoxV from './ui-box-v'
+import UiBoxH from './ui-box-h'
 
 export default {
-	UiBox,
-	UiVBox,
-	UiHBox,
-	UiLayout,
-	ChartLayout
+	UiBoxV,
+	UiBoxH
 }

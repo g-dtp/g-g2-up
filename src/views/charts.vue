@@ -1,13 +1,15 @@
 <template lang="pug">
 	.charts
-		ui-box(:widget="root")
+		dv-box(v-for="widget,index in root" :key="index" :widget="widget")
 </template>
 
 <script>
 	import axios from 'axios'
+	import { DvBox } from 'packages/index'
 
 	export default {
 		name: 'charts',
+		components: { DvBox },
 		provide: {
 			axios: axios,
 			url: '/geely-dataview/borad/charts',
@@ -18,31 +20,50 @@
 				data: [],
 				dimension: 'name',
 				measure: ['value'],
-				root: {
-					category: 0,
-					grid: { x: 0, y: 0, width: 380, height: 280, zIndex: null },
+				root: [{
+					category: 2,
 					id: 0,
 					type: '104',
 					typeName: 'ui-box-h',
-					uid: 'uid-1556605339779-2',
 					children: [
 						{
-				category: 1,
-					grid: { x: 0, y: 0, width: 380, height: 280, zIndex: null },
-				id: 1290,
-					title: '未命名图表',
-					type: '1040',
-					typeName: 'g2-pie',
-					uid: 'uid-1556605339779-2',
-					data: {
-					content: '',
-						dimension: [{ meta: 'name' }],
-						legend: [],
-						measure: [{ meta: 'value' }]
-				}
-			}
+							category: 2,
+							grid: { x: 0, y: 0, width: 380, height: 280, zIndex: null },
+							id: 1,
+							type: '105',
+							typeName: 'ui-box-v',
+							children: []
+						}, {
+							category: 0,
+							grid: { x: 0, y: 0, width: 380, height: 280, zIndex: null },
+							id: 1290,
+							title: '未命名图表',
+							type: '1040',
+							typeName: 'g2-pie',
+							uid: 'uid-1556605339779-2',
+							data: {
+								content: '',
+								dimension: [{ meta: 'name' }],
+								legend: [],
+								measure: [{ meta: 'value' }]
+							}
+						}, {
+							category: 0,
+							grid: { x: 0, y: 0, width: 380, height: 280, zIndex: null },
+							id: 1290,
+							title: '未命名图表',
+							type: '1040',
+							typeName: 'g2-pie',
+							uid: 'uid-1556605339779-2',
+							data: {
+								content: '',
+								dimension: [{ meta: 'name' }],
+								legend: [],
+								measure: [{ meta: 'value' }]
+							}
+						}
 					]
-				}
+				}]
 			}
 		},
 		mounted () {
