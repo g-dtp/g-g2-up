@@ -1,5 +1,5 @@
 <template lang='pug'>
-	.ui-box-v(:style="{'flex-direction': direction}")
+	.ui-box-v(:style="{'flex-direction': direction}" @drop.native="ondrop")
 		slot
 </template>
 
@@ -16,6 +16,11 @@
 			direction: {
 				type: String,
 				default: 'column'
+			}
+		},
+		methods: {
+			ondrop () {
+				console.log('xxxx')
 			}
 		}
 	}

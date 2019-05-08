@@ -5,7 +5,9 @@
 </template>
 
 <script>
-	import { Drop } from 'vue-drag-drop'
+	/*
+	* 绝对布局编辑器
+	* */
 	import DvChart from './dv-chart'
 	import DvLayout from './dv-layout'
 	import DvUi from './dv-ui'
@@ -13,7 +15,7 @@
 	import Vue from 'vue'
 	import VueDraggableResizable from 'vue-draggable-resizable'
 	import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
-	Vue.component('drop', Drop)
+
 	Vue.component('vue-draggable-resizable', VueDraggableResizable)
 	export default {
 		name: 'dv-edit',
@@ -32,8 +34,13 @@
 				layoutClass: this.layout
 			}
 		},
-		methods: {
-			ondrop () {}
+		computed: {
+			style () {
+				return {
+					left: this.widget.grid.x + 'px',
+					top: this.widget.grid.y + 'px'
+				}
+			}
 		}
 	}
 </script>
