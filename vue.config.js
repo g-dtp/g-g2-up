@@ -17,10 +17,6 @@ module.exports = {
 		}
 	},
 	configureWebpack: {
-		externals: {
-			'@antv/g2': '@antv/g2',
-			'@antv/data-set': '@antv/data-set'
-		},
 		resolve: {
 			alias: {
 				'packages': resolve('packages')

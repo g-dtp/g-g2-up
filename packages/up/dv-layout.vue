@@ -5,6 +5,7 @@
 		:widget='widget'
 		:name='widget.name'
 		:id="widget.id")
+		slot
 </template>
 
 <script>

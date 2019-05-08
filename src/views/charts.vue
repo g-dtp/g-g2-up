@@ -1,15 +1,15 @@
 <template lang="pug">
 	.charts
-		dv-box(v-for="widget,index in root" :key="index" :widget="widget")
+		dv-edit(v-for="widget,index in root" :key="index" :widget="widget")
 </template>
 
 <script>
 	import axios from 'axios'
-	import { DvBox } from 'packages/index'
+	import { DvBox, DvEdit } from 'packages/index'
 
 	export default {
 		name: 'charts',
-		components: { DvBox },
+		components: { DvBox, DvEdit },
 		provide: {
 			axios: axios,
 			url: '/geely-dataview/borad/charts',
@@ -45,7 +45,7 @@
 						}, {
 							category: 0,
 							grid: { x: 0, y: 0, width: 380, height: 280, zIndex: null },
-							id: 1290,
+							id: 12934,
 							title: '未命名图表',
 							type: '1040',
 							typeName: 'g2-pie',
