@@ -2,7 +2,7 @@
 	dv-chart(v-if="widget.category == 0" :widget ="widget" :class="[layoutClass]" :style="style" draggable)
 	dv-ui(v-else-if="widget.category == 1" :widget ="widget" :class="[layoutClass]" :style="style" draggable)
 	dv-layout(v-else-if="widget.category == 2" :widget ="widget" :class="[layoutClass]" :style="style" draggable @drop.native.stop="ondrop" @dragover.native.stop="ondragover" )
-		dv-auto(v-for="subWidget in widget.children" :widget ="subWidget")
+		dv-auto(v-for="subWidget in widget.children" :widget ="subWidget" :key="subWidget.id")
 
 </template>
 
@@ -55,9 +55,7 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.dv-auto {
-		.auto {
-
-		}
+	.auto {
+		flex: 1;
 	}
 </style>
