@@ -14,11 +14,15 @@
 		:legend="legend"
 	)
 	.empty(v-else)
+		g-icon(:iconClass="`icon-default-${widget.typeName}`")
 </template>
 <script>
+	import GIcon from './g-icon'
+
 	export default {
 		name: 'dv-chart',
 		inject: ['axios', 'url'],
+		components: { GIcon },
 		props: {
 			widget: {
 				type: Object,
