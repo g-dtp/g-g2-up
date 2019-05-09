@@ -12,7 +12,6 @@
 		:dimension="dimension"
 		:measure="measure"
 		:legend="legend"
-		:titleHeight="titleHeight"
 	)
 	.empty(v-else)
 </template>

@@ -1,8 +1,9 @@
 <script>
 	import G2 from '@antv/g2'
-
+	import G2Title from './g2-title'
 	export default {
 		name: 'base-serie',
+		components: { G2Title },
 		props: {
 			chartData: {
 				type: Array,
@@ -18,11 +19,11 @@
 			},
 			showTitle: {
 				type: Boolean,
-				default: false
+				default: true
 			},
 			titleHeight: {
 				type: Number,
-				default: 50
+				default: 60
 			},
 			w: {
 				type: Number,

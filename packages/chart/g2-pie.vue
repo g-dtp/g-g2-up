@@ -1,14 +1,14 @@
 <template lang='pug'>
 	.chart.g2-pie(:style="style")
+		g2-title(v-if="showTitle")
 </template>
 <script>
 	import { DataSet } from '@antv/data-set'
 	import G2Serie from './base/g2-serie'
-
 	const ds = new DataSet()
-
 	export default {
 		extends: G2Serie,
+
 		name: 'g2-pie',
 		props: {
 			coordType: {
@@ -42,4 +42,7 @@
 	}
 </script>
 <style lang="scss" scoped>
+	.chart {
+		position: relative;
+	}
 </style>
