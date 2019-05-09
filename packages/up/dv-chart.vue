@@ -64,14 +64,14 @@
 			this.$root.$off('dv-resize', this.onresize)
 		},
 		methods: {
-			onresize() {
+			onresize () {
 				if (this.$children.length > 0) {
 					this.$children[0].reForceFit()
 				}
 			},
 			changeSize (w, h) {
-				if (this.$refs.content) {
-					this.$refs.content.changeSize(w, h)
+				if (this.$children.length > 0) {
+					this.$children[0].changeSize(w, h)
 				}
 			},
 			load () {
@@ -99,13 +99,13 @@
 					queryColumns: this.widget.data.queryColumns,
 					legends: this.widget.data.legend
 				})
-				.then(res => {
-					this.data = res.data.data || []
-					this.loading = false
-				})
-				.catch(() => {
-					this.loading = false
-				})
+					.then(res => {
+						this.data = res.data.data || []
+						this.loading = false
+					})
+					.catch(() => {
+						this.loading = false
+					})
 			}
 		}
 	}
@@ -119,6 +119,7 @@
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
+
 		&.active {
 			box-shadow: 0 0 0 1px #3D89FF;
 		}
