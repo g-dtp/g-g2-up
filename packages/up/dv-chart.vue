@@ -1,8 +1,8 @@
 <template lang='pug'>
 	component.dv-chart(
-		v-if="data && data.length > 0 && refresh"
+		v-if="data && data.length > 0"
 		:is="widget.typeName"
-		ref="content"
+		ref="widget"
 		:key="widget.id"
 		:chartData="data"
 		:name='widget.name'
@@ -30,8 +30,6 @@
 		data () {
 			return {
 				data: [],
-				refresh: true,
-				timer: null,
 				titleHeight: 0
 			}
 		},
@@ -60,18 +58,16 @@
 		},
 		mounted () {
 			this.load()
+			this.$root.$on('dv-resize', this.onresize)
 		},
 		beforeDestroy () {
-			if (this.timer) {
-				clearTimeout(this.timer)
-			}
+			this.$root.$off('dv-resize', this.onresize)
 		},
 		methods: {
-			onRefresh () {
-				this.refresh = false
-				this.$nextTick(() => {
-					this.refresh = true
-				})
+			onresize() {
+				if (this.$children.length > 0) {
+					this.$children[0].reForceFit()
+				}
 			},
 			changeSize (w, h) {
 				if (this.$refs.content) {
@@ -79,7 +75,6 @@
 				}
 			},
 			load () {
-				console.log('render')
 				// 维度和度量都没有时不请求后台
 				if (this.widget.data.dimension.length === 0 && this.widget.data.measure.length === 0) {
 					this.data = []

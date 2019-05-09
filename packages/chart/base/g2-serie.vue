@@ -1,4 +1,3 @@
-
 <script>
 	import G2 from '@antv/g2'
 
@@ -123,13 +122,14 @@
 					forceFit: true,
 					autoPaddingAppend: 20
 				})
+				console.log(/chart/, this.chart)
 				this.chart.coord(this.coord)
 			},
-			// initChartData (options) {
-			// 	this.chart.source(this.chartData, options)
-			// },
 			changeSize (w, h) {
 				this.chart.changeSize(w, h)
+			},
+			reForceFit () {
+				this.chart._wrap__initForceFitEvent()
 			}
 		}
 	}

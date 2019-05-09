@@ -4,8 +4,10 @@
 		ref="content"
 		:widget='widget'
 		:name='widget.name'
-		:id="widget.id")
+		:id="widget.id"
+		@resize.native="onresize")
 		slot
+		slot(name="edit-resize")
 </template>
 
 <script>
@@ -24,11 +26,16 @@
 					return {}
 				}
 			}
+		},
+		methods: {
+			onresize (e) {
+				console.log(e)
+			}
 		}
 	}
 </script>
 <style lang="scss" scoped>
 	.dv-layout {
-		flex: 1;
+
 	}
 </style>

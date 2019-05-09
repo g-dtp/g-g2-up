@@ -21,14 +21,14 @@
 				measure: ['value'],
 				root: [{
 					category: 2,
-					grid: { x: 0, y: 0, width: 380, height: 280, zIndex: null },
+					grid: { x: 0, y: 0, height: 400, zIndex: null },
 					id: 0,
 					type: '104',
 					typeName: 'ui-box-h',
 					children: [
 						{
 							category: 2,
-							grid: { x: 0, y: 0, width: 380, height: 280, zIndex: null },
+							grid: { x: 0, y: 0, width: 380, zIndex: null },
 							id: 1,
 							type: '105',
 							typeName: 'ui-box-v',
