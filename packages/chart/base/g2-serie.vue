@@ -120,10 +120,8 @@
 					width: this.w,
 					height: this.h,
 					padding: this.padding,
-					forceFit: true,
 					autoPaddingAppend: 20
 				})
-				console.log(/chart/, this.chart)
 				this.chart.coord(this.coord)
 			},
 			changeSize (w, h) {

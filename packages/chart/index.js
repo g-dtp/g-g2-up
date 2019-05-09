@@ -10,18 +10,20 @@ import G2Ring from './g2-ring'
 import G2Area from './g2-area'
 import G2Radar from './g2-radar'
 import G2Funnel from './g2-funnel'
+import G2TagCloud from './g2-tag-cloud'
 
 export default {
-  G2Bar,
-  G2BarH,
-  G2BarDodge,
-  G2BarDodgeH,
-  G2BarStack,
-  G2BarStackH,
-  G2Line,
-  G2Area,
-  G2Radar,
-  G2Funnel,
-  G2Pie,
-  G2Ring
+	G2Bar,
+	G2BarH,
+	G2BarDodge,
+	G2BarDodgeH,
+	G2BarStack,
+	G2BarStackH,
+	G2Line,
+	G2Area,
+	G2Radar,
+	G2Funnel,
+	G2Pie,
+	G2Ring,
+	G2TagCloud
 }

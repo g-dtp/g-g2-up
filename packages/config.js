@@ -10,7 +10,8 @@ const ChartConfig = [
 	{ id: '1050', name: 'g2-line', icon: 'icon-chart-line', tooltip: '折线图' },
 	{ id: '1060', name: 'g2-area', icon: 'icon-chart-line-area', tooltip: '面积图' },
 	{ id: '1070', name: 'g2-radar', icon: 'icon-chart-radar', tooltip: '雷达图' },
-	{ id: '1080', name: 'g2-funnel', icon: 'icon-chart-funnel', tooltip: '漏斗图' }
+	{ id: '1080', name: 'g2-funnel', icon: 'icon-chart-funnel', tooltip: '漏斗图' },
+	{ id: '1090', name: 'g2-tag-cloud', icon: 'icon-chart-tag-cloud', tooltip: '词云' }
 ]
 
 const UiConfig = [
