@@ -11,13 +11,14 @@
 		:draggable='draggable'
 		:resizable='resizable'
 		@blur.native.stop='onblur'
+		:active.sync="active"
 		@click.native.stop="onStop"
 		@dragstop="onDragStop"
 		@activated="onActivated(widget)"
 		@resizestop="onResizeEnd"
 	)
-		dv-chart(v-if="widget.category == 0" :widget ="widget" :class="[layoutClass, style]")
-		dv-ui(v-else-if="widget.category == 1" :widget ="widget" :class="[layoutClass, style]")
+		dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :class="[layoutClass, style]")
+		dv-ui.dv-edit-content(v-else-if="widget.category == 1" :widget ="widget" :class="[layoutClass, style]")
 </template>
 
 <script>
@@ -51,6 +52,7 @@
 		data () {
 			return {
 				layoutClass: this.layout,
+				active: false,
 				draggable: true,
 				resizable: true,
 				editStore: this.store
@@ -101,14 +103,14 @@
 				this.widget.grid.x = x
 				this.widget.grid.y = y
 			},
-			onStop () {},
+			onStop () {
+			},
 			onkeyup (e) {
 				if (e.key === 'Backspace' || e.key === 'Delete') {
 					this.deleteSelf()
 				}
 			},
 			onfocus () {
-				if (!this.editable) return
 				this.$el.addEventListener('keyup', this.onkeyup, false)
 			},
 			onblur () {
@@ -117,10 +119,27 @@
 		}
 	}
 </script>
+<style lang="scss">
+	.dv-edit.resizing {
+		background: rgba(0, 0, 0, 0.1) !important;
+		/deep/ .dv-edit-content {
+			opacity: 0.3;
+		}
+	}
+	.dv-edit.active {
+		box-shadow: 0 0 0 1px #3D89FF;
+	}
+	:focus {
+		outline: none;
+
+	}
+</style>
 <style lang="scss" scoped>
 	.dv-edit {
 		background: transparent;
+		border: none;
 		$size: 4px;
+
 		/deep/ .handle {
 			width: 8px;
 			height: 8px;

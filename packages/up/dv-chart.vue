@@ -14,6 +14,7 @@
 		:legend="legend"
 		:titleHeight="titleHeight"
 	)
+	.empty(v-else)
 </template>
 <script>
 	export default {
@@ -110,6 +111,7 @@
 		}
 	}
 </script>
+
 <style lang="scss" scoped>
 	.dv-chart {
 		position: relative;
