@@ -13,7 +13,7 @@
 		:measure="measure"
 		:legend="legend"
 	)
-	.empty(v-else)
+	.dv-chart.empty(v-else)
 		g-icon(:iconClass="`icon-default-${widget.typeName}`")
 </template>
 <script>
@@ -63,19 +63,26 @@
 		mounted () {
 			this.load()
 			this.$root.$on('dv-resize', this.onresize)
+			this.$root.$on('update-charts', this.updateChart)
 		},
 		beforeDestroy () {
 			this.$root.$off('dv-resize', this.onresize)
+			this.$root.$off('update-charts', this.updateChart)
 		},
 		methods: {
 			onresize () {
-				if (this.$children.length > 0) {
+				if (this.$children.length > 0 && this.$children[0].reForceFit) {
 					this.$children[0].reForceFit()
 				}
 			},
 			changeSize (w, h) {
-				if (this.$children.length > 0) {
+				if (this.$children.length > 0 && this.$children[0].changeSize) {
 					this.$children[0].changeSize(w, h)
+				}
+			},
+			updateChart (widget) {
+				if (widget && widget.id === this.widget.id) {
+					this.load()
 				}
 			},
 			load () {
@@ -145,20 +152,20 @@
 			width: 100%;
 			box-sizing: border-box;
 		}
+	}
+	.empty {
+		background: rgba(255, 255, 255, 0.9);
+		text-align: center;
+		font-size: 12px;
+		height: 100%;
+		flex: auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
-		.empty {
-			background: rgba(255, 255, 255, 0.9);
-			text-align: center;
-			font-size: 12px;
-			flex: auto;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-
-			/deep/ .icon {
-				width: 30%;
-				height: 30%;
-			}
+		/deep/ .icon {
+			width: 30%;
+			height: 30%;
 		}
 	}
 </style>

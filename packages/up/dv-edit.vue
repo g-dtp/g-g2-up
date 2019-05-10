@@ -1,7 +1,7 @@
 <template lang='pug'>
 	vue-draggable-resizable.dv-edit(
 		:tabindex='tabindex'
-		:grid=[20, 20]
+		:grid = "[20, 20]"
 		:min-width="20"
 		:min-height="20"
 		:x="widget.grid.x"
@@ -10,10 +10,13 @@
 		:h='widget.grid.height'
 		:draggable='draggable'
 		:resizable='resizable'
+		:handles="['br']"
 		@blur.native.stop='onblur'
 		:active.sync="active"
 		@click.native.stop="onStop"
+		:onDragStart="onDragStartCallback"
 		@dragstop="onDragStop"
+		@dragging="onDragging"
 		@activated="onActivated(widget)"
 		@resizestop="onResizeEnd"
 	)
@@ -60,10 +63,7 @@
 		},
 		computed: {
 			style () {
-				return {
-					left: this.widget.grid.x + 'px',
-					top: this.widget.grid.y + 'px'
-				}
+				return {}
 			}
 		},
 		mounted () {
@@ -87,19 +87,21 @@
 					this.$children[0].$children[0].changeSize(w, h)
 				})
 			},
-			deleteSelf () {
-				this.$emit('delete', this.widget)
-				// this.store.removeWidget(this.widget)
-			},
-			onCmd (cmd) {
-				if (cmd.type === 'delete') {
-					this.deleteSelf()
-				}
-			},
 			onActivated () {
 				this.editStore.activeWidget = this.widget
 			},
 			onDragStop (x, y) {
+				if (x < 1) x = 1
+				this.widget.grid.x = x
+				this.widget.grid.y = y
+			},
+			onDragStartCallback (e) {
+			},
+			onDragging (x, y) {
+				if (x <= 1) {
+					this.widget.grid.x = 1
+					return false
+				}
 				this.widget.grid.x = x
 				this.widget.grid.y = y
 			},
@@ -122,13 +124,17 @@
 <style lang="scss">
 	.dv-edit.resizing {
 		background: rgba(0, 0, 0, 0.1) !important;
+
 		/deep/ .dv-edit-content {
 			opacity: 0.3;
 		}
 	}
+
 	.dv-edit.active {
-		box-shadow: 0 0 0 1px #3D89FF;
+		/*box-shadow: 0 0 0 1px #3D89FF;*/
+		z-index: 999 !important;
 	}
+
 	:focus {
 		outline: none;
 
@@ -170,8 +176,15 @@
 			}
 
 			&.handle-br {
-				right: -$size;
-				bottom: -$size;
+				box-shadow: none;
+				background: transparent;
+				right: 2px;
+				bottom: 2px;
+				width: 12px;
+				height: 12px;
+				border-width: 0 4px 4px 0;
+				border-color: #231815;
+				border-style: solid;
 			}
 
 			&.handle-bm {
