@@ -1,0 +1,23 @@
+@font-face {
+	font-family: 'wf_standard-font_light';
+	src: url('StandardFontLight.woff');
+	src: local('StandardFontLight'),
+	local('StandardFontLight'),
+	url('StandardFontLight.woff') format('woff')
+}
+
+@font-face {
+	font-family: 'wf_standard-font';
+	src: url('StandardFont.woff');
+	src: local('StandardFont'),
+	local('StandardFont'),
+	url('StandardFont.woff') format('woff')
+}
+
+@font-face {
+	font-family: 'wf_standard-font_bold';
+	src: url('StandardFontBold.woff');
+	src: local('StandardFontBold'),
+	local('StandardFontBold'),
+	url('StandardFontBold.woff') format('woff')
+}

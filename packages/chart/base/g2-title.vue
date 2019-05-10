@@ -15,6 +15,7 @@
 		position: absolute;
 		text-align: left;
 		padding: 10px;
+		z-index: 2;
 		h1 {
 			line-height: 1.2;
 			color: rgba(0, 0, 0, 0.85);

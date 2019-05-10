@@ -11,6 +11,7 @@ import G2Area from './g2-area'
 import G2Radar from './g2-radar'
 import G2Funnel from './g2-funnel'
 import G2TagCloud from './g2-tag-cloud'
+import G2Card from './g2-card'
 
 export default {
 	G2Bar,
@@ -25,5 +26,6 @@ export default {
 	G2Funnel,
 	G2Pie,
 	G2Ring,
-	G2TagCloud
+	G2TagCloud,
+	G2Card
 }
