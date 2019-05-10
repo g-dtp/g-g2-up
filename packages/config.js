@@ -12,7 +12,8 @@ const ChartConfig = [
 	{ category: 0, id: '1070', name: 'g2-radar', icon: 'icon-chart-radar', tooltip: '雷达图' },
 	{ category: 0, id: '1080', name: 'g2-funnel', icon: 'icon-chart-funnel', tooltip: '漏斗图' },
 	{ category: 0, id: '1090', name: 'g2-tag-cloud', icon: 'icon-chart-tag-cloud', tooltip: '词云' },
-	{ category: 0, id: '1100', name: 'g2-card', icon: 'icon-chart-card', tooltip: '卡片', width: 260, height: 180 }
+	{ category: 0, id: '1100', name: 'g2-card', icon: 'icon-chart-card', tooltip: '卡片', width: 260, height: 180 },
+	{ category: 0, id: '1110', name: 'g2-table', icon: 'icon-chart-table', tooltip: '表格', width: 260, height: 400 }
 ]
 
 const UiConfig = [

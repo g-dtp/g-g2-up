@@ -12,6 +12,7 @@ import G2Radar from './g2-radar'
 import G2Funnel from './g2-funnel'
 import G2TagCloud from './g2-tag-cloud'
 import G2Card from './g2-card'
+import G2Table from './g2-table'
 
 export default {
 	G2Bar,
@@ -27,5 +28,6 @@ export default {
 	G2Pie,
 	G2Ring,
 	G2TagCloud,
-	G2Card
+	G2Card,
+	G2Table
 }
