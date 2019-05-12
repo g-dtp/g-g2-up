@@ -1,14 +1,21 @@
 <template lang='pug'>
-	.chart.g2-table
+	.chart.g2-table(:style="style")
 		.g2-table__content
-			table()
-				thead
-					th
-						td
-			table()
-				tbody
-					tr
-						td
+			.g2-table__content__thead
+				table(border=0 cellpadding=0 cellspacing=0)
+					thead
+						colgroup
+							col(v-for='column,colIndex in columns' :key="column" width="180" :name="column")
+						tr
+							th(v-for='column,colIndex in columns' :key="column") {{column}}
+							th.gutter(:style="{width: '17px'}")
+			.g2-table__content__tbody
+				table(border=0 cellpadding=0 cellspacing=0)
+					colgroup
+						col(v-for='column,colIndex in columns' :key="column" width="180" :name="column")
+					tbody
+						tr(v-for='cell,rowIndex in list' :key="rowIndex")
+							td(v-for='column,colIndex in columns' :key="column" :name="column") {{cell[column]}}
 </template>
 
 <script>
@@ -50,23 +57,32 @@
 				}
 			}
 		},
-		data () {
+		data() {
 			return {
-
+				columns: [],
+				list: []
 			}
 		},
-		mounted () {
+		mounted() {
 			this.drawChart()
 		},
 		watch: {},
+		computed: {
+			style() {
+				return {
+					width: `${this.w}px`,
+					height: `${this.h}px`
+				}
+			}
+		},
 		methods: {
-			drawChart () {
-				// let measure = this.measure[0]
+			drawChart() {
 				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
-				console.log(this.dv.rows)
+				this.list = [...this.dv.rows]
+				this.columns = [this.dimension, ...this.measure]
 			},
-			getTransformMapNull () {
+			getTransformMapNull() {
 				return {
 					type: 'map',
 					callback: (row) => {
@@ -86,6 +102,27 @@
 	}
 
 	.g2-table {
+		background: #ffffff;
+		table {
+			border: none;
+			width: 100%;
+			height: 100%;
+		}
 
+		&__content {
+			height: 100%;
+			overflow-y: hidden;
+			overflow-x: auto;
+			display: flex;
+			flex-direction: column;
+
+			&__thead {
+				flex: 1;
+			}
+			&__tbody {
+				flex: auto;
+				overflow-y: auto;
+			}
+		}
 	}
 </style>
