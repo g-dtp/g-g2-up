@@ -2,6 +2,7 @@
 	component.dv-chart(
 		v-if="data && data.length > 0"
 		:is="widget.typeName"
+		:showTitle = "showTitle"
 		ref="widget"
 		:key="widget.id"
 		:chartData="data"
@@ -18,7 +19,6 @@
 </template>
 <script>
 	import GIcon from './g-icon'
-
 	export default {
 		name: 'dv-chart',
 		inject: ['axios', 'url'],
@@ -34,7 +34,13 @@
 		data () {
 			return {
 				data: [],
-				titleHeight: 0
+				showTitle: false
+			}
+		},
+		watch: {
+			'widget.styleObject.showTitle' (value) {
+				this.showTitle = value
+				this.$root.$emit('dv-resize')
 			}
 		},
 		computed: {

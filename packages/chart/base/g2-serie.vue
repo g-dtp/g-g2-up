@@ -1,9 +1,10 @@
 <script>
 	import G2 from '@antv/g2'
 	import G2Title from './g2-title'
+
 	export default {
 		name: 'base-serie',
-		components: { G2Title },
+		components: {G2Title},
 		props: {
 			chartData: {
 				type: Array,
@@ -54,17 +55,17 @@
 				}
 			}
 		},
-		data () {
+		data() {
 			return {
 				chart: null,
 				dv: null
 			}
 		},
 		computed: {
-			padding () {
+			padding() {
 				return this.showTitle ? [this.titleHeight, 'auto', 'auto', 'auto'] : [30, 'auto', 'auto', 'auto']
 			},
-			style () {
+			style() {
 				return {
 					height: `${this.h}px`,
 					width: `${this.w}px`
@@ -72,7 +73,7 @@
 			}
 
 		},
-		mounted () {
+		mounted() {
 			this.initChart()
 		},
 		watch: {
@@ -80,11 +81,11 @@
 				this.drawChart()
 			}
 		},
-		created () {
+		created() {
 		},
-		beforeDestroy () {
+		beforeDestroy() {
 		},
-		destroyed () {
+		destroyed() {
 			if (this.chart) {
 				this.chart.clear()
 				this.chart.destroy()
@@ -92,7 +93,7 @@
 		},
 		methods: {
 			/* dataset */
-			getTransformMapNull () {
+			getTransformMapNull() {
 				return {
 					type: 'map',
 					callback: (row) => {
@@ -104,7 +105,7 @@
 				}
 			},
 			/* dataset */
-			getTransformFold () {
+			getTransformFold() {
 				return {
 					type: 'fold',
 					fields: this.measure,
@@ -112,7 +113,7 @@
 					value: 'value'
 				}
 			},
-			initChart () {
+			initChart() {
 				if (this.chart) this.chart.destory()
 				this.chart = null
 				this.chart = new G2.Chart({
@@ -124,11 +125,12 @@
 				})
 				this.chart.coord(this.coord)
 			},
-			changeSize (w, h) {
+			changeSize(w, h) {
 				this.chart.changeSize(w, h)
 			},
-			reForceFit () {
-				this.chart._wrap__initForceFitEvent()
+			reForceFit() {
+				this.chart.set('padding', this.padding)
+				this.drawChart()
 			}
 		}
 	}
