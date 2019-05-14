@@ -1,5 +1,5 @@
 <template lang='pug'>
-	.ui-label(:contenteditable="edit"
+	.ui-label(:contenteditable="edit ? 'plaintext-only' : false"
 		:class={noEdit: !edit}
 		tabindex='3'
 		:style="style"
@@ -21,51 +21,52 @@
 				}
 			},
 			borderRadius: {
-				default: 8
+				default: 0
 			},
 			borderWidth: {
 				default: 1
 			}
 		},
-		data () {
+		data() {
 			return {
 				edit: false
 			}
 		},
-		watch: {
-		},
-		mounted () {
+		watch: {},
+		mounted() {
 			this.$el.innerText = this.widget.data.content
 		},
 		computed: {
-			style () {
+			style() {
+				let { background, fontSize, textAlign, color, lineHeight } = this.widget.styleObject
 				return {
 					borderRadius: `${this.borderRadius}px`,
-					fontSize: `18px`,
-
-					textAlign: 'left',
-					fontWeight: 600,
-					borderWidth: `${this.borderWidth}px`
+					fontSize: `${fontSize}px`,
+					background: `${background}`,
+					color: `${color}`,
+					textAlign: textAlign,
+					fontWeight: 500,
+					borderWidth: `${this.borderWidth}px`,
+					lineHeight: lineHeight
 				}
 			}
 		},
 		methods: {
 			stop() {
-
 			},
 			stopSome(e) {
 				e.stopPropagation()
 			},
-			onChange (e) {
+			onChange(e) {
 				this.widget.data.content = e.target.innerText
 			},
-			onEdit () {
+			onEdit() {
 				this.edit = true
 				this.$el.focus()
 				this.$el.addEventListener('mousedown', this.stopSome)
 				this.$el.addEventListener('keyup', this.stopSome)
 			},
-			outEdit () {
+			outEdit() {
 				this.$el.removeEventListener('mousedown', this.stopSome)
 				this.$el.removeEventListener('keyup', this.stopSome)
 				this.edit = false
@@ -81,15 +82,18 @@
 		background: transparent;
 		width: 100%;
 		height: 100%;
+		line-height: 1;
 		/*border-color: #3D89FF;*/
 		/*border-style: solid;*/
 		text-align: left;
 		line-height: 20px;
 		overflow-y: auto;
 		color: rgba(0, 0, 0, 0.85);
+
 		&.noEdit {
-			user-select:none;
+			user-select: none;
 		}
+
 		&:empty:before {
 			content: attr(placeholder);
 			color: #bbb;

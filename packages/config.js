@@ -27,8 +27,20 @@ const LayoutConfig = [
 	{ category: 3, id: 103, name: 'ui-box-v', icon: 'icon-ui-VBox', tooltip: '垂直布局容器', width: 100, height: 100 }
 ]
 
+const DefaultStyleConfig = {
+	'ui-label': {
+		color: 'rgba(0, 0, 0, 0.85)',
+		fontSize: 16,
+		fontFamily: '默认字体',
+		background: 'rgba(255,255,255, 1)',
+		textAlign: 'left',
+		lineHeight: 1.2
+	}
+}
+
 export {
 	ChartConfig,
 	UiConfig,
-	LayoutConfig
+	LayoutConfig,
+	DefaultStyleConfig
 }
