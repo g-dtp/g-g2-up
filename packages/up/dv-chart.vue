@@ -3,6 +3,8 @@
 		v-if="data && data.length > 0"
 		:is="widget.typeName"
 		:showTitle = "showTitle"
+		:title = "widget.title"
+		:subTitle = "widget.subTitle"
 		ref="widget"
 		:key="widget.id"
 		:chartData="data"
@@ -34,13 +36,13 @@
 		data () {
 			return {
 				data: [],
-				showTitle: false
+				showTitle: this.widget.styleObject.showTitle
 			}
 		},
 		watch: {
 			'widget.styleObject.showTitle' (value) {
 				this.showTitle = value
-				this.$root.$emit('dv-resize')
+				this.onresize()
 			}
 		},
 		computed: {
@@ -78,7 +80,9 @@
 		methods: {
 			onresize () {
 				if (this.$children.length > 0 && this.$children[0].reForceFit) {
-					this.$children[0].reForceFit()
+					this.$nextTick(() => {
+						this.$children[0].reForceFit()
+					})
 				}
 			},
 			changeSize (w, h) {

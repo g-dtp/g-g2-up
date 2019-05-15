@@ -1,6 +1,6 @@
 <template lang='pug'>
 	.chart.g2-pie(:style="style")
-		g2-title(v-if="showTitle")
+		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
 </template>
 <script>
 	import { DataSet } from '@antv/data-set'
@@ -8,7 +8,6 @@
 	const ds = new DataSet()
 	export default {
 		extends: G2Serie,
-
 		name: 'g2-pie',
 		props: {
 			coordType: {

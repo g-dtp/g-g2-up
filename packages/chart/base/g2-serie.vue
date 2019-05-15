@@ -22,6 +22,14 @@
 				type: Boolean,
 				default: true
 			},
+			title: {
+				type: String,
+				default: ''
+			},
+			subTitle: {
+				type: String,
+				default: ''
+			},
 			titleHeight: {
 				type: Number,
 				default: 60
@@ -129,6 +137,8 @@
 				this.chart.changeSize(w, h)
 			},
 			reForceFit() {
+				console.log(this.padding)
+				console.log(this.showTitle)
 				this.chart.set('padding', this.padding)
 				this.drawChart()
 			}
