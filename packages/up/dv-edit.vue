@@ -1,9 +1,9 @@
 <template lang='pug'>
 	vue-draggable-resizable.dv-edit(
 		:tabindex='tabindex'
-		:grid = "[20, 20]"
-		:min-width="20"
-		:min-height="20"
+		:grid = "[10, 10]"
+		:min-width="10"
+		:min-height="10"
 		:x="widget.grid.x"
 		:y="widget.grid.y"
 		:w='widget.grid.width'
@@ -77,15 +77,13 @@
 		},
 		methods: {
 			onResizeEnd (x, y, w, h) {
-				this.$nextTick(() => {
-					this.widget.grid.x = x
-					this.widget.grid.y = y
-					this.widget.grid.width = w
-					this.widget.grid.height = h
-					this.widget.width = w
-					this.widget.height = h
-					this.$children[0].$children[0].changeSize(w, h)
-				})
+				this.widget.grid.x = x
+				this.widget.grid.y = y
+				this.widget.grid.width = w
+				this.widget.grid.height = h
+				this.widget.width = w
+				this.widget.height = h
+				this.$children[0].$children[0].changeSize(w, h)
 			},
 			onActivated () {
 				this.editStore.activeWidget = this.widget
@@ -109,7 +107,7 @@
 			},
 			onkeyup (e) {
 				if (e.key === 'Backspace' || e.key === 'Delete') {
-					this.deleteSelf()
+					this.$emit('delete-self', this.widget)
 				}
 			},
 			onfocus () {
@@ -123,21 +121,24 @@
 </script>
 <style lang="scss">
 	.dv-edit.resizing {
-		background: rgba(0, 0, 0, 0.1) !important;
+		background: rgba(5,19,50,0.16) !important;
 
 		/deep/ .dv-edit-content {
-			opacity: 0.3;
+			opacity: 0.5;
 		}
 	}
 
 	.dv-edit.active {
-		/*box-shadow: 0 0 0 1px #3D89FF;*/
+		box-shadow: 0 2px 6px 0 rgba(152,159,167,0.30);
 		z-index: 999 !important;
+	}
+
+	.dv-edit:hover {
+		box-shadow: 0 2px 6px 0 rgba(152,159,167,0.30);
 	}
 
 	:focus {
 		outline: none;
-
 	}
 </style>
 <style lang="scss" scoped>
@@ -178,12 +179,12 @@
 			&.handle-br {
 				box-shadow: none;
 				background: transparent;
-				right: 2px;
-				bottom: 2px;
-				width: 12px;
-				height: 12px;
-				border-width: 0 4px 4px 0;
-				border-color: #231815;
+				right: 10px;
+				bottom: 10px;
+				width: 8px;
+				height: 8px;
+				border-width: 0 2px 2px 0;
+				border-color: #D8D8D8;
 				border-style: solid;
 			}
 

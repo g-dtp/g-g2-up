@@ -14,17 +14,6 @@ export default {
 		},
 		...blue
 	},
-	'black': {
-		name: '质感黑',
-		boardStyle: {
-			title: {
-				color: '#D0F0FF'
-			},
-			background: 'rgba(13,16,26, 1)',
-			border: 'none'
-		},
-		...black
-	},
 	'white': {
 		name: '领克绿',
 		boardStyle: {
@@ -35,5 +24,16 @@ export default {
 			border: '1px solid #dddddd'
 		},
 		...white
+	},
+	'black': {
+		name: '质感黑',
+		boardStyle: {
+			title: {
+				color: '#D0F0FF'
+			},
+			background: 'rgba(13,16,26, 1)',
+			border: 'none'
+		},
+		...black
 	}
 }

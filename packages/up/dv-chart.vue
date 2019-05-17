@@ -21,10 +21,11 @@
 </template>
 <script>
 	import GIcon from './g-icon'
+
 	export default {
 		name: 'dv-chart',
 		inject: ['axios', 'url'],
-		components: { GIcon },
+		components: {GIcon},
 		props: {
 			widget: {
 				type: Object,
@@ -33,34 +34,41 @@
 				}
 			}
 		},
-		data () {
+		data() {
 			return {
 				data: [],
+				timer: null,
 				showTitle: this.widget.styleObject.showTitle
 			}
 		},
 		watch: {
-			'widget.styleObject.showTitle' (value) {
+			'widget.styleObject.showTitle'(value) {
 				this.showTitle = value
 				this.onresize()
+			},
+			h() {
+				this.onParentResize()
+			},
+			w() {
+				this.onParentResize()
 			}
 		},
 		computed: {
-			dimension () {
+			dimension() {
 				let dimension = []
 				this.widget.data.dimension.forEach(item => {
 					dimension.push(item.meta)
 				})
 				return dimension[0]
 			},
-			measure () {
+			measure() {
 				let measure = []
 				this.widget.data.measure.forEach(item => {
 					measure.push(item.meta)
 				})
 				return measure
 			},
-			legend () {
+			legend() {
 				let legend = []
 				this.widget.data.legend.forEach(item => {
 					legend.push(item.meta)
@@ -68,34 +76,42 @@
 				return legend[0]
 			}
 		},
-		mounted () {
+		mounted() {
 			this.load()
-			this.$root.$on('dv-resize', this.onresize)
 			this.$root.$on('update-charts', this.updateChart)
 		},
-		beforeDestroy () {
-			this.$root.$off('dv-resize', this.onresize)
+		beforeDestroy() {
 			this.$root.$off('update-charts', this.updateChart)
 		},
 		methods: {
-			onresize () {
+			onParentResize() {
+				if (this.timer) clearTimeout(this.timer)
+				this.timer = setTimeout(() => {
+					if (this.$children.length > 0 && this.$children[0].reForceFit) {
+						this.$nextTick(() => {
+							this.$children[0].reForceFit()
+						})
+					}
+				}, 50)
+			},
+			onresize() {
 				if (this.$children.length > 0 && this.$children[0].reForceFit) {
 					this.$nextTick(() => {
 						this.$children[0].reForceFit()
 					})
 				}
 			},
-			changeSize (w, h) {
+			changeSize(w, h) {
 				if (this.$children.length > 0 && this.$children[0].changeSize) {
 					this.$children[0].changeSize(w, h)
 				}
 			},
-			updateChart (widget) {
+			updateChart(widget) {
 				if (widget && widget.id === this.widget.id) {
 					this.load()
 				}
 			},
-			load () {
+			load() {
 				// 维度和度量都没有时不请求后台
 				if (this.widget.data.dimension.length === 0 && this.widget.data.measure.length === 0) {
 					this.data = []
@@ -163,6 +179,7 @@
 			box-sizing: border-box;
 		}
 	}
+
 	.empty {
 		background: rgba(255, 255, 255, 0.9);
 		text-align: center;

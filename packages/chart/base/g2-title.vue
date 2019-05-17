@@ -15,18 +15,19 @@
 		width: 100%;
 		position: absolute;
 		text-align: left;
-		padding: 10px;
+		padding: 16px;
 		z-index: 2;
 		box-sizing: border-box;
 
 		h1 {
 			line-height: 1.2;
 			color: rgba(0, 0, 0, 0.85);
-			font-size: 16px;
+			font-size: 14px;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			margin: 0;
+			font-weight: 500;
 		}
 
 		h3 {
