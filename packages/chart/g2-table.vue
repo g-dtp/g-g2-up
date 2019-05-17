@@ -1,6 +1,7 @@
 <template lang='pug'>
 	.chart.g2-table(:style="style")
-		.g2-table__content
+		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
+		.g2-table__content(:style="{marginTop: showTitle ? '40px' : 0}")
 			.g2-table__content__thead
 				table(border=0 cellpadding=0 cellspacing=0 :style="{width:`${w-40}px`}")
 					colgroup
@@ -21,10 +22,11 @@
 
 <script>
 	import {DataSet} from '@antv/data-set'
-
+	import G2Title from './base/g2-title'
 	const ds = new DataSet()
 	export default {
 		name: 'g2-table',
+		components: {G2Title},
 		props: {
 			chartData: {
 				type: Array,
@@ -33,6 +35,22 @@
 						data: []
 					}
 				}
+			},
+			showTitle: {
+				type: Boolean,
+				default: true
+			},
+			title: {
+				type: String,
+				default: ''
+			},
+			subTitle: {
+				type: String,
+				default: ''
+			},
+			titleHeight: {
+				type: Number,
+				default: 60
 			},
 			w: {
 				type: Number,
@@ -68,8 +86,6 @@
 			}
 		},
 		mounted() {
-
-			console.log('mounted')
 			this.drawChart()
 		},
 		beforeDestroy() {
@@ -129,6 +145,10 @@
 	}
 
 	.g2-table {
+		/deep/ .g2-title {
+			left: 0;
+			top: 0;
+		}
 		background: #ffffff;
 		padding: 20px;
 		box-sizing: border-box;
