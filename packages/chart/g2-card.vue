@@ -1,6 +1,6 @@
 <template lang='pug'>
 	.chart.g2-card(:style="{width: w +'px', height: h+'px'}")
-		.g2-card__title {{dimension}}
+		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
 		.g2-card__content
 			.g2-card__content__value {{value || '--'}}
 </template>
@@ -20,6 +20,22 @@
 						data: []
 					}
 				}
+			},
+			showTitle: {
+				type: Boolean,
+				default: true
+			},
+			title: {
+				type: String,
+				default: ''
+			},
+			subTitle: {
+				type: String,
+				default: ''
+			},
+			titleHeight: {
+				type: Number,
+				default: 60
 			},
 			w: {
 				type: Number,
@@ -53,7 +69,11 @@
 		mounted () {
 			this.drawChart()
 		},
-		watch: {},
+		watch: {
+			'chartData'() {
+				this.drawChart()
+			}
+		},
 		methods: {
 			drawChart () {
 				let measure = this.measure[0]

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-	import {DataSet} from '@antv/data-set'
+	import { DataSet } from '@antv/data-set'
 	import G2Title from './base/g2-title'
 	const ds = new DataSet()
 	export default {
