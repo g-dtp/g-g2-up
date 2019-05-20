@@ -9,7 +9,7 @@
 		:w='widget.grid.width'
 		:h='widget.grid.height'
 		:draggable='draggable'
-		:resizable='resizable'
+		:resizable='widget.resizable'
 		:handles="['br']"
 		@blur.native.stop='onblur'
 		:active.sync="active"
@@ -22,6 +22,7 @@
 	)
 		dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :class="[layoutClass, style]")
 		dv-ui.dv-edit-content(v-else-if="widget.category == 1" :widget ="widget" :class="[layoutClass, style]")
+		dv-menu.dv-more-menu(v-if="active")
 </template>
 
 <script>
@@ -202,8 +203,8 @@
 		}
 		.dv-more-menu {
 			position: absolute;
-			top: 10px;
-			right: 10px;
+			top: 5px;
+			right: 0;
 		}
 	}
 </style>
