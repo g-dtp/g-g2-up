@@ -13,7 +13,8 @@
     "@antv/data-set": "^0.10.2",
     "@antv/g2": "^3.5.3",
     "core-js": "^2.6.5",
-    "vue-directive-tooltip": "^1.5.1",
+    "popper.js": "^1.15.0",
+    "v-tooltip": "^2.0.2",
     "vue-drag-drop": "^1.1.4"
   },
   "devDependencies": {

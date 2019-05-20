@@ -29,9 +29,8 @@
 	* 绝对布局编辑器
 	* */
 	import DvChart from './dv-chart'
-	import DvLayout from './dv-layout'
 	import DvUi from './dv-ui'
-	import DvEdit from './dv-edit'
+	import DvMenu from './tools/dv-menu'
 	import Vue from 'vue'
 	import VueDraggableResizable from 'vue-draggable-resizable'
 	import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
@@ -40,7 +39,7 @@
 	export default {
 		name: 'dv-edit',
 		inject: ['layout', 'store'],
-		components: { DvChart, DvUi, DvLayout, DvEdit },
+		components: { DvChart, DvUi, DvMenu },
 		props: {
 			widget: {
 				type: Object,
@@ -200,6 +199,11 @@
 			&.handle-ml {
 				left: -$size;
 			}
+		}
+		.dv-more-menu {
+			position: absolute;
+			top: 10px;
+			right: 10px;
 		}
 	}
 </style>
