@@ -79,8 +79,7 @@
 				let measure = this.measure[0]
 				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
-				console.log(this.dv)
-				this.value = this.dv.sum(measure)
+				this.value = this.dv.rows[0][measure]
 			},
 			getTransformMapNull () {
 				return {
