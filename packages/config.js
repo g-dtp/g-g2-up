@@ -1,5 +1,5 @@
 const ChartConfig = [
-	{ category: 0, id: '1010', name: 'g2-bar', icon: 'icon-chart-bar-v', tooltip: '柱形图', legend: 1 },
+	{ category: 0, id: '1010', name: 'g2-bar', icon: 'icon-chart-bar-v', tooltip: '柱形图', legend: 1, width: 260, height: 180 },
 	{ category: 0, id: '1011', name: 'g2-bar-h', icon: 'icon-chart-bar-h', tooltip: '柱形图(水平)', legend: 1 },
 	{ category: 0, id: '1020', name: 'g2-bar-dodge', icon: 'icon-chart-dodge-v', tooltip: '分组柱形图' },
 	{ category: 0, id: '1021', name: 'g2-bar-dodge-h', icon: 'icon-chart-dodge-h', tooltip: '分组柱形图(水平)' },
@@ -13,7 +13,7 @@ const ChartConfig = [
 	{ category: 0, id: '1080', name: 'g2-funnel', icon: 'icon-chart-funnel', tooltip: '漏斗图' },
 	{ category: 0, id: '1090', name: 'g2-tag-cloud', icon: 'icon-chart-tag-cloud', tooltip: '词云' },
 	{ category: 0, id: '1100', name: 'g2-card', icon: 'icon-chart-card', tooltip: '卡片', width: 260, height: 180, measure: 1, dimension: 0 },
-	{ category: 0, id: '1110', name: 'g2-table', icon: 'icon-chart-table', tooltip: '表格', width: 260, height: 400 }
+	{ category: 0, id: '1110', name: 'g2-table', icon: 'icon-chart-table', tooltip: '表格', width: 520, height: 360 }
 ]
 
 const UiConfig = [
