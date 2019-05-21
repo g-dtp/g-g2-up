@@ -3,7 +3,7 @@
 		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
 		.g2-table__content(:style="{marginTop: showTitle ? '40px' : 0}")
 			.g2-table__content__thead
-				table(border=0 cellpadding=0 cellspacing=0 :style="{width:`${w-40}px`}")
+				table(border=0 cellpadding=0 cellspacing=0 :style="{width:`${w-40-2}px`}")
 					colgroup
 						col(v-for='column,colIndex in columns' :key="column" width='100' :name="`${column}_${colIndex}`")
 						col(v-if="showGutter" :width="gutter" name="gutter" )
@@ -12,7 +12,7 @@
 							th(v-for='column,colIndex in columns' :key="column" :class="[`${column}_${colIndex}`]") {{column}}
 							th.gutter(v-if="showGutter" :style="{width: `${gutter}px`}")
 			.g2-table__content__tbody(ref="tbody")
-				table(border=0 cellpadding=0 cellspacing=0 :style="{width:`${w-40-gutter}px`}")
+				table(border=0 cellpadding=0 cellspacing=0 :style="{width:`${w-40-2-gutter}px`}")
 					colgroup
 						col(v-for='column,colIndex in columns' :key="column"  width='100' :name="`${column}_${colIndex}`")
 					tbody
