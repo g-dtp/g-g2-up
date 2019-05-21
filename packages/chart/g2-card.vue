@@ -1,7 +1,7 @@
 <template lang='pug'>
 	.chart.g2-card(:style="{width: w +'px', height: h+'px'}")
 		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
-		.g2-card__content
+		.g2-card__content(:style="{marginTop: showTitle ? '20px' : 0}")
 			.g2-card__content__value {{value || '--'}}
 </template>
 

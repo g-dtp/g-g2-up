@@ -1,10 +1,11 @@
 <template lang='pug'>
 	.chart.g2-bar-dodge-h(:style="style")
+		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
 </template>
 
 <script>
 	import G2Serie from './base/g2-serie'
-	import {DataSet} from '@antv/data-set'
+	import { DataSet } from '@antv/data-set'
 
 	const ds = new DataSet()
 	export default {
@@ -36,5 +37,7 @@
 	}
 </script>
 <style lang="scss" scoped>
-
+	.chart {
+		position: relative;
+	}
 </style>

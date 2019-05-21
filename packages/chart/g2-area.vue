@@ -1,5 +1,6 @@
 <template lang='pug'>
 	.chart.g2-line(:style="style")
+		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
 </template>
 <script>
 	import { DataSet } from '@antv/data-set'
@@ -37,4 +38,7 @@
 	}
 </script>
 <style lang="scss" scoped>
+	.chart {
+		position: relative;
+	}
 </style>

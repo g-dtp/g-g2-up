@@ -1,5 +1,6 @@
 <template lang='pug'>
 	.chart.g2-bar-stack(:style="style")
+		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
 </template>
 
 <script>
@@ -29,5 +30,7 @@
 	}
 </script>
 <style lang="scss" scoped>
-
+	.chart {
+		position: relative;
+	}
 </style>

@@ -1,5 +1,6 @@
 <template lang='pug'>
-	.chart.g2-bar
+	.chart.g2-bar(:style="style")
+		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
 </template>
 <script>
 	import G2Serie from './base/g2-serie'
@@ -42,4 +43,7 @@
 	}
 </script>
 <style lang="scss" scoped>
+	.chart {
+		position: relative;
+	}
 </style>

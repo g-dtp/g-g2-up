@@ -1,6 +1,6 @@
 <template lang="pug">
 	.chart.g2-tag-cloud
-		g2-title(v-if="showTitle")
+		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
 </template>
 
 <script>
