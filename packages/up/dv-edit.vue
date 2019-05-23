@@ -69,6 +69,7 @@
 		mounted () {
 			this.$el.addEventListener('focus', this.onfocus, true)
 			this.$el.addEventListener('blur', this.onblur, true)
+			this.emitBrandScroll(this.widget.grid)
 		},
 		beforeDestroy () {
 			if (this.timer) clearTimeout(this.timer)
@@ -84,14 +85,17 @@
 				this.widget.width = w
 				this.widget.height = h
 				this.$children[0].$children[0].changeSize(w, h)
+				this.emitBrandScroll(this.widget.grid)
 			},
 			onActivated () {
 				this.editStore.activeWidget = this.widget
+				this.emitBrandScroll(this.widget.grid)
 			},
 			onDragStop (x, y) {
 				if (x < 1) x = 1
 				this.widget.grid.x = x
 				this.widget.grid.y = y
+				this.emitBrandScroll(this.widget.grid)
 			},
 			onDragStartCallback (e) {
 			},
@@ -115,6 +119,10 @@
 			},
 			onblur () {
 				this.$el.removeEventListener('keyup', this.onkeyup, false)
+			},
+			emitBrandScroll(grid) {
+				//  图表得位置或者大小发生变化， 提醒画布是否需要滚动到合适得位置
+				this.$emit('grid-change', this.widget.grid)
 			}
 		}
 	}

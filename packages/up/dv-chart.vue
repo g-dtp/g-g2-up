@@ -133,6 +133,7 @@
 					type: this.widget.resourceType,
 					dimensions: this.widget.data.dimension,
 					measures: this.widget.data.measure,
+					line: this.widget.data.line,
 					queryColumns: this.widget.data.queryColumns,
 					legends: this.widget.data.legend
 				})
