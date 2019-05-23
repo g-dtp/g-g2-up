@@ -1,5 +1,6 @@
 const ChartConfig = [
 	{ category: 0, id: '1010', name: 'g2-bar', icon: 'icon-chart-bar-v', tooltip: '柱形图', legend: 1, width: 260, height: 180 },
+	{ category: 0, id: '1012', name: 'g2-bar-line', icon: 'icon-chart-bar-line', tooltip: '柱形图+折线', legend: 1, line: 1, width: 260, height: 180 },
 	{ category: 0, id: '1011', name: 'g2-bar-h', icon: 'icon-chart-bar-h', tooltip: '柱形图(水平)', legend: 1 },
 	{ category: 0, id: '1020', name: 'g2-bar-dodge', icon: 'icon-chart-dodge-v', tooltip: '分组柱形图' },
 	{ category: 0, id: '1021', name: 'g2-bar-dodge-h', icon: 'icon-chart-dodge-h', tooltip: '分组柱形图(水平)' },
