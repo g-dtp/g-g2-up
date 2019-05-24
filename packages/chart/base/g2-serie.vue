@@ -121,6 +121,14 @@
 					value: 'value'
 				}
 			},
+			getTransformLineFold() {
+				return {
+					type: 'fold',
+					fields: this.line,
+					key: 'type',
+					value: 'value'
+				}
+			},
 			initChart() {
 				if (this.chart) this.chart.destory()
 				this.chart = null

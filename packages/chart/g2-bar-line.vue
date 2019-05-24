@@ -4,7 +4,7 @@
 </template>
 <script>
 	import G2Serie from './base/g2-serie'
-	import { DataSet } from '@antv/data-set'
+	import {DataSet} from '@antv/data-set'
 
 	const ds = new DataSet()
 	export default {
@@ -16,30 +16,54 @@
 				default: ''
 			},
 			line: {
-				type: String,
-				default: ''
+				type: Array,
+				default: function () {
+					return []
+				}
 			}
 		},
-		mounted () {
+		mounted() {
 			this.drawChart()
+		},
+		beforeCreate() {
+			this._colors = ['#FACC14', '#57AD71', '#F04864']
 		},
 		watch: {},
 		methods: {
-			drawChart () {
+			drawChart() {
 				this.chart && this.chart.clear()
-				this.dv = ds.createView().source(this.chartData)
-				this.dv.transform(this.getTransformMapNull())
-				if (this.measure.length > 1) {
-					this.dv.transform(this.getTransformFold())
-					this.chart.source(this.dv)
-					this.chart.intervalStack().position(`${this.dimension}*value`).color('type')
-				} else {
-					this.chart.source(this.dv)
-					if (this.legend) {
-						this.chart.intervalStack().position(`${this.dimension}*${this.measure[0]}`).color(this.legend)
-					} else {
-						this.chart.interval().position(`${this.dimension}*${this.measure[0]}`)
-					}
+				if (this.measure.length === 0 && this.line.length === 0) {
+					let dv = ds.createView().source(this.chartData)
+					this.chart.source(dv)
+					this.chart.interval().position(`${this.dimension}*value`).color('#FFFFFF')
+				}
+
+				// 绘制柱状
+				if (this.measure.length > 0) {
+					let dv1 = ds.createView().source(this.chartData)
+					dv1.transform(this.getTransformMapNull())
+					dv1.transform(this.getTransformFold())
+					let view1 = this.chart.view()
+					view1.source(dv1)
+					view1.intervalStack().position(`${this.dimension}*value`).color('type')
+				}
+				// 绘制折线
+				if (this.line.length > 0) {
+					let dv2 = ds.createView().source(this.chartData)
+					dv2.transform(this.getTransformMapNull())
+					dv2.transform(this.getTransformLineFold())
+					let view2 = this.chart.view()
+					view2.source(dv2)
+					view2.axis('value', {
+						position: 'right',
+						grid: null,
+						label: {
+							textStyle: {
+								fill: '#FACC14'
+							}
+						}
+					})
+					view2.line().position(`${this.dimension}*value`).color('type', this._colors).shape('smooth')
 				}
 				this.chart.render()
 			}

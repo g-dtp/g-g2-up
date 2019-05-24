@@ -15,6 +15,7 @@
 		:dimension="dimension"
 		:measure="measure"
 		:legend="legend"
+		:line="line"
 	)
 	.dv-chart.empty(v-else)
 		g-icon(:iconClass="`icon-default-${widget.typeName}`")
@@ -60,6 +61,13 @@
 					dimension.push(item.meta)
 				})
 				return dimension[0]
+			},
+			line () {
+				let line = []
+				this.widget.data.line.forEach(item => {
+					line.push(item.meta)
+				})
+				return line
 			},
 			measure() {
 				let measure = []
@@ -132,7 +140,7 @@
 					dataModelId: this.widget.resourceId,
 					type: this.widget.resourceType,
 					dimensions: this.widget.data.dimension,
-					measures: this.widget.data.measure,
+					measures: [...this.widget.data.measure, ...this.widget.data.line],
 					line: this.widget.data.line,
 					queryColumns: this.widget.data.queryColumns,
 					legends: this.widget.data.legend
