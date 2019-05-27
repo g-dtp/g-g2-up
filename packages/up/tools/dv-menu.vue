@@ -1,32 +1,42 @@
 <template lang='pug'>
-	v-popover.dv-menu(placement="right" :open.sync="show")
+	v-popover.dv-menu(placement="right" :show="show" trigger="click" :hideOnTargetClick="false")
 		img(src="./icon-more-menu.png")
 		div(slot="popover")
-			.dv-menu-item(@click="onMenu('preview')")
-				g-icon(iconClass="icon-link-preview")
-				span 查看数据
-			.dv-menu-item(@click="onMenu('delete')")
-				g-icon(iconClass="icon-link-delete")
-				span 删除
+			dv-menu-item(v-for='item,index in _menu' :key="index" @click.native="onMenu(item)" :name="item.name" :iconClass="item.iconClass")
 </template>
 
 <script>
 	import { VPopover } from 'v-tooltip'
+	import DvMenuItem from './dv-menu/dv-menu-item'
 	export default {
 		name: 'dv-menu',
-		components: { VPopover },
+		components: { VPopover, DvMenuItem },
 		data() {
 			return {
-				show: false
+				show: true,
+				popperOptions: {
+
+				}
 			}
 		},
+		created() {
+			this._menu = [
+				{
+					iconClass: 'icon-link-preview',
+					name: '查看数据',
+					event: 'preview'
+				}, {
+					iconClass: 'icon-link-delete',
+					name: '删除',
+					event: 'delete'
+				}
+			]
+		},
 		mounted() {
-
 		},
 		methods: {
-			onMenu(type) {
-				this.$emit(type)
-				this.show = false
+			onMenu(item) {
+				this.$emit(item.event)
 			}
 		}
 	}

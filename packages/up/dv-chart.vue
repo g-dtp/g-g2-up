@@ -1,6 +1,6 @@
 <template lang='pug'>
 	component.dv-chart(
-		v-if="data && data.length > 0"
+		v-if="data && data.length > 0 && !showData"
 		:is="widget.typeName"
 		:showTitle = "showTitle"
 		:title = "widget.title"
@@ -17,22 +17,28 @@
 		:legend="legend"
 		:line="line"
 	)
+	dv-preview-data.preview-warp(v-else-if="data && data.length > 0 && showData" :widget ="widget" :data="data" :key="'table'")
 	.dv-chart.empty(v-else)
 		g-icon(:iconClass="`icon-default-${widget.typeName}`")
 </template>
 <script>
 	import GIcon from './g-icon'
+	import DvPreviewData from './tools/dv-preview-data'
 
 	export default {
 		name: 'dv-chart',
 		inject: ['axios', 'url'],
-		components: {GIcon},
+		components: {GIcon, DvPreviewData},
 		props: {
 			widget: {
 				type: Object,
 				default: function () {
 					return {}
 				}
+			},
+			showData: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -62,7 +68,7 @@
 				})
 				return dimension[0]
 			},
-			line () {
+			line() {
 				let line = []
 				this.widget.data.line.forEach(item => {
 					line.push(item.meta)
@@ -136,6 +142,9 @@
 					return
 				}
 				this.loading = true
+				if (!this.widget.data.line) {
+					this.widget.data.line = []
+				}
 				this.axios.post(this.url, {
 					dataModelId: this.widget.resourceId,
 					type: this.widget.resourceType,

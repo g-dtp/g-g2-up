@@ -20,9 +20,9 @@
 		@activated="onActivated(widget)"
 		@resizestop="onResizeEnd"
 	)
-		dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :class="[layoutClass, style]")
+		dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :class="[layoutClass, style]" :showData="showData")
 		dv-ui.dv-edit-content(v-else-if="widget.category == 1" :widget ="widget" :class="[layoutClass, style]")
-		dv-menu.dv-more-menu(v-if="active")
+		dv-menu.dv-more-menu(@preview="onShowData")
 </template>
 
 <script>
@@ -54,6 +54,7 @@
 		},
 		data () {
 			return {
+				showData: false,
 				layoutClass: this.layout,
 				active: false,
 				draggable: true,
@@ -77,6 +78,9 @@
 			this.$el.removeEventListener('blur', this.onblur, true)
 		},
 		methods: {
+			onShowData () {
+				this.showData = !this.showData
+			},
 			onResizeEnd (x, y, w, h) {
 				this.widget.grid.x = x
 				this.widget.grid.y = y
@@ -213,6 +217,14 @@
 			position: absolute;
 			top: 5px;
 			right: 0;
+		}
+
+		.preview-warp {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
 		}
 	}
 </style>
