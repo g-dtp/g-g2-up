@@ -1,42 +1,38 @@
 <template lang='pug'>
-	v-popover.dv-menu(placement="right" :show="show" trigger="click" :hideOnTargetClick="false")
+	v-popover.dv-menu(placement="right" :open.sync="show" trigger="click" :hideOnTargetClick="false")
 		img(src="./icon-more-menu.png")
 		div(slot="popover")
-			dv-menu-item(v-for='item,index in _menu' :key="index" @click.native="onMenu(item)" :name="item.name" :iconClass="item.iconClass")
+			dv-menu-item( @click.native="onMenu('preview')" :name="!showData ? '查看数据' : '返回图表'" iconClass="icon-link-preview")
+			dv-menu-item( @click.native="onMenu('delete')" name="删除" iconClass="icon-link-delete")
 </template>
 
 <script>
-	import { VPopover } from 'v-tooltip'
+	import {VPopover} from 'v-tooltip'
 	import DvMenuItem from './dv-menu/dv-menu-item'
+
 	export default {
 		name: 'dv-menu',
 		components: { VPopover, DvMenuItem },
 		data() {
 			return {
-				show: true,
-				popperOptions: {
-
-				}
+				show: false,
+				showData: false,
+				popperOptions: {}
 			}
 		},
 		created() {
-			this._menu = [
-				{
-					iconClass: 'icon-link-preview',
-					name: '查看数据',
-					event: 'preview'
-				}, {
-					iconClass: 'icon-link-delete',
-					name: '删除',
-					event: 'delete'
-				}
-			]
 		},
 		mounted() {
 		},
 		methods: {
-			onMenu(item) {
-				this.$emit(item.event)
+			onMenu(type) {
+				if (type === 'preview') {
+					this.showData = !this.showData
+					this.$emit(type, this.showData)
+				} else if (type === 'delete') {
+					this.$emit(type)
+				}
+				this.show = false
 			}
 		}
 	}
@@ -46,12 +42,13 @@
 		&.popover {
 			.popover-inner {
 				font-size: 12px;
-				color: rgba(0,0,0,0.75);
+				color: rgba(0, 0, 0, 0.75);
 				background: #ffffff;
 				padding: 4px 0;
 				border-radius: 5px;
-				box-shadow: 0 2px 6px 0 rgba(152,159,167,0.30);
+				box-shadow: 0 2px 6px 0 rgba(152, 159, 167, 0.30);
 			}
+
 			.popover-arrow {
 				border-color: #ffffff;
 			}
@@ -62,10 +59,12 @@
 			padding: 0 16px;
 			line-height: 30px;
 			height: 30px;
+
 			&:hover {
 				color: #3D89FF;
 			}
 		}
+
 		.g-icon {
 			margin-right: 8px;
 		}
@@ -76,6 +75,7 @@
 		width: 20px;
 		height: 20px;
 		z-index: 99;
+
 		img {
 			cursor: pointer;
 			width: 100%;

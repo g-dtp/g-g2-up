@@ -22,7 +22,7 @@
 	)
 		dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :class="[layoutClass, style]" :showData="showData")
 		dv-ui.dv-edit-content(v-else-if="widget.category == 1" :widget ="widget" :class="[layoutClass, style]")
-		dv-menu.dv-more-menu(@preview="onShowData")
+		dv-menu.dv-more-menu(@preview="onShowData" @delete="onDelete")
 </template>
 
 <script>
@@ -78,8 +78,11 @@
 			this.$el.removeEventListener('blur', this.onblur, true)
 		},
 		methods: {
-			onShowData () {
-				this.showData = !this.showData
+			onShowData (value) {
+				this.showData = value
+			},
+			onDelete () {
+				this.$emit('delete-self', this.widget)
 			},
 			onResizeEnd (x, y, w, h) {
 				this.widget.grid.x = x
