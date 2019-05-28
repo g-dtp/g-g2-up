@@ -10,7 +10,7 @@
 	const ds = new DataSet()
 	export default {
 		extends: G2Serie,
-		name: 'g2-bar-stack',
+		name: 'g2-bar-stack-h',
 		props: {},
 		mounted () {
 			this.drawChart()

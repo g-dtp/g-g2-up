@@ -145,8 +145,6 @@
 				this.chart.changeSize(w, h)
 			},
 			reForceFit() {
-				console.log(this.padding)
-				console.log(this.showTitle)
 				this.chart.set('padding', this.padding)
 				this.drawChart()
 			}
