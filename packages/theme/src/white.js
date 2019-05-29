@@ -57,7 +57,7 @@ export default {
 			label: {
 				textStyle: {
 					fill: '#999',
-					fontSize: 10
+					fontSize: 11
 				}
 			}
 		},
@@ -65,9 +65,9 @@ export default {
 			label: {
 				textStyle: {
 					fill: '#999',
-					fontSize: 10
+					fontSize: 11
 				},
-				fontSize: 10
+				fontSize: 11
 			},
 			line: {
 				stroke: '#CCC'
@@ -80,7 +80,7 @@ export default {
 			label: {
 				textStyle: {
 					fill: '#999',
-					fontSize: 10
+					fontSize: 11
 				}
 			},
 			line: {
@@ -104,7 +104,7 @@ export default {
 			label: {
 				textStyle: {
 					fill: '#999',
-					fontSize: 10
+					fontSize: 11
 				}
 			}
 		}

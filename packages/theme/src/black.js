@@ -68,7 +68,7 @@ export default {
 			label: {
 				textStyle: {
 					fill: '#2A6588',
-					fontSize: 10
+					fontSize: 11
 				}
 			},
 			line: {
@@ -82,7 +82,7 @@ export default {
 			label: {
 				textStyle: {
 					fill: '#2A6588',
-					fontSize: 10
+					fontSize: 11
 				}
 			},
 			line: {
@@ -96,7 +96,7 @@ export default {
 			label: {
 				textStyle: {
 					fill: '#2A6588',
-					fontSize: 10
+					fontSize: 11
 				}
 			},
 			line: {
@@ -119,7 +119,7 @@ export default {
 			label: {
 				textStyle: {
 					fill: '#2A6588',
-					fontSize: 10
+					fontSize: 11
 				}
 			},
 			line: {

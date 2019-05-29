@@ -1,5 +1,6 @@
 <template lang='pug'>
 	.ui-label(:contenteditable="edit ? 'plaintext-only' : false"
+		:key="`ui-${widget.id}`"
 		:class={noEdit: !edit}
 		tabindex='3'
 		:style="style"
