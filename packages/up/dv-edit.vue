@@ -89,9 +89,7 @@
 				this.widget.grid.y = y
 				this.widget.grid.width = w
 				this.widget.grid.height = h
-				this.widget.width = w
-				this.widget.height = h
-				this.$children[0].$children[0].changeSize(w, h)
+				// this.$children[0].$children[0].changeSize(w, h)
 				this.emitBrandScroll(this.widget.grid)
 			},
 			onActivated () {

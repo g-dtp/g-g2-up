@@ -44,23 +44,13 @@
 		data() {
 			return {
 				data: [],
-				timer: null,
-				showTitle: this.widget.styleObject.showTitle
-			}
-		},
-		watch: {
-			'widget.styleObject.showTitle'(value) {
-				this.showTitle = value
-				this.onresize()
-			},
-			h() {
-				this.onParentResize()
-			},
-			w() {
-				this.onParentResize()
+				timer: null
 			}
 		},
 		computed: {
+			showTitle() {
+				return this.widget.styleObject.showTitle
+			},
 			dimension() {
 				let dimension = []
 				this.widget.data.dimension.forEach(item => {
@@ -98,28 +88,11 @@
 			this.$root.$off('update-charts', this.updateChart)
 		},
 		methods: {
-			onParentResize() {
-				if (this.timer) clearTimeout(this.timer)
-				this.timer = setTimeout(() => {
-					if (this.$children.length > 0 && this.$children[0].reForceFit) {
-						this.$nextTick(() => {
-							this.$children[0].reForceFit()
-						})
-					}
-				}, 50)
-			},
-			onresize() {
-				if (this.$children.length > 0 && this.$children[0].reForceFit) {
-					this.$nextTick(() => {
-						this.$children[0].reForceFit()
-					})
-				}
-			},
-			changeSize(w, h) {
-				if (this.$children.length > 0 && this.$children[0].changeSize) {
-					this.$children[0].changeSize(w, h)
-				}
-			},
+			// changeSize(w, h) {
+			// 	if (this.$children.length > 0 && this.$children[0].changeSize) {
+			// 		this.$children[0].changeSize(w, h)
+			// 	}
+			// },
 			updateChart(widget) {
 				if (widget && widget.id === this.widget.id) {
 					this.load()

@@ -4,7 +4,7 @@
 
 	export default {
 		name: 'base-serie',
-		components: {G2Title},
+		components: { G2Title },
 		props: {
 			chartData: {
 				type: Array,
@@ -87,6 +87,16 @@
 		watch: {
 			chartData: function (val, oldVal) {
 				this.drawChart()
+			},
+			'showTitle'() {
+				console.log('reForceFit')
+				this.reForceFit()
+			},
+			'w'() {
+				this.changeSize()
+			},
+			'h'() {
+				this.changeSize()
 			}
 		},
 		created() {
@@ -130,7 +140,7 @@
 				}
 			},
 			initChart() {
-				if (this.chart) this.chart.destory()
+				if (this.chart) this.chart.destroy()
 				this.chart = null
 				this.chart = new G2.Chart({
 					container: this.$el,
@@ -142,7 +152,7 @@
 				this.chart.coord(this.coord)
 			},
 			changeSize(w, h) {
-				this.chart.changeSize(w, h)
+				this.chart.changeSize(this.w, this.h)
 			},
 			reForceFit() {
 				this.chart.set('padding', this.padding)

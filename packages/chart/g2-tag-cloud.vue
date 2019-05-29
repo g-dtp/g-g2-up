@@ -1,5 +1,5 @@
 <template lang="pug">
-	.chart.g2-tag-cloud
+	.chart.g2-tag-cloud(v-if='resize')
 		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
 </template>
 
@@ -39,16 +39,29 @@
 	export default {
 		extends: G2Serie,
 		name: 'g2-tag-cloud',
+		data() {
+			return {
+				width: 0,
+				height: 0,
+				resize: true
+			}
+		},
 		mounted() {
+			this.width = this.w
+			this.height = this.h
 			this.drawChart()
+		},
+		computed: {
+			padding() {
+				return this.showTitle ? [this.titleHeight, 24, 24, 24] : [24, 24, 24, 24]
+			}
 		},
 		methods: {
 			drawChart() {
 				let dimension = this.dimension
 				let measure = this.measure[0]
 				this.chart && this.chart.clear()
-				let data = [...this.chartData]
-				this.dv = ds.createView().source(data)
+				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
 				let range = this.dv.range(measure)
 				let min = range[0]
@@ -56,7 +69,7 @@
 				this.dv.transform({
 					type: 'tag-cloud',
 					fields: [dimension, measure],
-					size: [this.w, this.h],
+					size: [this.w - 48, this.h - this.padding[0] - 24],
 					padding: 0,
 					font: 'Verdana',
 					timeInterval: 5000,
@@ -69,7 +82,7 @@
 					},
 					fontSize: function fontSize(d) {
 						if (d.value) {
-							return (d.value - min) / (max - min) * (80 - 24) + 24
+							return (d.value - min) / (max - min) * (80 - 24) + 12
 						}
 						return 1
 					}
@@ -90,6 +103,12 @@
 				this.chart.coord().reflect()
 				this.chart.point().position('x*y').color(dimension).shape('cloud')
 				this.chart.render()
+			},
+			changeSize(w, h) {
+				if (this.chart) {
+					this.chart.changeSize(this.w, this.h)
+					this.drawChart()
+				}
 			}
 		}
 	}
