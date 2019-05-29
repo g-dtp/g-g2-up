@@ -19,7 +19,8 @@ const ChartConfig = [
 
 const UiConfig = [
 	{ category: 1, id: '101', name: 'ui-label', icon: 'icon-ui-label', tooltip: '文本', width: 200, height: 40 },
-	{ category: 1, id: '102', name: 'ui-tooltip', icon: 'icon-ui-remark', tooltip: '备注', width: 20, height: 20, resizable: false }
+	{ category: 1, id: '102', name: 'ui-tooltip', icon: 'icon-ui-remark', tooltip: '备注', width: 20, height: 20, resizable: false },
+	{ category: 1, id: '103', name: 'ui-image', icon: 'icon-ui-image', tooltip: '图片', width: 260, height: 180 }
 ]
 
 const LayoutConfig = [

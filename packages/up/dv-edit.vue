@@ -1,5 +1,6 @@
 <template lang='pug'>
 	vue-draggable-resizable.dv-edit(
+		:class="{over: over}"
 		:tabindex='tabindex'
 		:grid = "[10, 10]"
 		:min-width="10"
@@ -19,10 +20,12 @@
 		@dragging="onDragging"
 		@activated="onActivated(widget)"
 		@resizestop="onResizeEnd"
+		@mouseenter.native="onEnter"
+		@mouseleave.native="onLeave"
 	)
 		dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :class="[layoutClass, style]" :showData="showData")
 		dv-ui.dv-edit-content(v-else-if="widget.category == 1" :widget ="widget" :class="[layoutClass, style]")
-		dv-menu.dv-more-menu(@preview="onShowData" @delete="onDelete")
+		dv-menu.dv-more-menu(v-if='over' @preview="onShowData" @delete="onDelete")
 </template>
 
 <script>
@@ -54,6 +57,7 @@
 		},
 		data () {
 			return {
+				over: false,
 				showData: false,
 				layoutClass: this.layout,
 				active: false,
@@ -78,6 +82,12 @@
 			this.$el.removeEventListener('blur', this.onblur, true)
 		},
 		methods: {
+			onEnter() {
+				this.over = true
+			},
+			onLeave() {
+				this.over = false
+			},
 			onShowData (value) {
 				this.showData = value
 			},
@@ -144,6 +154,14 @@
 	.dv-edit.active {
 		box-shadow: 0 2px 6px 0 rgba(152,159,167,0.30);
 		z-index: 999 !important;
+		.handle-br {
+			display: none !important;
+		}
+	}
+	.dv-edit.over {
+		.handle-br {
+			display: block !important;
+		}
 	}
 
 	.dv-edit:hover {
@@ -194,8 +212,8 @@
 				background: transparent;
 				right: 10px;
 				bottom: 10px;
-				width: 8px;
-				height: 8px;
+				width: 10px;
+				height: 10px;
 				border-width: 0 2px 2px 0;
 				border-color: #D8D8D8;
 				border-style: solid;
