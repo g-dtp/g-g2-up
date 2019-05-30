@@ -1,10 +1,31 @@
 <template lang='pug'>
-	img.ui-image(src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1559124774&di=d912e120154a8b6ec74d4cbeff9250ab&src=http://www.logofree.cn/uploads/image/20180118/10/1.jpg")
+	img.ui-image(v-if="url" :src="url")
 </template>
 
 <script>
 	export default {
-		name: 'ui-image'
+		name: 'ui-image',
+		props: {
+			widget: {
+				type: Object,
+				default: function () {
+					return {}
+				}
+			}
+		},
+		data() {
+			return {
+				url: ''
+			}
+		},
+		mounted () {
+			this.url = this.widget.data.picUrl
+		},
+		watch: {
+			'widget.data.picUrl' () {
+				this.url = this.widget.data.picUrl
+			}
+		}
 	}
 </script>
 <style lang="scss" scoped>
