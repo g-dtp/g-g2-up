@@ -1,5 +1,5 @@
 <template lang='pug'>
-	v-popover.dv-menu(placement="right" :open.sync="show" trigger="click" :hideOnTargetClick="false")
+	v-popover.dv-menu(placement="right" :open.sync="show" trigger="click" :hideOnTargetClick="true")
 		img(src="./icon-more-menu.png")
 		div(slot="popover")
 			dv-menu-item( @click.native="onMenu('preview')" :name="!showData ? '查看数据' : '返回图表'" iconClass="icon-link-preview")
@@ -7,7 +7,7 @@
 </template>
 
 <script>
-	import {VPopover} from 'v-tooltip'
+	import { VPopover } from 'v-tooltip'
 	import DvMenuItem from './dv-menu/dv-menu-item'
 
 	export default {

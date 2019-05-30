@@ -1,5 +1,5 @@
 <template lang='pug'>
-	img.ui-image(v-if="url" :src="url")
+	img.ui-image(:src="url")
 </template>
 
 <script>

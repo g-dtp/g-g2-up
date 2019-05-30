@@ -10,9 +10,10 @@
   },
   "main": "packages/index.js",
   "dependencies": {
-    "@antv/data-set": "^0.10.2",
+    "@antv/data-set": "^0.10.1",
     "@antv/g2": "^3.5.3",
     "core-js": "^2.6.5",
+    "loadash": "^1.0.0",
     "popper.js": "^1.15.0",
     "v-tooltip": "^2.0.2",
     "vue-drag-drop": "^1.1.4"

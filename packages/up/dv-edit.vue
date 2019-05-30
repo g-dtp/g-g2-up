@@ -25,13 +25,14 @@
 	)
 		dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :class="[layoutClass, style]" :showData="showData")
 		dv-ui.dv-edit-content(v-else-if="widget.category == 1" :widget ="widget" :class="[layoutClass, style]")
-		dv-menu.dv-more-menu(v-if='over' @preview="onShowData" @delete="onDelete")
+		dv-menu.dv-more-menu(:class="{over: !over}" @preview="onShowData" @delete="onDelete")
 </template>
 
 <script>
 	/*
 	* 绝对布局编辑器
 	* */
+	import { VPopover } from 'v-tooltip'
 	import DvChart from './dv-chart'
 	import DvUi from './dv-ui'
 	import DvMenu from './tools/dv-menu'
@@ -42,8 +43,8 @@
 	Vue.component('vue-draggable-resizable', VueDraggableResizable)
 	export default {
 		name: 'dv-edit',
-		inject: ['layout', 'store'],
-		components: { DvChart, DvUi, DvMenu },
+		inject: ['layout'],
+		components: { DvChart, DvUi, DvMenu, VPopover },
 		props: {
 			widget: {
 				type: Object,
@@ -62,8 +63,7 @@
 				layoutClass: this.layout,
 				active: false,
 				draggable: true,
-				resizable: true,
-				editStore: this.store
+				resizable: true
 			}
 		},
 		computed: {
@@ -103,7 +103,7 @@
 				this.emitBrandScroll(this.widget.grid)
 			},
 			onActivated () {
-				this.editStore.activeWidget = this.widget
+				this.$emit('change-activated', this.widget)
 				this.emitBrandScroll(this.widget.grid)
 			},
 			onDragStop (x, y) {
@@ -142,6 +142,7 @@
 		}
 	}
 </script>
+
 <style lang="scss">
 	.dv-edit.resizing {
 		background: rgba(5,19,50,0.16) !important;
@@ -236,6 +237,9 @@
 			position: absolute;
 			top: 5px;
 			right: 0;
+			&.over {
+				display: none;
+			}
 		}
 
 		.preview-warp {
