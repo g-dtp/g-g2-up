@@ -5,7 +5,6 @@
 
 <script>
 	import { VTooltip } from 'v-tooltip'
-	console.log(/xxxx/, VTooltip)
 	export default {
 		name: 'ui-tooltip',
 		props: {

@@ -2,6 +2,7 @@ import Chart from './chart'
 import Ui from './ui'
 import DvBox from './up/dv-box'
 import DvEdit from './up/dv-edit'
+import DvPreview from './up/dv-preview'
 import DvAuto from './up/dv-auto'
 import G2 from '@antv/g2'
 import { ChartConfig, ChartConfigMap, UiConfig, DefaultStyleConfig, G2Table } from './config'
@@ -30,5 +31,6 @@ export {
 	G2,
 	DvBox,
 	DvEdit,
+	DvPreview,
 	DvAuto
 }
