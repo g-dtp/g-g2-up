@@ -12,11 +12,14 @@
   "dependencies": {
     "@antv/data-set": "^0.10.1",
     "@antv/g2": "^3.5.3",
+    "@antv/l7": "^1.1.11",
+    "china-map-geojson": "^1.0.4",
     "core-js": "^2.6.5",
     "loadash": "^1.0.0",
     "popper.js": "^1.15.0",
     "v-tooltip": "^2.0.2",
-    "vue-drag-drop": "^1.1.4"
+    "vue-drag-drop": "^1.1.4",
+    "world-map-geojson": "^1.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.6.0",

@@ -14,6 +14,10 @@ import G2TagCloud from './g2-tag-cloud'
 import G2Card from './g2-card'
 import G2Table from './g2-table'
 import G2BarLine from './g2-bar-line'
+import G2WorldMap from './g2-world-map'
+import G2ChinaMap from './g2-china-map'
+import G2Province from './g2-province-map'
+
 export default {
 	G2Bar,
 	G2BarH,
@@ -30,5 +34,8 @@ export default {
 	G2TagCloud,
 	G2Card,
 	G2Table,
-	G2BarLine
+	G2BarLine,
+	G2WorldMap,
+	G2ChinaMap,
+	G2Province
 }

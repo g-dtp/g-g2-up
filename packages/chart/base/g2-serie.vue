@@ -69,6 +69,10 @@
 				dv: null
 			}
 		},
+		beforeCreate() {
+			this._changeSizeTimer = ''
+			this._reForceFitTimer = ''
+		},
 		computed: {
 			padding() {
 				return this.showTitle ? [this.titleHeight, 'auto', 'auto', 'auto'] : [30, 'auto', 'auto', 'auto']
@@ -152,11 +156,17 @@
 				this.chart.coord(this.coord)
 			},
 			changeSize(w, h) {
-				this.chart.changeSize(this.w, this.h)
+				if (this._changeSizeTimer) clearTimeout(this._changeSizeTimer)
+				this._changeSizeTimer = setTimeout(() => {
+					this.chart.changeSize(this.w, this.h)
+				}, 100)
 			},
 			reForceFit() {
-				this.chart.set('padding', this.padding)
-				this.drawChart()
+				if (this._reForceFitTimer) clearTimeout(this._reForceFitTimer)
+				this._reForceFitTimer = setTimeout(() => {
+					this.chart.set('padding', this.padding)
+					this.drawChart()
+				})
 			}
 		}
 	}

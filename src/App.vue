@@ -4,6 +4,9 @@
 </template>
 
 <script>
+	import Vue from 'vue'
+	import G2Up from 'packages/index'
+	Vue.use(G2Up)
 	export default {
 		name: 'app'
 	}
