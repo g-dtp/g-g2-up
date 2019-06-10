@@ -5,6 +5,7 @@
 <script>
 	import { DataSet } from '@antv/data-set'
 	import G2Serie from './base/g2-serie'
+	import { toFixed2 } from './formatter'
 	const ds = new DataSet()
 	export default {
 		extends: G2Serie,
@@ -22,19 +23,125 @@
 		methods: {
 			drawChart () {
 				this.chart && this.chart.clear()
-				this.chart.coord('theta', {})
 				this.dv = ds.createView()
 					.source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
-				this.dv.transform({
-					type: 'fold',
-					fields: this.measure,
-					dimension: this.dimension,
-					key: 'type',
-					value: 'value'
+				this.chart.tooltip({
+					showTitle: false
 				})
-				this.chart.source(this.dv)
-				this.chart.intervalStack().position('value').color(this.dimension)
+				this.chart.legend(false)
+				if (this.dimension && this.measure.length === 0) {
+					// 只有X轴有数据时，兼容一个友好得显示
+					this.chart.coord('theta', {})
+					this.dv.transform({
+						type: 'map',
+						callback(row) {
+							row.count = 1
+							return row
+						}
+					})
+					this.dv.transform({
+						type: 'fold',
+						fields: this.dimension,
+						key: 'type',
+						value: 'value'
+					})
+					this.chart.source(this.dv)
+					this.chart.intervalStack().position('count').color('value').label('value')
+				} else if (this.dimension && this.measure.length === 1) {
+					// 单个Y轴
+					this.chart.coord('theta', {})
+					this.dv.transform({
+						type: 'fold',
+						fields: this.measure,
+						key: 'type',
+						value: 'value'
+					})
+					this.dv.transform({
+						type: 'percent',
+						field: 'value',
+						dimension: this.dimension,
+						as: 'percent'
+					})
+					this.chart.source(this.dv, {
+						percent: {
+							formatter: toFixed2
+						}
+					})
+					this.chart.intervalStack().position('percent').color(this.dimension).label('percent')
+				} else {
+					this.chart.coord('theta', {
+						radius: 0.7
+					})
+					// 多个Y轴
+					this.dv.transform({
+						type: 'fold',
+						fields: this.measure,
+						key: 'type',
+						value: 'value'
+					})
+					this.dv.transform({
+						type: 'aggregate',
+						fields: 'value',
+						operations: ['sum'],
+						as: ['total'],
+						groupBy: [this.dimension]
+					})
+					this.dv.transform({
+						type: 'percent',
+						field: 'total',
+						dimension: this.dimension,
+						as: 'percent'
+					})
+					this.chart.source(this.dv, {
+						percent: {
+							formatter: toFixed2
+						}
+					})
+					this.chart.intervalStack().position('percent').color(this.dimension).label(this.dimension, { offset: -20 }).select(false).style({
+						lineWidth: 1,
+						stroke: '#fff'
+					})
+					// 外圈
+					let outDv = ds.createView()
+						.source(this.chartData)
+					outDv.transform({
+						type: 'fold',
+						fields: this.measure,
+						key: 'type',
+						value: 'value'
+					})
+					outDv.transform({
+						type: 'percent',
+						field: 'value',
+						dimension: 'type',
+						as: 'percent',
+						groupBy: [ this.dimension ]
+					})
+					console.log(outDv)
+					let outter = this.chart.view()
+					outter.coord('theta', {
+						innerRadius: 0.7 / 0.9,
+						radius: 0.9
+					})
+					outter.source(outDv, {
+						percent: {
+							formatter: toFixed2
+						}
+					})
+					let colors = G2.Global.colors_pie_16[0] + '-' + G2.Global.colors_pie_16[this.chartData.length - 1]
+					outter.intervalStack().position('value')
+						.color(this.dimension, colors)
+						.tooltip('type*percent', function(item, percent) {
+						return {
+							name: item,
+							value: toFixed2(percent)
+						}
+					}).select(false).style({
+						lineWidth: 1,
+						stroke: '#fff'
+					})
+				}
 				this.chart.render()
 			}
 		}

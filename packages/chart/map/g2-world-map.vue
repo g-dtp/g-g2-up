@@ -4,7 +4,7 @@
 </template>
 
 <script>
-	import G2Serie from './base/g2-serie'
+	import G2Serie from '../base/g2-serie'
 	import WorldData from 'world-map-geojson'
 	import { DataSet } from '@antv/data-set'
 	console.log(/WorldData/, WorldData)
@@ -27,12 +27,6 @@
 				this.geoDv = ds.createView().source(WorldData, {
 					type: 'GeoJSON'
 				})
-				// this.dv = ds.createView().source(userData).transform({
-				// 	geoDataView: this.geoDv,
-				// 	field: 'name',
-				// 	type: 'geo.centroid',
-				// 	as: ['longitude', 'latitude']
-				// })
 				this.chart && this.chart.clear()
 				this.chart.scale({
 					longitude: {
@@ -57,13 +51,7 @@
 				bgView.polygon().position('longitude*latitude').color('#ebedf0').style({
 					lineWidth: 1,
 					stroke: '#fafbfc'
-				}).active(false)
-				// let userView = this.chart.view()
-				// userView.source(this.dv)
-				// userView.point().position('longitude*latitude').color('#1890ff').opacity(0.6).size('value', [5, 15]).style({
-				// 	lineWidth: 1,
-				// 	stroke: '#1890ff'
-				// }).shape('circle')
+				}).active(false).tooltip()
 				this.chart.render()
 			}
 		}

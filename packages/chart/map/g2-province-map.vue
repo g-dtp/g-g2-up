@@ -1,38 +1,34 @@
 <template lang='pug'>
-	.g2-china-map
-		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
+	.g2-province-map
 </template>
 
 <script>
-	import G2Serie from './base/g2-serie'
-	import { ChinaData } from 'china-map-geojson'
+	import G2Serie from '../base/g2-serie'
+	import { ProvinceData } from 'china-map-geojson'
+	console.log(ProvinceData)
 	import { DataSet } from '@antv/data-set'
 	const ds = new DataSet()
 	export default {
 		extends: G2Serie,
-		name: 'g2-china-map',
+		name: 'g2-province-map',
 		data() {
 			return {
 				geoDv: '',
 				dv: '',
-				chart: ''
+				chart: '',
+				geojsonList: [],
+				current: 0
 			}
 		},
 		mounted() {
+			this.geojsonList = Object.values(ProvinceData)
 			this.drawChart()
 		},
 		methods: {
 			drawChart() {
-				this.geoDv = ds.createView().source(ChinaData, {
+				this.geoDv = ds.createView().source(this.geojsonList[this.current], {
 					type: 'GeoJSON'
 				})
-				// this.dv = ds.createView().source(userData).transform({
-				// 	geoDataView: this.geoDv,
-				// 	field: 'name',
-				// 	type: 'geo.centroid',
-				// 	as: ['longitude', 'latitude']
-				// })
-				console.log(/dv/, this.geoDv)
 				this.chart && this.chart.clear()
 				this.chart.scale({
 					longitude: {
@@ -49,7 +45,7 @@
 					sizeType: 'circle'
 				})
 				this.chart.tooltip({
-					showTitle: false
+					showTitle: true
 				})
 				let bgView = this.chart.view()
 				bgView.source(this.geoDv)
@@ -57,13 +53,7 @@
 				bgView.polygon().position('longitude*latitude').color('#ebedf0').style({
 					lineWidth: 1,
 					stroke: '#fafbfc'
-				}).active(false)
-				// let userView = this.chart.view()
-				// userView.source(this.dv)
-				// userView.point().position('longitude*latitude').color('#1890ff').opacity(0.6).size('value', [5, 15]).style({
-				// 	lineWidth: 1,
-				// 	stroke: '#1890ff'
-				// }).shape('circle')
+				})
 				this.chart.render()
 			}
 		}

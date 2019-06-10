@@ -30,15 +30,25 @@
 						fill: '#FFF'
 					}
 				}
-
 				this.chart && this.chart.clear()
 				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
+
 				if (this.measure.length > 1) {
 					this.dv.transform(this.getTransformFold())
+					this.dv.transform({
+						type: 'sort-by',
+						fields: [ 'value' ],
+						order: 'DESC'
+					})
 					this.chart.source(this.dv)
 					this.chart.intervalStack().position(`${this.dimension}*value`).color('type').label('value', labelConfig)
 				} else {
+					this.dv.transform({
+						type: 'sort-by',
+						fields: [this.measure[0]],
+						order: 'DESC'
+					})
 					this.chart.source(this.dv)
 					if (this.legend) {
 						this.chart.intervalStack().position(`${this.dimension}*${this.measure[0]}`).color(this.legend).label(this.measure[0], labelConfig)
