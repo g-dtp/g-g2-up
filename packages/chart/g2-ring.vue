@@ -23,7 +23,10 @@
 		methods: {
 			drawChart () {
 				this.chart && this.chart.clear()
-				this.chart.coord('theta', { innerRadius: 0.75 })
+				this.chart.coord('theta', {
+					innerRadius: 0.5 / 0.7,
+					radius: 0.7
+				})
 				this.chart.tooltip({
 					showTitle: false
 				})
