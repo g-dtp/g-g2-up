@@ -1,6 +1,6 @@
 <template lang='pug'>
 	vue-draggable-resizable.dv-edit(
-		:class="{over: over}"
+		:class="[{over: over}, theme]"
 		:tabindex='tabindex'
 		:grid = "[10, 10]"
 		:min-width="10"
@@ -54,6 +54,10 @@
 			},
 			tabindex: {
 				default: 0
+			},
+			theme: {
+				type: String,
+				default: 'blue'
 			}
 		},
 		data () {
@@ -248,6 +252,20 @@
 			left: 0;
 			width: 100%;
 			height: 100%;
+		}
+	}
+</style>
+<style lang="scss">
+	.black {
+		.chart {
+			.g2-title {
+				h1 {
+					color: #D0F0FF !important;
+				}
+				h3 {
+					color: rgba(208, 240, 255, 0.6) !important;
+				}
+			}
 		}
 	}
 </style>
