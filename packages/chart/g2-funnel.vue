@@ -5,7 +5,7 @@
 <script>
 	import { DataSet } from '@antv/data-set'
 	import G2Serie from './base/g2-serie'
-
+	import { toFixed2 } from './formatter'
 	const ds = new DataSet()
 
 	export default {
@@ -26,7 +26,6 @@
 				this.chart && this.chart.clear()
 				if (!this.measure || this.measure.length === 0) return
 				let key = this.measure[0]
-
 				this.dv = ds.createView()
 					.source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
@@ -48,9 +47,29 @@
 						nice: false
 					}
 				})
+
 				this.chart.axis(false)
 				this.chart.coord('rect').transpose().scale(1, -1)
-				this.chart.intervalSymmetric().position(`${this.dimension}*percent`).shape('funnel').color(this.dimension)
+				this.chart.intervalSymmetric().position(`${this.dimension}*percent`)
+					.shape('funnel')
+					.color(this.dimension)
+
+				this.dv.rows.forEach(item => {
+					let position = { percent: 'median' }
+					position[this.dimension] = item[this.dimension]
+					this.chart.guide().text({
+						top: true,
+						position: position,
+						content: toFixed2(item.percent), // 显示的文本内容
+						style: {
+							fill: '#fff',
+							fontSize: '12',
+							textAlign: 'center',
+							shadowBlur: 2,
+							shadowColor: 'rgba(255, 0, 0, .45)'
+						}
+					})
+				})
 				this.chart.render()
 			}
 		}
