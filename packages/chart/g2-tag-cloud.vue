@@ -78,7 +78,7 @@
 						if (random === 2) {
 							random = 0
 						}
-						return random * 90
+						return random * 45
 					},
 					fontSize: function fontSize(d) {
 						if (d.value) {
@@ -101,7 +101,7 @@
 					showTitle: false
 				})
 				this.chart.coord().reflect()
-				this.chart.point().position('x*y').color(dimension).shape('cloud')
+				this.chart.point().position('x*y').color(dimension).shape('cloud').tooltip(`${dimension}*${measure}`)
 				this.chart.render()
 			},
 			changeSize(w, h) {
