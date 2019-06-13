@@ -1,8 +1,13 @@
 <template lang="pug">
 	.move
 		.move-warp
-			dv-move-shadow(v-if='dragging' :position="position")
-			dv-move(@dragging="onDragging" @drag-end="onDragEnd")
+			dv-move-shadow(v-if='shadow' :position="position" :size="size")
+			dv-move(
+				@dragging="onDragging"
+				@drag-end="onDragEnd"
+				@resizing="onResizing"
+				@resize-end="onResizeEnd")
+					img(src='https://www.baidu.com/img/bd_logo1.png')
 </template>
 
 <script>
@@ -13,17 +18,31 @@
 		components: { DvMove, DvMoveShadow },
 		data() {
 			return {
-				dragging: false,
-				position: ''
+				shadow: false,
+				position: {
+					x: 0,
+					y: 0
+				},
+				size: {
+					x: 1,
+					y: 1
+				}
 			}
 		},
 		methods: {
 			onDragging(position) {
-				this.dragging = true
+				this.shadow = true
 				this.position = position
 			},
 			onDragEnd() {
-				this.dragging = false
+				this.shadow = false
+			},
+			onResizing(size) {
+				this.shadow = true
+				this.size = size
+			},
+			onResizeEnd() {
+				this.shadow = false
 			}
 		}
 	}

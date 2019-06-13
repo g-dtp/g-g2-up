@@ -3,16 +3,20 @@
 </template>
 
 <script>
+	import Config from './move/config'
 	export default {
 		name: 'dv-move-shadow',
 		props: {
-			w: {
-				default: 240
-			},
-			h: {
-				default: 180
-			},
 			position: {
+				type: Object,
+				default: function () {
+					return {
+						x: 0,
+						y: 0
+					}
+				}
+			},
+			size: {
 				type: Object,
 				default: function () {
 					return {
@@ -25,10 +29,10 @@
 		computed: {
 			style() {
 				return {
-					width: this.w + 'px',
-					height: this.h + 'px',
-					left: this.position.x + 'px',
-					top: this.position.y + 'px'
+					width: (this.size.x * Config.CELL.width) + 'px',
+					height: (this.size.y * Config.CELL.height) + 'px',
+					left: (this.position.x * Config.CELL.width) + 'px',
+					top: (this.position.y * Config.CELL.height) + 'px'
 				}
 			}
 		}
