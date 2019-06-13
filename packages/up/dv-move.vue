@@ -22,22 +22,25 @@
 				this.diffY = event.clientY - this.$el.offsetTop
 				document.addEventListener('mousemove', this.onMoving)
 				document.addEventListener('mouseup', this.onEnd)
+				this.$emit('drag-start')
 			},
 			onMoving(event) {
 				let left = event.clientX - this.diffX
-				left = left - left % 240
 				let top = event.clientY - this.diffY
-				top = top - top % 180
-				if (left < 0) left = 0
-				if (top < 0) top = 0
 				this.$el.style.left = left + 'px'
 				this.$el.style.top = top + 'px'
+				let x = left - left % 240
+				let y = top - top % 180
+				if (x < 0) left = 0
+				if (y < 0) top = 0
+				this.$emit('dragging', { x, y })
 			},
 			onEnd(event) {
 				this.diffX = 0
 				this.diffY = 0
 				document.removeEventListener('mousemove', this.onMoving)
 				document.removeEventListener('mouseup', this.onEnd)
+				this.$emit('drag-end')
 			}
 		}
 	}
@@ -45,7 +48,7 @@
 
 <style scoped>
 	.dv-move {
-		transition: all .3s ease-in;
+		transition: transform .25s,width .25s,height .25s;
 		position: absolute;
 		width: 240px;
 		height: 180px;
