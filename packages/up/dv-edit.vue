@@ -25,7 +25,7 @@
 	)
 		dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :class="[layoutClass, style]" :showData="showData")
 		dv-ui.dv-edit-content(v-else-if="widget.category == 1" :widget ="widget" :class="[layoutClass, style]")
-		dv-menu.dv-more-menu(:class="{over: !over}" @preview="onShowData" @delete="onDelete")
+		dv-menu.dv-more-menu(:class="{over: !over}" @preview="onShowData" @delete="onDelete" :category="widget.category")
 </template>
 
 <script>
