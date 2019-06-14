@@ -7,21 +7,14 @@
 	export default {
 		name: 'dv-move-shadow',
 		props: {
-			position: {
+			grid: {
 				type: Object,
 				default: function () {
 					return {
 						x: 0,
-						y: 0
-					}
-				}
-			},
-			size: {
-				type: Object,
-				default: function () {
-					return {
-						x: 0,
-						y: 0
+						y: 0,
+						width: Config.CELL.width,
+						height: Config.CELL.height
 					}
 				}
 			}
@@ -29,10 +22,10 @@
 		computed: {
 			style() {
 				return {
-					width: (this.size.x * Config.CELL.width) + 'px',
-					height: (this.size.y * Config.CELL.height) + 'px',
-					left: (this.position.x * Config.CELL.width) + 'px',
-					top: (this.position.y * Config.CELL.height) + 'px'
+					width: (this.grid.width * Config.CELL.width) + 'px',
+					height: (this.grid.height * Config.CELL.height) + 'px',
+					left: (this.grid.x * Config.CELL.width) + 'px',
+					top: (this.grid.y * Config.CELL.height) + 'px'
 				}
 			}
 		}

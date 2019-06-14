@@ -18,10 +18,20 @@
 	export default {
 		name: 'dv-move',
 		components: { DvResize },
+		props: {
+			widget: {
+				type: Object,
+				default: function () {
+					return {}
+				}
+			}
+		},
 		data() {
 			return {
 				diffX: 0,
 				diffY: 0,
+				left: 0,
+				top: 0,
 				x: 0,
 				y: 0,
 				sizeX: 1,
@@ -31,11 +41,36 @@
 				change: false
 			}
 		},
+		watch: {
+			'widget.grid.x' () {
+				this.initPosition()
+				this.$el.style.left = this.left + 'px'
+			},
+			'widget.grid.y' () {
+				this.initPosition()
+				this.$el.style.top = this.top + 'px'
+			}
+		},
 		mounted() {
+			this.initPosition()
+			this.initSize()
 			this.$el.style.width = this.width + 'px'
 			this.$el.style.height = this.height + 'px'
+			this.$el.style.left = this.left + 'px'
+			this.$el.style.top = this.top + 'px'
 		},
 		methods: {
+			initPosition() {
+				console.log('change-position')
+				let { x, y } = this.widget.grid
+				this.left = x * Config.CELL.width
+				this.top = y * Config.CELL.height
+			},
+			initSize() {
+				let { width, height } = this.widget.grid
+				this.width = width * Config.CELL.width
+				this.height = height * Config.CELL.height
+			},
 			onMoveStart(event) {
 				this.change = true
 				this.diffX = event.clientX - this.$el.offsetLeft
@@ -53,7 +88,7 @@
 				this.$el.style.top = top + 'px'
 				this.x = Math.round(left / Config.CELL.width)
 				this.y = Math.round(top / Config.CELL.height)
-				this.$emit('dragging', { x: this.x, y: this.y })
+				this.$emit('dragging', this.getGrid())
 			},
 			onEnd(event) {
 				this.diffX = 0
@@ -62,7 +97,7 @@
 				this.$el.style.top = (Config.CELL.height * this.y) + 'px'
 				document.removeEventListener('mousemove', this.onMoving)
 				document.removeEventListener('mouseup', this.onEnd)
-				this.$emit('drag-end', { x: this.x, y: this.y })
+				this.$emit('drag-end', this.getGrid())
 				this.change = false
 			},
 			onResizing(data) {
@@ -79,15 +114,23 @@
 				this.$el.style.height = h + 'px'
 				this.sizeX = Math.ceil(w / Config.CELL.width)
 				this.sizeY = Math.ceil(h / Config.CELL.height)
-				this.$emit('resizing', { x: this.sizeX, y: this.sizeY })
+				this.$emit('resizing', this.getGrid())
 			},
 			onResizeEnd(data) {
 				this.width = (this.sizeX * Config.CELL.width)
 				this.height = (this.sizeY * Config.CELL.height)
 				this.$el.style.width = 	this.width + 'px'
 				this.$el.style.height = this.height + 'px'
-				this.$emit('resize-end', { x: this.sizeX, y: this.sizeY })
+				this.$emit('resize-end', this.getGrid())
 				this.change = false
+			},
+			getGrid() {
+				return {
+					x: this.x,
+					y: this.y,
+					width: this.sizeX,
+					height: this.sizeY
+				}
 			}
 		}
 	}
@@ -97,6 +140,7 @@
 	.dv-move {
 		position: absolute;
 		background: aqua;
+		user-select: none;
 		&.transition {
 			transition: transform .25s, width .25s, height .25s, left  .25s , top .25s ;
 		}
