@@ -54,28 +54,28 @@
 			dimension() {
 				let dimension = []
 				this.widget.data.dimension.forEach(item => {
-					dimension.push(item.meta)
+					dimension.push(item.alia || item.meta)
 				})
 				return dimension[0]
 			},
 			line() {
 				let line = []
 				this.widget.data.line.forEach(item => {
-					line.push(item.meta)
+					line.push(item.alia || item.meta)
 				})
 				return line
 			},
 			measure() {
 				let measure = []
 				this.widget.data.measure.forEach(item => {
-					measure.push(item.meta)
+					measure.push(item.alia || item.meta)
 				})
 				return measure
 			},
 			legend() {
 				let legend = []
 				this.widget.data.legend.forEach(item => {
-					legend.push(item.meta)
+					legend.push(item.alia || item.meta)
 				})
 				return legend[0]
 			}
