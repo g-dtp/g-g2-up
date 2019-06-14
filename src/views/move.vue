@@ -69,7 +69,7 @@
 					// 当前位置 是否已经被占位
 					let target = this.impactChecking(grid, widget)
 					if (target) {
-						let { y, height } = target.grid
+						let {y, height} = target.grid
 						if (y === grid.y) {
 							target.grid.y = y + grid.height
 						} else {
@@ -110,8 +110,16 @@
 					let endY = y + height - 1
 					let gridEndX = grid.x + grid.width - 1
 					let gridEndY = grid.y + grid.height - 1
-					return (grid.x >= x && grid.x < endX) && (grid.y >= item.grid.y && grid.y < endY)
+					return this.rectangleCol(grid.x, grid.y, grid.width, grid.height, x, y, width, height)
 				})
+			},
+			rectangleCol(x1, y1, w1, h1, x2, y2, w2, h2) {
+				let maxX, maxY, minX, minY
+				maxX = x1 + w1 >= x2 + w2 ? x1 + w1 : x2 + w2
+				maxY = y1 + h1 >= y2 + h2 ? y1 + h1 : y2 + h2
+				minX = x1 <= x2 ? x1 : x2
+				minY = y1 <= y2 ? y1 : y2
+				return ((maxX - minX) < (w1 + w2)) && ((maxY - minY) < (h1 + h2))
 			}
 		}
 	}
