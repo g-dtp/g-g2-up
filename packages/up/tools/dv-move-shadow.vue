@@ -1,5 +1,6 @@
 <template lang="pug">
 	.dv-move-shadow(:style="style")
+		.dv-move-shadow__content
 </template>
 
 <script>
@@ -36,6 +37,12 @@
 	.dv-move-shadow {
 		position: absolute;
 		transition: transform .25s, width .25s, height .25s, left  .25s , top .25s ;
-		background: rgba(0, 0, 0, 0.4);
+		background: transparent;
+		padding: 5px;
+		box-sizing: border-box;
+		&__content {
+			height: 100%;
+			background: rgba(0, 0, 0, 0.2);
+		}
 	}
 </style>

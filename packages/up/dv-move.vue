@@ -4,7 +4,7 @@
 		@mousedown="onMoveStart")
 		.dv-move__content
 			slot
-			dv-resize(@resizing="onResizing" @resize-end="onResizeEnd")
+			dv-resize(@start-resize="onStartResize" @resizing="onResizing" @resize-end="onResizeEnd")
 </template>
 
 <script>
@@ -49,6 +49,14 @@
 			'widget.grid.y' () {
 				this.initPosition()
 				this.$el.style.top = this.top + 'px'
+			},
+			'widget.grid.width' () {
+				this.initSize()
+				this.$el.style.width = this.width + 'px'
+			},
+			'widget.grid.height' () {
+				this.initSize()
+				this.$el.style.height = this.height + 'px'
 			}
 		},
 		mounted() {
@@ -68,6 +76,8 @@
 			},
 			initSize() {
 				let { width, height } = this.widget.grid
+				this.sizeX = width
+				this.sizeY = height
 				this.width = width * Config.CELL.width
 				this.height = height * Config.CELL.height
 			},
@@ -77,7 +87,7 @@
 				this.diffY = event.clientY - this.$el.offsetTop
 				document.addEventListener('mousemove', this.onMoving)
 				document.addEventListener('mouseup', this.onEnd)
-				this.$emit('drag-start')
+				this.$emit('drag-start', this.getGrid())
 			},
 			onMoving(event) {
 				let left = event.clientX - this.diffX
@@ -90,7 +100,7 @@
 				this.y = Math.round(top / Config.CELL.height)
 				this.$emit('dragging', this.getGrid())
 			},
-			onEnd(event) {
+			onEnd() {
 				this.diffX = 0
 				this.diffY = 0
 				this.$el.style.left = (Config.CELL.width * this.x) + 'px'
@@ -99,6 +109,9 @@
 				document.removeEventListener('mouseup', this.onEnd)
 				this.$emit('drag-end', this.getGrid())
 				this.change = false
+			},
+			onStartResize () {
+				this.$emit('resize-start', this.getGrid())
 			},
 			onResizing(data) {
 				this.change = true
@@ -116,7 +129,7 @@
 				this.sizeY = Math.ceil(h / Config.CELL.height)
 				this.$emit('resizing', this.getGrid())
 			},
-			onResizeEnd(data) {
+			onResizeEnd() {
 				this.width = (this.sizeX * Config.CELL.width)
 				this.height = (this.sizeY * Config.CELL.height)
 				this.$el.style.width = 	this.width + 'px'
@@ -139,12 +152,15 @@
 <style lang="scss" scoped>
 	.dv-move {
 		position: absolute;
-		background: aqua;
+		padding: 5px;
+		background: transparent;
+		box-sizing: border-box;
 		user-select: none;
 		&.transition {
 			transition: transform .25s, width .25s, height .25s, left  .25s , top .25s ;
 		}
 		&__content {
+			background: aqua;
 			position: relative;
 			height: 100%;
 			.dv-resize {
