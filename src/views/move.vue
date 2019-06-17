@@ -1,7 +1,7 @@
 <template lang="pug">
 	.move
 		.move-warp
-			dv-move-shadow(v-if='shadow' :grid="grid")
+			dv-move-shadow(v-if='shadow' :grid="shadowGrid")
 			dv-move(
 				v-for="widget,index in widgets"
 				:widget="widget"
@@ -20,11 +20,11 @@
 
 	export default {
 		name: 'move',
-		components: {DvMove, DvMoveShadow},
+		components: { DvMove, DvMoveShadow },
 		data() {
 			return {
 				shadow: false,
-				grid: {
+				shadowGrid: {
 					x: -1,
 					y: -1,
 					width: 0,
@@ -42,7 +42,8 @@
 							width: 1,
 							x: 0,
 							y: 0
-						}
+						},
+						expectedGrid: null
 					},
 					{
 						id: 2,
@@ -51,7 +52,28 @@
 							width: 2,
 							x: 1,
 							y: 1
-						}
+						},
+						expectedGrid: null
+					},
+					{
+						id: 3,
+						grid: {
+							height: 1,
+							width: 2,
+							x: 1,
+							y: 0
+						},
+						expectedGrid: null
+					},
+					{
+						id: 4,
+						grid: {
+							height: 1,
+							width: 1,
+							x: 1,
+							y: 3
+						},
+						expectedGrid: null
 					}
 				]
 			}
@@ -60,59 +82,89 @@
 		},
 		methods: {
 			onDragStart(grid) {
-				console.log(grid)
-				this.grid = grid
+				this.shadowGrid = grid
 			},
 			onDragging(grid, widget) {
 				this.shadow = true
-				if (this.grid.x !== grid.x || this.grid.y !== grid.y) {
-					// 当前位置 是否已经被占位
-					let target = this.impactChecking(grid, widget)
-					if (target) {
-						let {y, height} = target.grid
-						if (y === grid.y) {
-							target.grid.y = y + grid.height
-						} else {
-							grid.y = y + height
-						}
-					}
-					this.grid = grid
+				if (this.shadowGrid.x !== grid.x || this.shadowGrid.y !== grid.y) {
+					this.doImpactChecking(grid, widget)
 				}
 			},
 			onDragEnd(grid, widget) {
-				widget.grid.x = this.grid.x
-				widget.grid.y = this.grid.y
+				this.widgets.forEach(item => {
+					if (item.expectedGrid) {
+						item.grid.x = item.expectedGrid.x
+						item.grid.y = item.expectedGrid.y
+						item.grid.width = item.expectedGrid.width
+						item.grid.height = item.expectedGrid.height
+						item.expectedGrid = null
+					}
+				})
+				widget.grid.x = this.shadowGrid.x
+				widget.grid.y = this.shadowGrid.y
+				widget.grid.width = this.shadowGrid.width
+				widget.grid.height = this.shadowGrid.height
 				this.shadow = false
 			},
 			onResizeStart(grid) {
-				this.grid = grid
+				this.shadowGrid = grid
 			},
 			onResizing(grid, widget) {
 				this.shadow = true
-				if (this.grid.width !== grid.width || this.grid.height !== grid.height) {
-					let target = this.impactChecking(grid, widget)
-					if (target) {
-						target.grid.y = grid.y + grid.height
-					}
-					this.grid = grid
+				if (this.shadowGrid.width !== grid.width || this.shadowGrid.height !== grid.height) {
+					this.doImpactChecking(grid, widget)
 				}
-
 			},
 			onResizeEnd() {
 				this.shadow = false
 			},
+			// 循环检测
+			impactCheckingLoop(widget) {
+				let target = this.impactChecking(widget.expectedGrid, widget, true)
+				if (target) {
+					let { y, height } = widget.expectedGrid
+					target.expectedGrid = {
+						x: target.grid.x,
+						y: y + height,
+						width: target.grid.width,
+						height: target.grid.height
+					}
+					this.impactCheckingLoop(target)
+				}
+			},
+			doImpactChecking(grid, widget) {
+				let target = this.impactChecking(grid, widget)
+				if (target) {
+					let { y, height } = target.grid
+					if (y === grid.y) {
+						// shadow占据碰撞块的位置, 被碰撞块移动
+						target.expectedGrid = {
+							x: target.grid.x,
+							y: y + grid.height,
+							width: target.grid.width,
+							height: target.grid.height
+						}
+						this.impactCheckingLoop(target)
+					} else {
+						grid.y = y + height
+						// 碰撞块不移动，shadow 被再次定位到碰撞快下方
+						this.doImpactChecking(grid, widget)
+					}
+				}
+				this.shadowGrid = grid
+			},
 			// shadow块碰撞检测
-			impactChecking(grid, widget) {
+			impactChecking(grid, widget, clear) {
 				return this.widgets.find(item => {
 					if (widget.id === item.id) return false
 					let { x, y, width, height } = item.grid
-					let endX = x + width - 1
-					let endY = y + height - 1
-					let gridEndX = grid.x + grid.width - 1
-					let gridEndY = grid.y + grid.height - 1
+					if (!clear) {
+						item.expectedGrid = null
+					}
 					return this.rectangleCol(grid.x, grid.y, grid.width, grid.height, x, y, width, height)
 				})
 			},
+			// 判断两个矩形是否相交
 			rectangleCol(x1, y1, w1, h1, x2, y2, w2, h2) {
 				let maxX, maxY, minX, minY
 				maxX = x1 + w1 >= x2 + w2 ? x1 + w1 : x2 + w2

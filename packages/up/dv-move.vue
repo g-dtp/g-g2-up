@@ -4,6 +4,8 @@
 		@mousedown="onMoveStart")
 		.dv-move__content
 			slot
+				div {{x}}: {{y}}
+				div {{widget.grid}}
 			dv-resize(@start-resize="onStartResize" @resizing="onResizing" @resize-end="onResizeEnd")
 </template>
 
@@ -42,6 +44,19 @@
 			}
 		},
 		watch: {
+			'widget.expectedGrid'(value) {
+				if (value) {
+					let { x, y } = this.widget.expectedGrid
+					this.left = x * Config.CELL.width
+					this.top = y * Config.CELL.height
+					this.$el.style.left = this.left + 'px'
+					this.$el.style.top = this.top + 'px'
+				} else {
+					this.initPosition()
+					this.$el.style.left = this.left + 'px'
+					this.$el.style.top = this.top + 'px'
+				}
+			},
 			'widget.grid.x' () {
 				this.initPosition()
 				this.$el.style.left = this.left + 'px'
