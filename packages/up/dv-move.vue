@@ -1,8 +1,8 @@
 <template lang="pug">
 	.dv-move(
-		:class="{transition: !change}"
+		:class="[{transition: !change}, {moving: change}]"
 		@mousedown="onMoveStart")
-		.dv-move__content
+		.dv-move__content(:class="{impact: widget.expectedGrid}")
 			slot
 				div {{x}}: {{y}}
 				div {{widget.grid}}
@@ -86,6 +86,8 @@
 			initPosition() {
 				console.log('change-position')
 				let { x, y } = this.widget.grid
+				this.x = x
+				this.y = y
 				this.left = x * Config.CELL.width
 				this.top = y * Config.CELL.height
 			},
@@ -174,10 +176,17 @@
 		&.transition {
 			transition: transform .25s, width .25s, height .25s, left  .25s , top .25s ;
 		}
+		&.moving {
+			/*box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);*/
+			z-index: 2;
+		}
 		&__content {
 			background: aqua;
 			position: relative;
 			height: 100%;
+			&.impact {
+				background: rgba(255, 0, 0, 0.8);
+			}
 			.dv-resize {
 				display: none;
 				right: 10px;

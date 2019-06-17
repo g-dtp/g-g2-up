@@ -43,7 +43,8 @@
 							x: 0,
 							y: 0
 						},
-						expectedGrid: null
+						expectedGrid: null,
+						impact: false
 					},
 					{
 						id: 2,
@@ -51,29 +52,32 @@
 							height: 2,
 							width: 2,
 							x: 1,
-							y: 1
+							y: 2
 						},
-						expectedGrid: null
+						expectedGrid: null,
+						impact: false
 					},
 					{
 						id: 3,
 						grid: {
-							height: 1,
+							height: 2,
 							width: 2,
 							x: 1,
 							y: 0
 						},
-						expectedGrid: null
+						expectedGrid: null,
+						impact: false
 					},
 					{
 						id: 4,
 						grid: {
 							height: 1,
 							width: 1,
-							x: 1,
+							x: 0,
 							y: 3
 						},
-						expectedGrid: null
+						expectedGrid: null,
+						impact: false
 					}
 				]
 			}
@@ -84,9 +88,15 @@
 			onDragStart(grid) {
 				this.shadowGrid = grid
 			},
+			reset() {
+				this.widgets.forEach(item => {
+					item.expectedGrid = null
+				})
+			},
 			onDragging(grid, widget) {
 				this.shadow = true
 				if (this.shadowGrid.x !== grid.x || this.shadowGrid.y !== grid.y) {
+					this.reset()
 					this.doImpactChecking(grid, widget)
 				}
 			},
@@ -115,12 +125,25 @@
 					this.doImpactChecking(grid, widget)
 				}
 			},
-			onResizeEnd() {
+			onResizeEnd(grid, widget) {
+				this.widgets.forEach(item => {
+					if (item.expectedGrid) {
+						item.grid.x = item.expectedGrid.x
+						item.grid.y = item.expectedGrid.y
+						item.grid.width = item.expectedGrid.width
+						item.grid.height = item.expectedGrid.height
+						item.expectedGrid = null
+					}
+				})
+				widget.grid.x = this.shadowGrid.x
+				widget.grid.y = this.shadowGrid.y
+				widget.grid.width = this.shadowGrid.width
+				widget.grid.height = this.shadowGrid.height
 				this.shadow = false
 			},
 			// 循环检测
 			impactCheckingLoop(widget) {
-				let target = this.impactChecking(widget.expectedGrid, widget, true)
+				let target = this.impactChecking(widget.expectedGrid, widget)
 				if (target) {
 					let { y, height } = widget.expectedGrid
 					target.expectedGrid = {
@@ -154,13 +177,10 @@
 				this.shadowGrid = grid
 			},
 			// shadow块碰撞检测
-			impactChecking(grid, widget, clear) {
+			impactChecking(grid, widget) {
 				return this.widgets.find(item => {
 					if (widget.id === item.id) return false
 					let { x, y, width, height } = item.grid
-					if (!clear) {
-						item.expectedGrid = null
-					}
 					return this.rectangleCol(grid.x, grid.y, grid.width, grid.height, x, y, width, height)
 				})
 			},
