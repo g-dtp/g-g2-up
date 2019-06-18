@@ -74,7 +74,7 @@
 				})
 				this.chart.axis(this.dimension, {
 					label: {
-						autoRotate: false,
+						autoRotate: true,
 						autoHide: true
 					}
 				})
