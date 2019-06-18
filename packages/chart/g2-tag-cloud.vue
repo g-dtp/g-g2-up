@@ -82,7 +82,7 @@
 					},
 					fontSize: function fontSize(d) {
 						if (d.value) {
-							return (d.value - min) / (max - min) * (80 - 24) + 12
+							return (d.value - min) / (max - min) * (40 - 10) + 10
 						}
 						return 1
 					}
