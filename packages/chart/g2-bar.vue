@@ -27,7 +27,7 @@
 					offset: 0,
 					textStyle: {
 						fontSize: 11,
-						fill: '#FFF'
+						fill: '#f2f2f2'
 					}
 				}
 				this.chart && this.chart.clear()
@@ -42,7 +42,7 @@
 					})
 					this.chart.source(this.dv)
 					this.chart.intervalStack().position(`${this.dimension}*value`).color('type').label('value', labelConfig)
-				} else if (this.measure.length === 1){
+				} else if (this.measure.length === 1) {
 					this.dv.transform({
 						type: 'sort-by',
 						fields: [this.measure[0]],
@@ -63,8 +63,21 @@
 						}
 					})
 					this.chart.source(this.dv)
-					this.chart.interval().position(`${this.dimension}*count`).label('count', labelConfig)
+					if (this.legend) {
+						this.chart.intervalStack().position(`${this.dimension}*count`).color(this.legend).label('count', labelConfig)
+					} else {
+						this.chart.interval().position(`${this.dimension}*count`).label('count', labelConfig)
+					}
 				}
+				this.chart.tooltip(`${this.dimension}*count`, {
+					useHtml: true
+				})
+				this.chart.axis(this.dimension, {
+					label: {
+						autoRotate: false,
+						autoHide: true
+					}
+				})
 				this.chart.render()
 			}
 		}
