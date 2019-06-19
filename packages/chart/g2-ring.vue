@@ -5,7 +5,7 @@
 <script>
 	import { DataSet } from '@antv/data-set'
 	import G2Serie from './base/g2-serie'
-	import { toFixed2 } from './formatter'
+	import { toFixed2, toFixed } from './formatter'
 	const ds = new DataSet()
 	export default {
 		extends: G2Serie,
@@ -24,13 +24,12 @@
 			drawChart () {
 				this.chart && this.chart.clear()
 				this.chart.coord('theta', {
-					innerRadius: 0.5 / 0.7,
-					radius: 0.7
+					innerRadius: 0.6 / 1,
+					radius: 1
 				})
 				this.chart.tooltip({
 					showTitle: false
 				})
-				this.chart.legend(false)
 				this.dv = ds.createView()
 					.source(this.chartData)
 					.transform(this.getTransformMapNull())
@@ -60,6 +59,11 @@
 						groupBy: [this.dimension]
 					})
 					this.dv.transform({
+						type: 'sort-by',
+						fields: 'value',
+						order: 'DESC'
+					})
+					this.dv.transform({
 						type: 'percent',
 						field: 'total',
 						dimension: this.dimension,
@@ -70,7 +74,19 @@
 						.position('percent')
 						.color(this.dimension)
 						.label(this.dimension + '*percent', (label, percent) => {
-							return label + '' + toFixed2(percent)
+							if (percent > 0.05){
+								return toFixed(percent)
+							} else {
+								return ''
+							}
+						}, {
+							offset: -10,
+							textStyle: {
+								fill: '#ffffff',
+								fontSize: 12,
+								shadowBlur: 2,
+								shadowColor: 'rgba(0, 0, 0, 1)'
+							}
 						})
 						.tooltip(this.dimension + '*percent', function(item, percent) {
 							return {
@@ -78,12 +94,36 @@
 								value: toFixed2(percent)
 							}
 						})
+					let max = this.dv.rows[0]
+					this.chart.guide().html({
+						position: ['50%', '50%'],
+						html: '<div class="g2-ring-guide-html"><p class="title">' + max[this.dimension] + '</p><p class="value">' + max.value + '</p></div>'
+					})
 				}
+
 				this.chart.render()
 			}
 		}
 	}
 </script>
+<style lang="scss">
+	.g2-ring-guide-html {
+		text-align: center;
+		p {
+			margin: 0;
+		}
+		.title {
+			font-size: 12px;
+			color: #8c8c8c;
+			font-weight: 300;
+		}
+		.value {
+			margin-top: 8px;
+			font-size: 28px;
+			color: #000;
+		}
+	}
+</style>
 <style lang="scss" scoped>
 	.chart {
 		position: relative;
