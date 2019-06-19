@@ -29,7 +29,6 @@
 				this.chart.tooltip({
 					showTitle: false
 				})
-				this.chart.legend(false)
 				if (this.dimension && this.measure.length === 0) {
 					// 只有X轴有数据时，兼容一个友好得显示
 					this.chart.coord('theta', {})
@@ -118,7 +117,6 @@
 						as: 'percent',
 						groupBy: [ this.dimension ]
 					})
-					console.log(outDv)
 					let outter = this.chart.view()
 					outter.coord('theta', {
 						innerRadius: 0.7 / 0.9,
