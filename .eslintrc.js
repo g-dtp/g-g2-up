@@ -14,7 +14,8 @@ module.exports = {
     'no-mixed-spaces-and-tabs': 0,
     'indent': ['off', 'tab'],
     'no-trailing-spaces': 1,
-    'space-before-function-paren': 0 // 这句话表示在函数后可以不加空格
+    'space-before-function-paren': 0, // 这句话表示在函数后可以不加空格
+	'object-curly-spacing': 0
   },
   parserOptions: {
     parser: 'babel-eslint'
