@@ -5,8 +5,10 @@
 <script>
 	import { DataSet } from '@antv/data-set'
 	import G2Serie from './base/g2-serie'
+	import G2 from '@antv/g2'
 	import { toFixed2, toFixed } from './formatter'
 	const ds = new DataSet()
+
 	export default {
 		extends: G2Serie,
 		name: 'g2-pie',

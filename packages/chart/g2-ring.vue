@@ -3,9 +3,10 @@
 		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
 </template>
 <script>
-	import { DataSet } from '@antv/data-set'
+	import {DataSet} from '@antv/data-set'
 	import G2Serie from './base/g2-serie'
-	import { toFixed2, toFixed } from './formatter'
+	import {toFixed2, toFixed} from './formatter'
+
 	const ds = new DataSet()
 	export default {
 		extends: G2Serie,
@@ -16,12 +17,12 @@
 				default: 'rect'
 			}
 		},
-		mounted () {
+		mounted() {
 			this.drawChart()
 		},
 		watch: {},
 		methods: {
-			drawChart () {
+			drawChart() {
 				this.chart && this.chart.clear()
 				this.chart.coord('theta', {
 					innerRadius: 0.6 / 1,
@@ -45,12 +46,12 @@
 					this.chart.intervalStack().position('count').color(this.dimension)
 				} else {
 					this.dv.transform({
-							type: 'fold',
-							fields: this.measure,
-							dimension: this.dimension,
-							key: 'type',
-							value: 'value'
-						})
+						type: 'fold',
+						fields: this.measure,
+						dimension: this.dimension,
+						key: 'type',
+						value: 'value'
+					})
 					this.dv.transform({
 						type: 'aggregate',
 						fields: 'value',
@@ -74,7 +75,7 @@
 						.position('percent')
 						.color(this.dimension)
 						.label(this.dimension + '*percent', (label, percent) => {
-							if (percent > 0.05){
+							if (percent > 0.05) {
 								return toFixed(percent)
 							} else {
 								return ''
@@ -88,7 +89,7 @@
 								shadowColor: 'rgba(0, 0, 0, 1)'
 							}
 						})
-						.tooltip(this.dimension + '*percent', function(item, percent) {
+						.tooltip(this.dimension + '*percent', function (item, percent) {
 							return {
 								name: item,
 								value: toFixed2(percent)
@@ -109,14 +110,17 @@
 <style lang="scss">
 	.g2-ring-guide-html {
 		text-align: center;
+
 		p {
 			margin: 0;
 		}
+
 		.title {
 			font-size: 12px;
 			color: #8c8c8c;
 			font-weight: 300;
 		}
+
 		.value {
 			margin-top: 8px;
 			font-size: 28px;
