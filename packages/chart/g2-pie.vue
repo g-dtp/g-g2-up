@@ -5,7 +5,7 @@
 <script>
 	import { DataSet } from '@antv/data-set'
 	import G2Serie from './base/g2-serie'
-	import { toFixed2 } from './formatter'
+	import { toFixed2, toFixed } from './formatter'
 	const ds = new DataSet()
 	export default {
 		extends: G2Serie,
@@ -46,7 +46,10 @@
 						value: 'value'
 					})
 					this.chart.source(this.dv)
-					this.chart.intervalStack().position('count').color('value').label('value')
+					this.chart.intervalStack()
+						.position('count')
+						.color('value')
+						.label('value', { offset: -10 })
 				} else if (this.dimension && this.measure.length === 1) {
 					// 单个Y轴
 					this.chart.coord('theta', {})
@@ -55,6 +58,11 @@
 						fields: this.measure,
 						key: 'type',
 						value: 'value'
+					})
+					this.dv.transform({
+						type: 'sort-by',
+						fields: 'value',
+						order: 'DESC'
 					})
 					this.dv.transform({
 						type: 'percent',
@@ -67,7 +75,16 @@
 							formatter: toFixed2
 						}
 					})
-					this.chart.intervalStack().position('percent').color(this.dimension).label('percent')
+					this.chart.intervalStack()
+						.position('percent')
+						.color(this.dimension)
+						.label('percent', (percent) => {
+							if (percent > 0.05){
+								return toFixed(percent)
+							} else {
+								return ''
+							}
+						}, { offset: -10 })
 				} else {
 					this.chart.coord('theta', {
 						radius: 0.7
