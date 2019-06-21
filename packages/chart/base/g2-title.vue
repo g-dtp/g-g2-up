@@ -20,7 +20,7 @@
 		box-sizing: border-box;
 
 		h1 {
-			line-height: 1.2;
+			line-height: 1.5;
 			color: rgba(0, 0, 0, 0.85);
 			font-size: 14px;
 			overflow: hidden;
@@ -31,9 +31,10 @@
 		}
 
 		h3 {
-			line-height: 1.5;
+			line-height: 2;
 			font-size: 12px;
 			color: rgba(0,0,0,0.45);
+			font-weight: 500;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
