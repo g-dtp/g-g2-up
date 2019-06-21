@@ -16,7 +16,7 @@
 					colgroup
 						col(v-for='column,colIndex in columns' :key="column"  width='100' :name="`${column}_${colIndex}`")
 					tbody
-						tr(v-for='cell,rowIndex in list' :key="rowIndex")
+						tr(v-for='cell,rowIndex in list' :key="rowIndex" :class="{striped: rowIndex%2 != 0}")
 							td(v-for='column,colIndex in columns' :key="column" :class="[`${column}_${colIndex}`]") {{cell[column]}}
 </template>
 
@@ -177,8 +177,10 @@
 				border-bottom: 1px solid rgba(5, 19, 50, 0.24);
 
 				th {
-					height: 30px;
+					height: 35px;
 					padding: 0;
+					font-size: 12px;
+					font-weight: 500;
 					border-left: 1px solid rgba(5, 19, 50, 0.08);
 					background: rgb(246, 247, 248);
 					box-sizing: border-box;
@@ -194,7 +196,8 @@
 				width: 100%;
 				overflow-y: auto;
 				td {
-					height: 30px;
+					height: 35px;
+					font-size: 14px;
 					padding: 0;
 					border-left: 1px solid rgba(5, 19, 50, 0.08);
 					border-bottom: 1px solid rgba(5, 19, 50, 0.08);
@@ -209,10 +212,12 @@
 						border-bottom: none
 					}
 				}
-
+				tr.striped {
+					background: rgba(5,19,50,0.04);
+				}
 				tr:hover {
 					td {
-						background: rgba(246, 247, 248, 0.5);
+						background:  rgba(5,19,50,0.12);
 					}
 				}
 			}

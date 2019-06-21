@@ -1,5 +1,5 @@
 @import '../fonts/font.css';
-.dv-edit,dv-layout {
+.dv-edit,.dv-preview {
   .chart {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimSun, sans-serif;
   }
@@ -8,9 +8,35 @@
     .dv-chart {
       background-color: #202536 !important;
       color: #D0F0FF !important;
-      th {
-        background: #15171E !important;
+      &.g2-table {
+        color: rgba(255,255,255,0.45) !important;
+        .g2-table__content {
+          border: 1px solid #383F51 !important;
+        }
+        th {
+          background: rgba(47, 67, 113, 0.45) !important;
+          border-left: 1px solid #383F51 !important;
+        }
+        td {
+          border-left: 1px solid #383F51 !important;
+          border-bottom: 1px solid #383F51 !important;
+        }
+        tr:hover {
+          td {
+            background: rgba(0, 0, 0, 0.12) !important;
+          }
+        }
+        tr.striped {
+          background: rgba(17,23,37,0.45) !important;
+        }
       }
+
+      &.g2-card {
+        .g2-card__content__value {
+          color: #1C90D9;
+        }
+      }
+
     }
 
   }
