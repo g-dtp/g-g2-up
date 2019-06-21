@@ -95,6 +95,13 @@ export default {
 			}
 		}
 	},
+	legend: {
+		bottom: {
+			textStyle: {
+				fontSize: 11
+			}
+		}
+	},
 	shape: {
 		point: {
 			lineWidth: 1,
