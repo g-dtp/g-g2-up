@@ -74,8 +74,11 @@
 						padding: 0,
 						font: 'Verdana',
 						timeInterval: 1000,
-						rotate: function rotate(item) {
-							let random = Math.ceil(item.value % 4)
+						rotate: function rotate(item, index) {
+							let random = Math.ceil(item.value % 2)
+							if (index % 2 === 0) {
+								random = 0 - random
+							}
 							return random * 45
 						},
 						fontSize: function fontSize(d) {
