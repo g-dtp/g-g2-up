@@ -1,6 +1,6 @@
 <template lang='pug'>
-	v-popover.dv-menu(placement="right" :open.sync="show" trigger="click" :hideOnTargetClick="true")
-		img(src="./icon-more-menu.png")
+	v-popover.dv-menu(placement="right" :open.sync="show" trigger="click" :hideOnTargetClick="true" offset="10")
+		g-icon.icon-menu-more(iconClass="icon-menu-more")
 		div(slot="popover")
 			dv-menu-item(v-if="category == 0" @click.native="onMenu('preview')" :name="!showData ? '查看数据' : '返回图表'" iconClass="icon-link-preview")
 			dv-menu-item( @click.native="onMenu('delete')" name="删除" iconClass="icon-link-delete")
@@ -58,32 +58,29 @@
 				border-color: #ffffff;
 			}
 		}
-
 		.dv-menu-item {
 			cursor: pointer;
 			padding: 0 16px;
 			line-height: 30px;
 			height: 30px;
-
 			&:hover {
 				color: #3D89FF;
 			}
 		}
 
-		.g-icon {
-			margin-right: 8px;
-		}
 	}
 </style>
 <style lang="scss" scoped>
 	.dv-menu {
-		width: 20px;
-		height: 20px;
 		z-index: 99;
-
 		img {
 			cursor: pointer;
 			width: 100%;
+		}
+		.icon-menu-more {
+			font-size: 12px;
+			color: rgba(0,0,0,0.45);
+			cursor: pointer;
 		}
 
 	}

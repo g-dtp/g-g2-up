@@ -15,12 +15,12 @@
 		width: 100%;
 		position: absolute;
 		text-align: left;
-		padding: 16px;
+		padding: 10px 16px;
 		z-index: 2;
 		box-sizing: border-box;
 
 		h1 {
-			line-height: 1.5;
+			line-height: 1;
 			color: rgba(0, 0, 0, 0.85);
 			font-size: 14px;
 			overflow: hidden;

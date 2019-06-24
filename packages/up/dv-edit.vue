@@ -157,7 +157,7 @@
 	}
 
 	.dv-edit.active {
-		box-shadow: 0 2px 6px 0 rgba(152,159,167,0.30);
+		box-shadow: 0 2px 6px 0 rgba(0,0,0,0.08);
 		z-index: 999 !important;
 		.handle-br {
 			display: none !important;
@@ -170,7 +170,7 @@
 	}
 
 	.dv-edit:hover {
-		box-shadow: 0 2px 6px 0 rgba(152,159,167,0.30);
+		box-shadow: 0 2px 6px 0 rgba(0,0,0,0.08);
 	}
 
 	:focus {
@@ -215,12 +215,12 @@
 			&.handle-br {
 				box-shadow: none;
 				background: transparent;
-				right: 10px;
-				bottom: 10px;
-				width: 10px;
-				height: 10px;
+				right: 8px;
+				bottom: 8px;
+				width: 8px;
+				height: 8px;
 				border-width: 0 2px 2px 0;
-				border-color: #D8D8D8;
+				border-color: rgba(0,0,0,0.45);
 				border-style: solid;
 			}
 
@@ -239,8 +239,8 @@
 		}
 		.dv-more-menu {
 			position: absolute;
-			top: 5px;
-			right: 0;
+			top: 8px;
+			right: 8px;
 			&.over {
 				display: none;
 			}
