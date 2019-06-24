@@ -22,16 +22,20 @@
 		watch: {},
 		methods: {
 			drawChart () {
+				let config = {}
+				config[this.dimension] = {
+					type: 'cat'
+				}
 				this.chart && this.chart.clear()
 				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
 				this.chart.coord().transpose()
 				if (this.measure.length > 1) {
 					this.dv.transform(this.getTransformFold())
-					this.chart.source(this.dv)
+					this.chart.source(this.dv, config)
 					this.chart.intervalStack().position(`${this.dimension}*value`).color('type')
 				} else {
-					this.chart.source(this.dv)
+					this.chart.source(this.dv, config)
 					if (this.legend) {
 						this.chart.intervalStack().position(`${this.dimension}*${this.measure[0]}`).color(this.legend)
 					} else {

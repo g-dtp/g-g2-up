@@ -30,6 +30,10 @@
 						fill: '#f2f2f2'
 					}
 				}
+				let config = {}
+				config[this.dimension] = {
+					type: 'cat'
+				}
 				this.chart && this.chart.clear()
 				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
@@ -40,7 +44,8 @@
 						fields: [ 'value' ],
 						order: 'DESC'
 					})
-					this.chart.source(this.dv)
+
+					this.chart.source(this.dv, config)
 					this.chart.intervalStack().position(`${this.dimension}*value`).color('type').label('value', labelConfig)
 				} else if (this.measure.length === 1) {
 					this.dv.transform({
@@ -48,7 +53,7 @@
 						fields: [this.measure[0]],
 						order: 'DESC'
 					})
-					this.chart.source(this.dv)
+					this.chart.source(this.dv, config)
 					if (this.legend) {
 						this.chart.intervalStack().position(`${this.dimension}*${this.measure[0]}`).color(this.legend).label(this.measure[0], labelConfig)
 					} else {
@@ -62,7 +67,7 @@
 							return row
 						}
 					})
-					this.chart.source(this.dv)
+					this.chart.source(this.dv, config)
 					if (this.legend) {
 						this.chart.intervalStack().position(`${this.dimension}*count`).color(this.legend).label('count', labelConfig)
 					} else {

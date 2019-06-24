@@ -18,11 +18,15 @@
 		watch: {},
 		methods: {
 			drawChart () {
+				let config = {}
+				config[this.dimension] = {
+					type: 'cat'
+				}
 				this.chart && this.chart.clear()
 				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
 				this.dv.transform(this.getTransformFold())
-				this.chart.source(this.dv)
+				this.chart.source(this.dv, config)
 				this.chart.intervalStack().position(`${this.dimension}*value`).color('type')
 				this.chart.render()
 			}

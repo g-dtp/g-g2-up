@@ -31,10 +31,14 @@
 		watch: {},
 		methods: {
 			drawChart() {
+				let config = {}
+				config[this.dimension] = {
+					type: 'cat'
+				}
 				this.chart && this.chart.clear()
 				if (this.measure.length === 0 && this.line.length === 0) {
 					let dv = ds.createView().source(this.chartData)
-					this.chart.source(dv)
+					this.chart.source(dv, config)
 					this.chart.interval().position(`${this.dimension}*value`).color('#FFFFFF')
 				}
 
@@ -44,7 +48,7 @@
 					dv1.transform(this.getTransformMapNull())
 					dv1.transform(this.getTransformFold())
 					let view1 = this.chart.view()
-					view1.source(dv1)
+					view1.source(dv1, config)
 					view1.intervalStack().position(`${this.dimension}*value`).color('type')
 				}
 				// 绘制折线
@@ -53,7 +57,7 @@
 					dv2.transform(this.getTransformMapNull())
 					dv2.transform(this.getTransformLineFold())
 					let view2 = this.chart.view()
-					view2.source(dv2)
+					view2.source(dv2, config)
 					view2.axis('value', {
 						position: 'right',
 						grid: null,
