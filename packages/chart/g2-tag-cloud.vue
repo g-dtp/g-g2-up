@@ -63,45 +63,93 @@
 				this.chart && this.chart.clear()
 				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
-				let range = this.dv.range(measure)
-				let min = range[0]
-				let max = range[1]
-				this.dv.transform({
-					type: 'tag-cloud',
-					fields: [dimension, measure],
-					size: [this.w - 48, this.h - this.padding[0] - 24],
-					padding: 0,
-					font: 'Verdana',
-					timeInterval: 5000,
-					rotate: function rotate() {
-						let random = ~~(Math.random() * 4) % 4
-						if (random === 2) {
-							random = 0
+				if (dimension && measure) {
+					let range = this.dv.range(measure)
+					let min = range[0]
+					let max = range[1]
+					this.dv.transform({
+						type: 'tag-cloud',
+						fields: [dimension, measure],
+						size: [this.w - 48, this.h - this.padding[0] - 24],
+						padding: 0,
+						font: 'Verdana',
+						timeInterval: 1000,
+						rotate: function rotate(item) {
+							let random = Math.ceil(item.value % 4)
+							return random * 45
+						},
+						fontSize: function fontSize(d) {
+							if (min === max) {
+								return 16
+							}
+							if (d.value) {
+								return (d.value - min) / (max - min) * (40 - 10) + 10
+							}
+							return 1
 						}
-						return random * 45
-					},
-					fontSize: function fontSize(d) {
-						if (d.value) {
-							return (d.value - min) / (max - min) * (40 - 10) + 10
+					})
+					this.dv.transform({
+						type: 'sort-by',
+						fields: [ measure ],
+						order: 'DESC'
+					})
+					this.chart.source(this.dv, {
+						x: {
+							nice: false
+						},
+						y: {
+							nice: false
 						}
-						return 1
-					}
-				})
-				this.chart.source(this.dv, {
-					x: {
-						nice: false
-					},
-					y: {
-						nice: false
-					}
-				})
-				this.chart.legend(false)
-				this.chart.axis(false)
-				this.chart.tooltip({
-					showTitle: false
-				})
-				this.chart.coord().reflect()
-				this.chart.point().position('x*y').color(dimension).shape('cloud').tooltip(`${dimension}*${measure}`)
+					})
+					this.chart.legend(false)
+					this.chart.axis(false)
+					this.chart.tooltip({
+						showTitle: false
+					})
+					this.chart.coord().reflect()
+					this.chart.point().position('x*y').color(dimension).shape('cloud').tooltip(`${dimension}*${measure}`)
+				} else if (dimension) {
+					this.dv.transform({
+						type: 'map',
+						callback(row) {
+							row.count = 1
+							return row
+						}
+					})
+					this.dv.transform({
+						type: 'tag-cloud',
+						fields: [dimension, 'count'],
+						size: [this.w - 48, this.h - this.padding[0] - 24],
+						padding: 0,
+						font: 'Verdana',
+						timeInterval: 5000,
+						rotate: function rotate(item) {
+							let random = ~~(Math.random() * 4) % 4
+							if (random === 2) {
+								random = 0
+							}
+							return random * 45
+						},
+						fontSize: function fontSize() {
+							return 16
+						}
+					})
+					this.chart.source(this.dv, {
+						x: {
+							nice: false
+						},
+						y: {
+							nice: false
+						}
+					})
+					this.chart.legend(false)
+					this.chart.axis(false)
+					this.chart.tooltip({
+						showTitle: false
+					})
+					this.chart.coord().reflect()
+					this.chart.point().position('x*y').color(dimension).shape('cloud').tooltip(`${dimension}*count`)
+				}
 				this.chart.render()
 			},
 			changeSize(w, h) {
