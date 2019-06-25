@@ -127,11 +127,7 @@
 						font: 'Verdana',
 						timeInterval: 5000,
 						rotate: function rotate(item) {
-							let random = ~~(Math.random() * 4) % 4
-							if (random === 2) {
-								random = 0
-							}
-							return random * 45
+							return 0
 						},
 						fontSize: function fontSize() {
 							return 16
