@@ -78,7 +78,6 @@
 		mounted () {
 			this.$el.addEventListener('focus', this.onfocus, true)
 			this.$el.addEventListener('blur', this.onblur, true)
-			this.emitBrandScroll(this.widget.grid)
 		},
 		beforeDestroy () {
 			if (this.timer) clearTimeout(this.timer)
