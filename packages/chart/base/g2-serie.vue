@@ -32,7 +32,7 @@
 			},
 			titleHeight: {
 				type: Number,
-				default: 60
+				default: 70
 			},
 			w: {
 				type: Number,
@@ -75,7 +75,16 @@
 		},
 		computed: {
 			padding() {
-				return this.showTitle ? [this.titleHeight, 'auto', 'auto', 'auto'] : [30, 'auto', 'auto', 'auto']
+				let p = [30, 'auto', 'auto', 'auto']
+				if (this.showTitle) {
+					if (this.title) {
+						p = [this.titleHeight - 20, 'auto', 'auto', 'auto']
+					}
+					if (this.subTitle) {
+						p = [this.titleHeight, 'auto', 'auto', 'auto']
+					}
+				}
+				return p
 			},
 			style() {
 				return {
@@ -93,8 +102,12 @@
 				this.drawChart()
 			},
 			'showTitle'() {
-				console.log('reForceFit')
 				this.reForceFit()
+			},
+			'subTitle'(newVal, oldVal) {
+				if ((newVal && !oldVal) || (!newVal && oldVal)) {
+					this.reForceFit()
+				}
 			},
 			'w'() {
 				this.changeSize()

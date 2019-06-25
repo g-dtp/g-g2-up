@@ -1,7 +1,7 @@
 <template lang='pug'>
 	.chart.g2-table(:style="style")
 		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
-		.g2-table__content(:style="{marginTop: showTitle ? '40px' : 0}")
+		.g2-table__content
 			.g2-table__content__thead
 				table(border=0 cellpadding=0 cellspacing=0 :style="{width:`${w-40-2}px`}")
 					colgroup
@@ -105,8 +105,19 @@
 			style() {
 				return {
 					width: `${this.w}px`,
-					height: `${this.h}px`
+					height: `${this.h}px`,
+					paddingTop: this.paddingTop
 				}
+			},
+			paddingTop () {
+				let top = '16px'
+				if (this.showTitle) {
+					top = '50px'
+					if (this.subTitle) {
+						top = '70px'
+					}
+				}
+				return top
 			}
 		},
 		methods: {
@@ -143,14 +154,13 @@
 	.chart {
 
 	}
-
 	.g2-table {
 		/deep/ .g2-title {
 			left: 0;
 			top: 0;
 		}
 		background: #ffffff;
-		padding: 20px;
+		padding: 16px 16px 16px 16px;
 		box-sizing: border-box;
 
 		table {

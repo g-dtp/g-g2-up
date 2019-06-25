@@ -15,12 +15,12 @@
 		width: 100%;
 		position: absolute;
 		text-align: left;
-		padding: 10px 16px;
+		padding: 16px;
 		z-index: 2;
 		box-sizing: border-box;
 
 		h1 {
-			line-height: 1;
+			line-height: 1.2;
 			color: rgba(0, 0, 0, 0.85);
 			font-size: 14px;
 			overflow: hidden;
@@ -31,14 +31,14 @@
 		}
 
 		h3 {
-			line-height: 2;
+			line-height: 1.2;
 			font-size: 12px;
+			margin: 6px 0 0 0;
 			color: rgba(0,0,0,0.45);
 			font-weight: 500;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
-			margin: 0;
 		}
 	}
 </style>
