@@ -5,21 +5,21 @@
 			.g2-table__content__thead(ref="thead")
 				table(border=0 cellpadding=0 cellspacing=0 :style='headerStyle')
 					colgroup
-						col(v-for='column,colIndex in columns' :key="column" :width='defaultWidth' :name="`column_${colIndex}`")
+						col(v-for='column,colIndex in columns' v-if="column" :key="column" :width='defaultWidth' :name="`column_${colIndex}`")
 						col
 						col(v-if="showGutter" :width="gutter" name="gutter" )
 					thead
 						tr
-							th(v-for='column,colIndex in columns' :key="column" :class="[`column_${colIndex}`]") {{column}}
+							th(v-for='column,colIndex in columns' v-if="column" :key="column" :class="[`column_${colIndex}`]") {{column}}
 							th
 							th.gutter(v-if="showGutter" :style="{width: `${gutter}px`}")
 			.g2-table__content__tbody(ref="tbody")
 				table(border=0 cellpadding=0 cellspacing=0 :style='bodyStyle')
 					colgroup
-						col(v-for='column,colIndex in columns' :key="column"  :width='defaultWidth' :name="`column_${colIndex}`")
+						col(v-for='column,colIndex in columns' v-if="column" :key="column"  :width='defaultWidth' :name="`column_${colIndex}`")
 					tbody
 						tr(v-for='cell,rowIndex in list' :key="rowIndex" :class="{striped: rowIndex%2 != 0}")
-							td(v-for='column,colIndex in columns' :key="column" :class="[`column_${colIndex}`]") {{cell[column]}}
+							td(v-for='column,colIndex in columns' v-if="column" :key="column" :class="[`column_${colIndex}`]") {{cell[column]}}
 							td
 </template>
 
@@ -70,7 +70,7 @@
 			},
 			dimension: {
 				type: String,
-				default: 'dimension'
+				default: ''
 			},
 			measure: {
 				type: Array,
@@ -197,6 +197,7 @@
 				this.dv.transform(this.getTransformMapNull())
 				this.list = [...this.dv.rows]
 				this.columns = [this.dimension, ...this.measure]
+				debugger
 				this.calculateGutter()
 			},
 			getTransformMapNull() {
