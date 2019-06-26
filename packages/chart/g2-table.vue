@@ -5,31 +5,44 @@
 			.g2-table__content__thead(ref="thead")
 				table(border=0 cellpadding=0 cellspacing=0 :style='headerStyle')
 					colgroup
-						col(v-for='column,colIndex in columns' v-if="column" :key="column" :width='defaultWidth' :name="`column_${colIndex}`")
+						col(v-for='column,colIndex in dimension' v-if="column" :key="column"  :width='defaultWidth' :name="`column_d_${colIndex}`")
+						col(v-for='m,colIndex in measure' v-if="m" :key="m"  :width='defaultWidth' :name="`column_d_${colIndex}`")
 						col
 						col(v-if="showGutter" :width="gutter" name="gutter" )
 					thead
 						tr
-							th(v-for='column,colIndex in columns' v-if="column" :key="column" :class="[`column_${colIndex}`]") {{column}}
+							th(v-for='column,colIndex in dimension' v-if="column" :key="column" :class="[`column_d_${colIndex}`]") {{column}}
+							th(v-for='m,colIndex in measure' v-if="m" :key="m" :class="[`column_m_${colIndex}`]") {{m}}
 							th
 							th.gutter(v-if="showGutter" :style="{width: `${gutter}px`}")
 			.g2-table__content__tbody(ref="tbody")
 				table(border=0 cellpadding=0 cellspacing=0 :style='bodyStyle')
 					colgroup
-						col(v-for='column,colIndex in columns' v-if="column" :key="column"  :width='defaultWidth' :name="`column_${colIndex}`")
-					tbody
-						tr(v-for='cell,rowIndex in list' :key="rowIndex" :class="{striped: rowIndex%2 != 0}")
-							td(v-for='column,colIndex in columns' v-if="column" :key="column" :class="[`column_${colIndex}`]") {{cell[column]}}
-							td
+						col(v-for='column,colIndex in dimension' v-if="column" :key="column"  :width='defaultWidth' :name="`column_d_${colIndex}`")
+						col(v-for='column,colIndex in measure' v-if="column" :key="column"  :width='defaultWidth' :name="`column_d_${colIndex}`")
+						col
+					tbody(ref="table")
+						g2-table-row(
+							v-for='row,rowIndex in list'
+							:key="rowIndex"
+							:row="row"
+							:index="rowIndex"
+							:legend="realLegend"
+							:dimension="realDimension"
+							:measure="measure"
+							:fieldMap="fieldMap"
+							:list="list"
+							)
 </template>
 
 <script>
 	import { DataSet } from '@antv/data-set'
 	import G2Title from './base/g2-title'
+	import G2TableRow from './g2-table/g2-table-row'
 	const ds = new DataSet()
 	export default {
 		name: 'g2-table',
-		components: {G2Title},
+		components: { G2Title, G2TableRow },
 		props: {
 			chartData: {
 				type: Array,
@@ -69,8 +82,10 @@
 				default: ''
 			},
 			dimension: {
-				type: String,
-				default: ''
+				type: Array,
+				default: function () {
+					return []
+				}
 			},
 			measure: {
 				type: Array,
@@ -80,7 +95,7 @@
 			},
 			defaultWidth: {
 				type: Number,
-				default: 80
+				default: 150
 			}
 		},
 		data() {
@@ -91,7 +106,10 @@
 				showGutter: false,
 				gutter: 0,
 				headerWidth: '100%',
-				bodyWidth: '100%'
+				bodyWidth: '100%',
+				fieldMap: {},
+				realDimension: [],
+				realLegend: []
 			}
 		},
 		mounted() {
@@ -194,22 +212,39 @@
 			},
 			drawChart() {
 				this.dv = ds.createView().source(this.chartData)
-				this.dv.transform(this.getTransformMapNull())
-				this.list = [...this.dv.rows]
-				this.columns = [this.dimension, ...this.measure]
-				debugger
-				this.calculateGutter()
-			},
-			getTransformMapNull() {
-				return {
-					type: 'map',
-					callback: (row) => {
-						if (!row[this.dimension]) {
-							row[this.dimension] = 'null'
+				this.fieldMap = {}
+				this.realLegend = [...this.dimension]
+				this.realDimension = [this.realLegend.pop()]
+				this.fieldMap = {}
+				// 给每行生成一个分组id
+				let legend
+				let keys
+				let rows = {}
+				this.dv.rows.forEach(row => {
+					this.realLegend.forEach((key, index) => {
+						legend = index > 0 ? this.realLegend.slice(0, index + 1) : [key]
+						keys = []
+						legend.forEach(k => {
+							keys.push(row[k])
+						})
+						let id = keys.join('_')
+						if (this.fieldMap[id]) {
+							this.fieldMap[id] += 1
+						} else {
+							this.fieldMap[id] = 1
+							// 记录每次得第一行
+							// row[`__${key}`] = 1
+							rows[id] = row
 						}
-						return row
-					}
-				}
+						// '_'代表字段序列
+						// row[`_${key}`] = this.fieldMap[id]
+						// 只更新第一行
+						rows[id][`_${key}`] = this.fieldMap[id]
+					})
+				})
+				this.list = [...this.dv.rows]
+				this.columns = [...this.dimension, ...this.measure]
+				this.calculateGutter()
 			}
 		}
 	}
@@ -257,14 +292,13 @@
 					padding: 0;
 					font-size: 12px;
 					font-weight: 500;
-					border-left: 1px solid rgba(5, 19, 50, 0.08);
+					border-right: 1px solid rgba(5, 19, 50, 0.08);
 					background: rgb(246, 247, 248);
 					box-sizing: border-box;
-					&:first-child {
-						border-left: none
+					&:last-child {
+						border-right: none
 					}
 				}
-
 			}
 
 			&__tbody {
@@ -272,31 +306,6 @@
 				width: 100%;
 				overflow-y: auto;
 				overflow-x: auto;
-				td {
-					height: 35px;
-					font-size: 14px;
-					padding: 0;
-					border-left: 1px solid rgba(5, 19, 50, 0.08);
-					border-bottom: 1px solid rgba(5, 19, 50, 0.08);
-					box-sizing: border-box;
-					&:first-child {
-						border-left: none
-					}
-				}
-
-				tr:last-child {
-					td {
-						border-bottom: none
-					}
-				}
-				tr.striped {
-					background: rgba(5,19,50,0.04);
-				}
-				tr:hover {
-					td {
-						background:  rgba(5,19,50,0.12);
-					}
-				}
 			}
 		}
 	}
