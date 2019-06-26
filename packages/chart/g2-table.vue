@@ -2,22 +2,25 @@
 	.chart.g2-table(:style="style")
 		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
 		.g2-table__content
-			.g2-table__content__thead
-				table(border=0 cellpadding=0 cellspacing=0 :style="{width:`${w-40-2}px`}")
+			.g2-table__content__thead(ref="thead")
+				table(border=0 cellpadding=0 cellspacing=0 :style='headerStyle')
 					colgroup
-						col(v-for='column,colIndex in columns' :key="column" width='100' :name="`${column}_${colIndex}`")
+						col(v-for='column,colIndex in columns' :key="column" :width='defaultWidth' :name="`column_${colIndex}`")
+						col
 						col(v-if="showGutter" :width="gutter" name="gutter" )
 					thead
 						tr
-							th(v-for='column,colIndex in columns' :key="column" :class="[`${column}_${colIndex}`]") {{column}}
+							th(v-for='column,colIndex in columns' :key="column" :class="[`column_${colIndex}`]") {{column}}
+							th
 							th.gutter(v-if="showGutter" :style="{width: `${gutter}px`}")
 			.g2-table__content__tbody(ref="tbody")
-				table(border=0 cellpadding=0 cellspacing=0 :style="{width:`${w-40-2-gutter}px`}")
+				table(border=0 cellpadding=0 cellspacing=0 :style='bodyStyle')
 					colgroup
-						col(v-for='column,colIndex in columns' :key="column"  width='100' :name="`${column}_${colIndex}`")
+						col(v-for='column,colIndex in columns' :key="column"  :width='defaultWidth' :name="`column_${colIndex}`")
 					tbody
 						tr(v-for='cell,rowIndex in list' :key="rowIndex" :class="{striped: rowIndex%2 != 0}")
-							td(v-for='column,colIndex in columns' :key="column" :class="[`${column}_${colIndex}`]") {{cell[column]}}
+							td(v-for='column,colIndex in columns' :key="column" :class="[`column_${colIndex}`]") {{cell[column]}}
+							td
 </template>
 
 <script>
@@ -74,6 +77,10 @@
 				default: function () {
 					return []
 				}
+			},
+			defaultWidth: {
+				type: Number,
+				default: 80
 			}
 		},
 		data() {
@@ -82,13 +89,21 @@
 				columns: [],
 				list: [],
 				showGutter: false,
-				gutter: 0
+				gutter: 0,
+				headerWidth: '100%',
+				bodyWidth: '100%'
 			}
 		},
 		mounted() {
 			this.drawChart()
+			if (this.$refs.tbody) {
+				this.$refs.tbody.addEventListener('scroll', this.scrollX)
+			}
 		},
 		beforeDestroy() {
+			if (this.$refs.tbody) {
+				this.$refs.tbody.removeEventListener('scroll', this.scrollX)
+			}
 		},
 		watch: {
 			'chartData'() {
@@ -99,6 +114,29 @@
 			},
 			'h'() {
 				this.calculateGutter()
+			},
+			'columns': {
+				immediate: true,
+				handler: function (value) {
+					if (value) {
+						this.calculateWidth()
+					}
+				}
+			},
+			'list': {
+				immediate: true,
+				handler: function (value) {
+					if (value && value.length > 0) {
+						this.showList = value
+					} else {
+						this.showList = []
+						let len = this.columns.length
+						for (let i = 0; i < 10; i++) {
+							this.showList.push(new Array(len))
+						}
+					}
+					this.calculateGutter()
+				}
 			}
 		},
 		computed: {
@@ -118,15 +156,40 @@
 					}
 				}
 				return top
+			},
+			headerStyle() {
+				return {
+					width: this.headerWidth
+				}
+			},
+			bodyStyle() {
+				return {
+					width: this.bodyWidth
+				}
 			}
 		},
 		methods: {
+			scrollX() {
+				this.$refs.thead.scrollLeft = this.$refs.tbody.scrollLeft
+			},
+			calculateWidth() {
+				if (!this.$refs.tbody) return
+				let w = this.columns.length * this.defaultWidth
+				if (w < this.$refs.thead.clientWidth) {
+					this.headerWidth = this.bodyWidth = '100%'
+				} else {
+					this.headerWidth = w + this.gutter + 'px'
+					this.bodyWidth = w + 'px'
+				}
+			},
 			calculateGutter() {
 				if (this.timer) clearTimeout(this.timer)
 				this.timer = setTimeout(() => {
+					if (!this.$refs.tbody) return
 					let el = this.$refs.tbody
 					this.gutter = el.offsetWidth - el.clientWidth
 					this.showGutter = el.scrollHeight > el.clientHeight
+					this.calculateWidth()
 				})
 			},
 			drawChart() {
@@ -164,6 +227,7 @@
 		box-sizing: border-box;
 
 		table {
+			table-layout: fixed;
 			border: none;
 			width: 100%;
 			height: 100%;
@@ -184,6 +248,7 @@
 			box-sizing: border-box;
 			&__thead {
 				flex: none;
+				overflow: hidden;
 				border-bottom: 1px solid rgba(5, 19, 50, 0.24);
 
 				th {
@@ -205,6 +270,7 @@
 				flex: auto;
 				width: 100%;
 				overflow-y: auto;
+				overflow-x: auto;
 				td {
 					height: 35px;
 					font-size: 14px;
