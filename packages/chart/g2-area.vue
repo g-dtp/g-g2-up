@@ -25,17 +25,26 @@
 		methods: {
 			drawChart () {
 				let config = {}
-				config[this.dimension] = {
-					type: 'cat'
-				}
+				// config[this.dimension] = {
+				// 	type: 'cat'
+				// }
+				let fields = [...this.dimension]
+				let dimension = fields.pop()
 				this.chart && this.chart.clear()
 				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
 				this.dv.transform(this.getTransformFold())
 				this.chart.source(this.dv, config)
-				this.chart.scale(this.dimension, { range: [0, 1] })
-				this.chart.line().position(`${this.dimension}*value`).color('type').size(2)
-				this.chart.area().position(`${this.dimension}*value`).color('type').opacity(0.5)
+				this.chart.scale(dimension, { range: [0, 1] })
+				this.chart.facet('rect', {
+					fields: fields,
+					autoSetAxis: false,
+					padding: 20,
+					eachView: function eachView(view) {
+						view.line().position(`${dimension}*value`).color('type').size(2)
+						view.area().position(`${dimension}*value`).color('type').opacity(0.5)
+					}
+				})
 				this.chart.render()
 			}
 		}

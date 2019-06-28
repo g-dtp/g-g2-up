@@ -31,7 +31,8 @@
 				this.chart.tooltip({
 					showTitle: false
 				})
-				if (this.dimension && this.measure.length === 0) {
+				let dimension = this.dimension[0]
+				if (dimension && this.measure.length === 0) {
 					// 只有X轴有数据时，兼容一个友好得显示
 					this.chart.coord('theta', {})
 					this.dv.transform({
@@ -43,7 +44,7 @@
 					})
 					this.dv.transform({
 						type: 'fold',
-						fields: this.dimension,
+						fields: dimension,
 						key: 'type',
 						value: 'value'
 					})
@@ -52,7 +53,7 @@
 						.position('count')
 						.color('value')
 						.label('value', { offset: -10 })
-				} else if (this.dimension && this.measure.length === 1) {
+				} else if (dimension && this.measure.length === 1) {
 					// 单个Y轴
 					this.chart.coord('theta', {})
 					this.dv.transform({
@@ -69,7 +70,7 @@
 					this.dv.transform({
 						type: 'percent',
 						field: 'value',
-						dimension: this.dimension,
+						dimension: dimension,
 						as: 'percent'
 					})
 					this.chart.source(this.dv, {
@@ -79,7 +80,7 @@
 					})
 					this.chart.intervalStack()
 						.position('percent')
-						.color(this.dimension)
+						.color(dimension)
 						.label('percent', (percent) => {
 							if (percent > 0.05){
 								return toFixed(percent)
@@ -103,12 +104,12 @@
 						fields: 'value',
 						operations: ['sum'],
 						as: ['total'],
-						groupBy: [this.dimension]
+						groupBy: [dimension]
 					})
 					this.dv.transform({
 						type: 'percent',
 						field: 'total',
-						dimension: this.dimension,
+						dimension: dimension,
 						as: 'percent'
 					})
 					this.chart.source(this.dv, {
@@ -116,7 +117,7 @@
 							formatter: toFixed2
 						}
 					})
-					this.chart.intervalStack().position('percent').color(this.dimension).label(this.dimension, { offset: -20 }).select(false).style({
+					this.chart.intervalStack().position('percent').color(dimension).label(dimension, { offset: -20 }).select(false).style({
 						lineWidth: 1,
 						stroke: '#fff'
 					})
@@ -134,7 +135,7 @@
 						field: 'value',
 						dimension: 'type',
 						as: 'percent',
-						groupBy: [ this.dimension ]
+						groupBy: [ dimension ]
 					})
 					let outter = this.chart.view()
 					outter.coord('theta', {
@@ -148,7 +149,7 @@
 					})
 					let colors = G2.Global.colors_pie_16[0] + '-' + G2.Global.colors_pie_16[this.chartData.length - 1]
 					outter.intervalStack().position('value')
-						.color(this.dimension, colors)
+						.color(dimension, colors)
 						.tooltip('type*percent', function(item, percent) {
 						return {
 							name: item,

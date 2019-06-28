@@ -30,10 +30,12 @@
 						fill: '#f2f2f2'
 					}
 				}
+				let fields = [...this.dimension]
+				let dimension = fields.pop()
 				let config = {}
-				config[this.dimension] = {
-					type: 'cat'
-				}
+				// config[dimension] = {
+				// 	type: 'cat'
+				// }
 				this.chart && this.chart.clear()
 				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
@@ -44,9 +46,15 @@
 						fields: [ 'value' ],
 						order: 'DESC'
 					})
-
 					this.chart.source(this.dv, config)
-					this.chart.intervalStack().position(`${this.dimension}*value`).color('type').label('value', labelConfig)
+					this.chart.facet('rect', {
+						fields: fields,
+						autoSetAxis: false,
+						padding: 20,
+						eachView: (view) => {
+							view.intervalStack().position(`${dimension}*value`).color('type').label('value', labelConfig)
+						}
+					})
 				} else if (this.measure.length === 1) {
 					this.dv.transform({
 						type: 'sort-by',
@@ -55,9 +63,23 @@
 					})
 					this.chart.source(this.dv, config)
 					if (this.legend) {
-						this.chart.intervalStack().position(`${this.dimension}*${this.measure[0]}`).color(this.legend).label(this.measure[0], labelConfig)
+						this.chart.facet('rect', {
+							fields: fields,
+							autoSetAxis: false,
+							padding: 20,
+							eachView: (view) => {
+								view.intervalStack().position(`${dimension}*${this.measure[0]}`).color(this.legend).label(this.measure[0], labelConfig)
+							}
+						})
 					} else {
-						this.chart.interval().position(`${this.dimension}*${this.measure[0]}`).label(this.measure[0], labelConfig)
+						this.chart.facet('rect', {
+							fields: fields,
+							autoSetAxis: false,
+							padding: 20,
+							eachView: (view) => {
+								view.interval().position(`${dimension}*${this.measure[0]}`).label(this.measure[0], labelConfig)
+							}
+						})
 					}
 				} else {
 					this.dv.transform({
@@ -69,9 +91,23 @@
 					})
 					this.chart.source(this.dv, config)
 					if (this.legend) {
-						this.chart.intervalStack().position(`${this.dimension}*count`).color(this.legend).label('count', labelConfig)
+						this.chart.facet('rect', {
+							fields: fields,
+							autoSetAxis: false,
+							padding: 20,
+							eachView: (view) => {
+								view.intervalStack().position(`${dimension}*count`).color(this.legend).label('count', labelConfig)
+							}
+						})
 					} else {
-						this.chart.interval().position(`${this.dimension}*count`).label('count', labelConfig)
+						this.chart.facet('rect', {
+							fields: fields,
+							autoSetAxis: false,
+							padding: 20,
+							eachView: (view) => {
+								view.interval().position(`${dimension}*count`).label('count', labelConfig)
+							}
+						})
 					}
 				}
 				this.chart.tooltip(`${this.dimension}*count`, {

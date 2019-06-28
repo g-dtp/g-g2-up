@@ -53,8 +53,10 @@
 				default: 'rect'
 			},
 			dimension: {
-				type: String,
-				default: 'dimension'
+				type: Array,
+				default: function () {
+					return []
+				}
 			},
 			measure: {
 				type: Array,
@@ -66,7 +68,9 @@
 		data() {
 			return {
 				chart: null,
-				dv: null
+				dv: null,
+				realDimension: [],
+				realLegend: []
 			}
 		},
 		beforeCreate() {

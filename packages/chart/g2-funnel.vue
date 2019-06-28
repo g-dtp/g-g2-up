@@ -25,6 +25,7 @@
 			drawChart () {
 				this.chart && this.chart.clear()
 				if (!this.measure || this.measure.length === 0) return
+				let dimension = this.dimension[0]
 				let key = this.measure[0]
 				this.dv = ds.createView()
 					.source(this.chartData)
@@ -50,13 +51,13 @@
 
 				this.chart.axis(false)
 				this.chart.coord('rect').transpose().scale(1, -1)
-				this.chart.intervalSymmetric().position(`${this.dimension}*percent`)
+				this.chart.intervalSymmetric().position(`${dimension}*percent`)
 					.shape('funnel')
-					.color(this.dimension)
+					.color(dimension)
 
 				this.dv.rows.forEach(item => {
 					let position = { percent: 'median' }
-					position[this.dimension] = item[this.dimension]
+					position[dimension] = item[dimension]
 					this.chart.guide().text({
 						top: true,
 						position: position,

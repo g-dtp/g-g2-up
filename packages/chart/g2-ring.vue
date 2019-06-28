@@ -34,7 +34,8 @@
 				this.dv = ds.createView()
 					.source(this.chartData)
 					.transform(this.getTransformMapNull())
-				if (this.dimension && this.measure.length === 0) {
+				let dimension = this.dimension[0]
+				if (dimension && this.measure.length === 0) {
 					this.dv.transform({
 						type: 'map',
 						callback(row) {
@@ -43,12 +44,12 @@
 						}
 					})
 					this.chart.source(this.dv)
-					this.chart.intervalStack().position('count').color(this.dimension)
+					this.chart.intervalStack().position('count').color(dimension)
 				} else {
 					this.dv.transform({
 						type: 'fold',
 						fields: this.measure,
-						dimension: this.dimension,
+						dimension: dimension,
 						key: 'type',
 						value: 'value'
 					})
@@ -57,7 +58,7 @@
 						fields: 'value',
 						operations: ['sum'],
 						as: ['total'],
-						groupBy: [this.dimension]
+						groupBy: [dimension]
 					})
 					this.dv.transform({
 						type: 'sort-by',
@@ -67,14 +68,14 @@
 					this.dv.transform({
 						type: 'percent',
 						field: 'total',
-						dimension: this.dimension,
+						dimension: dimension,
 						as: 'percent'
 					})
 					this.chart.source(this.dv)
 					this.chart.intervalStack()
 						.position('percent')
-						.color(this.dimension)
-						.label(this.dimension + '*percent', (label, percent) => {
+						.color(dimension)
+						.label(dimension + '*percent', (label, percent) => {
 							if (percent > 0.05) {
 								return toFixed(percent)
 							} else {
@@ -89,7 +90,7 @@
 								shadowColor: 'rgba(0, 0, 0, 1)'
 							}
 						})
-						.tooltip(this.dimension + '*percent', function (item, percent) {
+						.tooltip(dimension + '*percent', function (item, percent) {
 							return {
 								name: item,
 								value: toFixed2(percent)
@@ -98,7 +99,7 @@
 					let max = this.dv.rows[0]
 					this.chart.guide().html({
 						position: ['50%', '50%'],
-						html: '<div class="g2-ring-guide-html"><p class="title">' + max[this.dimension] + '</p><p class="value">' + max.value + '</p></div>'
+						html: '<div class="g2-ring-guide-html"><p class="title">' + max[dimension] + '</p><p class="value">' + max.value + '</p></div>'
 					})
 				}
 

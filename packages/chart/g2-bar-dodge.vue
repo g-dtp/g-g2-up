@@ -19,21 +19,32 @@
 		methods: {
 			drawChart () {
 				let config = {}
-				config[this.dimension] = {
-					type: 'cat'
-				}
 				this.chart && this.chart.clear()
 				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
 				this.dv.transform(this.getTransformFold())
 				this.chart.source(this.dv, config)
-				this.chart.interval().position(`${this.dimension}*value`).color('type').adjust([{
-					type: 'dodge',
-					dodgeBy: 'type',
-					marginRatio: 0
-				}, {
-					type: 'stack'
-				}])
+				let fields = [...this.dimension]
+				let dimension = fields.pop()
+				this.chart.facet('rect', {
+					fields: fields,
+					autoSetAxis: false,
+					padding: 20,
+					eachView: function eachView(view) {
+						view.interval()
+							.position(`${dimension}*value`)
+							.color('type')
+							.adjust(
+								[
+									{
+										type: 'dodge',
+										dodgeBy: 'type',
+										marginRatio: 0
+									}
+								]
+							)
+					}
+				})
 				this.chart.render()
 			}
 		}

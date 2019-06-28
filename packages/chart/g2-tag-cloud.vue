@@ -58,7 +58,7 @@
 		},
 		methods: {
 			drawChart() {
-				let dimension = this.dimension
+				let dimension = this.dimension[0]
 				let measure = this.measure[0]
 				this.chart && this.chart.clear()
 				this.dv = ds.createView().source(this.chartData)

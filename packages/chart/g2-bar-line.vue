@@ -32,14 +32,15 @@
 		methods: {
 			drawChart() {
 				let config = {}
-				config[this.dimension] = {
+				let dimension = this.dimension[0]
+				config[dimension] = {
 					type: 'cat'
 				}
 				this.chart && this.chart.clear()
 				if (this.measure.length === 0 && this.line.length === 0) {
 					let dv = ds.createView().source(this.chartData)
 					this.chart.source(dv, config)
-					this.chart.interval().position(`${this.dimension}*value`).color('#FFFFFF')
+					this.chart.interval().position(`${dimension}*value`).color('#FFFFFF')
 				}
 
 				// 绘制柱状
@@ -49,7 +50,7 @@
 					dv1.transform(this.getTransformFold())
 					let view1 = this.chart.view()
 					view1.source(dv1, config)
-					view1.intervalStack().position(`${this.dimension}*value`).color('type')
+					view1.intervalStack().position(`${dimension}*value`).color('type')
 				}
 				// 绘制折线
 				if (this.line.length > 0) {
@@ -67,7 +68,7 @@
 							}
 						}
 					})
-					view2.line().position(`${this.dimension}*value`).color('type', this._colors).shape('smooth')
+					view2.line().position(`${dimension}*value`).color('type', this._colors).shape('smooth')
 				}
 				this.chart.render()
 			}

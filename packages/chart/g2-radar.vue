@@ -25,6 +25,7 @@
 			drawChart () {
 				this.chart && this.chart.clear()
 				this.chart.coord('polar')
+				let dimension = this.dimension
 				this.dv = ds.createView()
 					.source(this.chartData)
 					.transform(this.getTransformMapNull())
@@ -35,8 +36,8 @@
 						value: 'value'
 					})
 				this.chart.source(this.dv)
-				this.chart.line().position(`${this.dimension}*value`).color('type')
-				this.chart.point().position(`${this.dimension}*value`).color('type').size(4).shape('circle')
+				this.chart.line().position(`${dimension}*value`).color('type')
+				this.chart.point().position(`${dimension}*value`).color('type').size(4).shape('circle')
 				this.chart.render()
 			}
 		}
