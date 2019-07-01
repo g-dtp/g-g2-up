@@ -5,6 +5,7 @@
 		:showTitle = "showTitle"
 		:title = "widget.title"
 		:subTitle = "widget.subTitle"
+		:mergeCell = "widget.styleObject.mergeCell"
 		ref="widget"
 		:key="widget.id"
 		:chartData="data"

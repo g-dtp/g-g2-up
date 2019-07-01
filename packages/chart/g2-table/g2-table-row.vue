@@ -68,6 +68,9 @@
 </script>
 <style lang="scss" scoped>
 	.g2-table-row {
+		.merged {
+			background: #FFFFFF;
+		}
 		td {
 			height: 35px;
 			font-size: 14px;

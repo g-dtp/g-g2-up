@@ -96,6 +96,10 @@
 			defaultWidth: {
 				type: Number,
 				default: 150
+			},
+			mergeCell: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -213,35 +217,39 @@
 			drawChart() {
 				this.dv = ds.createView().source(this.chartData)
 				this.fieldMap = {}
-				this.realLegend = [...this.dimension]
-				this.realDimension = [this.realLegend.pop()]
-				this.fieldMap = {}
-				// 给每行生成一个分组id
-				let legend
-				let keys
-				let rows = {}
-				this.dv.rows.forEach(row => {
-					this.realLegend.forEach((key, index) => {
-						legend = index > 0 ? this.realLegend.slice(0, index + 1) : [key]
-						keys = []
-						legend.forEach(k => {
-							keys.push(row[k])
+				if (this.mergeCell) {
+					this.realLegend = [...this.dimension]
+					this.realDimension = [this.realLegend.pop()]
+					// 给每行生成一个分组id
+					let legend
+					let keys
+					let rows = {}
+					this.dv.rows.forEach(row => {
+						this.realLegend.forEach((key, index) => {
+							legend = index > 0 ? this.realLegend.slice(0, index + 1) : [key]
+							keys = []
+							legend.forEach(k => {
+								keys.push(row[k])
+							})
+							let id = keys.join('_')
+							if (this.fieldMap[id]) {
+								this.fieldMap[id] += 1
+							} else {
+								this.fieldMap[id] = 1
+								// 记录每次得第一行
+								// row[`__${key}`] = 1
+								rows[id] = row
+							}
+							// '_'代表字段序列
+							// row[`_${key}`] = this.fieldMap[id]
+							// 只更新第一行
+							rows[id][`_${key}`] = this.fieldMap[id]
 						})
-						let id = keys.join('_')
-						if (this.fieldMap[id]) {
-							this.fieldMap[id] += 1
-						} else {
-							this.fieldMap[id] = 1
-							// 记录每次得第一行
-							// row[`__${key}`] = 1
-							rows[id] = row
-						}
-						// '_'代表字段序列
-						// row[`_${key}`] = this.fieldMap[id]
-						// 只更新第一行
-						rows[id][`_${key}`] = this.fieldMap[id]
 					})
-				})
+				} else {
+					this.realDimension = [...this.dimension]
+					this.realLegend = []
+				}
 				this.list = [...this.dv.rows]
 				this.columns = [...this.dimension, ...this.measure]
 				this.calculateGutter()
