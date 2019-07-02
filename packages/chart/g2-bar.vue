@@ -32,10 +32,18 @@
 				}
 				let fields = [...this.dimension]
 				let dimension = fields.pop()
-				let config = {}
-				// config[dimension] = {
-				// 	type: 'cat'
-				// }
+				let scaleConfig = {}
+				scaleConfig[dimension] = {
+					sync: true
+				}
+				scaleConfig[this.legend] = {
+					sync: true
+				}
+				this.measure.forEach(m => {
+					scaleConfig[m] = {
+						sync: true
+					}
+				})
 				this.chart && this.chart.clear()
 				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
@@ -46,10 +54,9 @@
 						fields: [ 'value' ],
 						order: 'DESC'
 					})
-					this.chart.source(this.dv, config)
+					this.chart.source(this.dv, scaleConfig)
 					this.chart.facet('rect', {
 						fields: fields,
-						autoSetAxis: false,
 						padding: 20,
 						eachView: (view) => {
 							view.intervalStack().position(`${dimension}*value`).color('type').label('value', labelConfig)
@@ -61,11 +68,10 @@
 						fields: [this.measure[0]],
 						order: 'DESC'
 					})
-					this.chart.source(this.dv, config)
+					this.chart.source(this.dv, scaleConfig)
 					if (this.legend) {
 						this.chart.facet('rect', {
 							fields: fields,
-							autoSetAxis: false,
 							padding: 20,
 							eachView: (view) => {
 								view.intervalStack().position(`${dimension}*${this.measure[0]}`).color(this.legend).label(this.measure[0], labelConfig)
@@ -74,7 +80,6 @@
 					} else {
 						this.chart.facet('rect', {
 							fields: fields,
-							autoSetAxis: false,
 							padding: 20,
 							eachView: (view) => {
 								view.interval().position(`${dimension}*${this.measure[0]}`).label(this.measure[0], labelConfig)
@@ -89,11 +94,10 @@
 							return row
 						}
 					})
-					this.chart.source(this.dv, config)
+					this.chart.source(this.dv, scaleConfig)
 					if (this.legend) {
 						this.chart.facet('rect', {
 							fields: fields,
-							autoSetAxis: false,
 							padding: 20,
 							eachView: (view) => {
 								view.intervalStack().position(`${dimension}*count`).color(this.legend).label('count', labelConfig)
@@ -102,7 +106,6 @@
 					} else {
 						this.chart.facet('rect', {
 							fields: fields,
-							autoSetAxis: false,
 							padding: 20,
 							eachView: (view) => {
 								view.interval().position(`${dimension}*count`).label('count', labelConfig)

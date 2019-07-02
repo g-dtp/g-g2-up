@@ -22,19 +22,28 @@
 		watch: {},
 		methods: {
 			drawChart () {
-				let config = {}
 				let fields = [...this.dimension]
 				let dimension = fields.pop()
-				// config[dimension] = {
-				// 	type: 'cat'
-				// }
+				let scaleConfig = {}
+				scaleConfig[dimension] = {
+					sync: true
+				}
+				scaleConfig[this.legend] = {
+					sync: true
+				}
+				this.measure.forEach(m => {
+					scaleConfig[m] = {
+						sync: true
+					}
+				})
+				console.log(/scaleConfig/, scaleConfig)
 				this.chart && this.chart.clear()
 				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
 				this.chart.coord().transpose()
 				if (this.measure.length > 1) {
 					this.dv.transform(this.getTransformFold())
-					this.chart.source(this.dv, config)
+					this.chart.source(this.dv, scaleConfig)
 					this.chart.facet('rect', {
 						fields: fields,
 						autoSetAxis: false,
@@ -44,7 +53,7 @@
 						}
 					})
 				} else {
-					this.chart.source(this.dv, config)
+					this.chart.source(this.dv, scaleConfig)
 					if (this.legend) {
 						this.chart.facet('rect', {
 							fields: fields,
