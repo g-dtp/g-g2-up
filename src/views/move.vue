@@ -122,7 +122,9 @@
 			onResizing(grid, widget) {
 				this.shadow = true
 				if (this.shadowGrid.width !== grid.width || this.shadowGrid.height !== grid.height) {
-					this.doImpactChecking(grid, widget)
+					// 改变大小时得碰撞避让规则
+					this.reset()
+					this.doImpactChecking2(grid, widget)
 				}
 			},
 			onResizeEnd(grid, widget) {
@@ -141,48 +143,81 @@
 				widget.grid.height = this.shadowGrid.height
 				this.shadow = false
 			},
+
+			// 改变大小时得碰撞避让规则 被碰撞得避让
+			doImpactChecking2(grid, widget) {
+				let targets = this.impactChecking(grid, widget)
+				targets.forEach(t => {
+					let { x, y, height, width } = widget.grid
+					let tGrid = t.grid
+					let ex = tGrid.x
+					let ey = tGrid.y
+					if (x + width <= tGrid.x) {
+						ex = grid.x + grid.width
+					}
+					if (y + height <= tGrid.y) {
+						ey = grid.y + grid.height
+					}
+					t.expectedGrid = {
+						x: ex,
+						y: ey,
+						width: t.grid.width,
+						height: t.grid.height
+					}
+					this.impactCheckingLoop(t)
+				})
+				this.shadowGrid = grid
+			},
 			// 循环检测
 			impactCheckingLoop(widget) {
-				let target = this.impactChecking(widget.expectedGrid, widget)
-				if (target) {
+				let targets = this.impactChecking(widget.expectedGrid, widget)
+				console.log(/targets/, targets)
+				targets.forEach(t => {
 					let { y, height } = widget.expectedGrid
-					target.expectedGrid = {
-						x: target.grid.x,
+					t.expectedGrid = {
+						x: t.grid.x,
 						y: y + height,
-						width: target.grid.width,
-						height: target.grid.height
+						width: t.grid.width,
+						height: t.grid.height
 					}
-					this.impactCheckingLoop(target)
-				}
+					// this.impactCheckingLoop(t)
+				})
 			},
 			doImpactChecking(grid, widget) {
-				let target = this.impactChecking(grid, widget)
-				if (target) {
-					let { y, height } = target.grid
+				// 可能碰撞到多个
+				let targets = this.impactChecking(grid, widget)
+				targets.forEach(t => {
+					let { y, height } = t.grid
 					if (y === grid.y) {
 						// shadow占据碰撞块的位置, 被碰撞块移动
-						target.expectedGrid = {
-							x: target.grid.x,
-							y: y + grid.height,
-							width: target.grid.width,
-							height: target.grid.height
+						t.expectedGrid = {
+							x: t.grid.x,
+							y: y + t.height,
+							width: t.grid.width,
+							height: t.grid.height
 						}
-						this.impactCheckingLoop(target)
+						// this.impactCheckingLoop(t)
 					} else {
 						grid.y = y + height
 						// 碰撞块不移动，shadow 被再次定位到碰撞快下方
-						this.doImpactChecking(grid, widget)
+						// this.doImpactChecking(grid, widget)
 					}
-				}
+				})
 				this.shadowGrid = grid
 			},
 			// shadow块碰撞检测
 			impactChecking(grid, widget) {
-				return this.widgets.find(item => {
-					if (widget.id === item.id) return false
-					let { x, y, width, height } = item.grid
-					return this.rectangleCol(grid.x, grid.y, grid.width, grid.height, x, y, width, height)
+				let has = []
+				this.widgets.forEach(w => {
+					if (widget.id !== w.id) {
+						let { x, y, width, height } = w.grid
+						if (this.rectangleCol(grid.x, grid.y, grid.width, grid.height, x, y, width, height)) {
+							has.push(w)
+						}
+					}
 				})
+				console.log(/has/, has)
+				return has
 			},
 			// 判断两个矩形是否相交
 			rectangleCol(x1, y1, w1, h1, x2, y2, w2, h2) {

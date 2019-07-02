@@ -84,7 +84,6 @@
 		},
 		methods: {
 			initPosition() {
-				console.log('change-position')
 				let { x, y } = this.widget.grid
 				this.x = x
 				this.y = y
