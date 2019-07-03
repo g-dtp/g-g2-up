@@ -48,7 +48,7 @@
 				this.widget.data.dimension.forEach(item => {
 					dimension.push(item.meta)
 				})
-				return dimension[0]
+				return dimension
 			},
 			line() {
 				let line = []

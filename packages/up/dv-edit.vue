@@ -25,7 +25,7 @@
 	)
 		dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :class="[layoutClass, style]" :showData="showData")
 		dv-ui.dv-edit-content(v-else-if="widget.category == 1" :widget ="widget" :class="[layoutClass, style]")
-		dv-menu.dv-more-menu(:class="{over: !over}" @preview="onShowData" @delete="onDelete" :category="widget.category")
+		dv-menu.dv-more-menu(:class="{over: !over}" @preview="onShowData" @delete="onDelete" :category="widget.category" :showDataDefault="showData" :mode="mode")
 </template>
 
 <script>
@@ -64,6 +64,7 @@
 			return {
 				over: false,
 				showData: false,
+				mode: 1,
 				layoutClass: this.layout,
 				active: false,
 				draggable: true,
@@ -73,6 +74,20 @@
 		computed: {
 			style () {
 				return {}
+			}
+		},
+		watch: {
+			'widget.data.dimension': {
+				immediate: true,
+				handler: function () {
+					this.changeShowData()
+				}
+			},
+			'widget.data.measure': {
+				immediate: true,
+				handler: function () {
+					this.changeShowData()
+				}
 			}
 		},
 		mounted () {
@@ -93,6 +108,13 @@
 			},
 			onShowData (value) {
 				this.showData = value
+			},
+			changeShowData () {
+				this.$nextTick(() => {
+					let { dimension, measure } = this.widget.data
+					this.showData = dimension.length === 0 || measure.length === 0
+					this.mode = dimension.length === 0 || measure.length === 0 ? 0 : 1
+				})
 			},
 			onDelete () {
 				this.$emit('delete-self', this.widget)

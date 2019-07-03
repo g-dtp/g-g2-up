@@ -2,7 +2,7 @@
 	v-popover.dv-menu(placement="right" :open.sync="show" trigger="click" :hideOnTargetClick="true" offset="10")
 		g-icon.icon-menu-more(iconClass="icon-menu-more")
 		div(slot="popover")
-			dv-menu-item(v-if="category == 0" @click.native="onMenu('preview')" :name="!showData ? '查看数据' : '返回图表'" iconClass="icon-link-preview")
+			dv-menu-item(v-if="category == 0 && mode == 1" @click.native="onMenu('preview')" :name="!showData ? '查看数据' : '返回图表'" iconClass="icon-link-preview")
 			dv-menu-item( @click.native="onMenu('delete')" name="删除" iconClass="icon-link-delete")
 </template>
 
@@ -16,12 +16,18 @@
 		props: {
 			category: {
 				default: '0'
+			},
+			showDataDefault: {
+				default: false
+			},
+			mode: {
+				default: 1
 			}
 		},
 		data() {
 			return {
 				show: false,
-				showData: false,
+				showData: this.showDataDefault,
 				popperOptions: {}
 			}
 		},
