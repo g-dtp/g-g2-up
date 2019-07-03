@@ -180,7 +180,7 @@
 						width: t.grid.width,
 						height: t.grid.height
 					}
-					// this.impactCheckingLoop(t)
+					this.impactCheckingLoop(t)
 				})
 			},
 			doImpactChecking(grid, widget) {
@@ -188,19 +188,19 @@
 				let targets = this.impactChecking(grid, widget)
 				targets.forEach(t => {
 					let { y, height } = t.grid
-					if (y === grid.y) {
+					if (y >= grid.y) {
 						// shadow占据碰撞块的位置, 被碰撞块移动
 						t.expectedGrid = {
 							x: t.grid.x,
-							y: y + t.height,
+							y: t.grid.y + grid.height,
 							width: t.grid.width,
 							height: t.grid.height
 						}
-						// this.impactCheckingLoop(t)
+						this.impactCheckingLoop(t)
 					} else {
 						grid.y = y + height
 						// 碰撞块不移动，shadow 被再次定位到碰撞快下方
-						// this.doImpactChecking(grid, widget)
+						this.doImpactChecking(grid, widget)
 					}
 				})
 				this.shadowGrid = grid
