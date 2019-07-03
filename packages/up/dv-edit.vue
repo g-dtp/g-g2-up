@@ -15,6 +15,7 @@
 		@blur.native.stop='onblur'
 		:active.sync="active"
 		@click.native.stop="onStop"
+		@mousedown.native.stop="onStop"
 		:onDragStart="onDragStartCallback"
 		@dragstop="onDragStop"
 		@dragging="onDragging"
