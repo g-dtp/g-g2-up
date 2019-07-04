@@ -4,8 +4,8 @@
 		@mousedown="onMoveStart")
 		.dv-move__content(:class="{impact: widget.expectedGrid}")
 			slot
-				div {{x}}: {{y}}
-				div {{widget.grid}}
+				div id:{{widget.id}}
+				div {{ widget.expectedGrid || widget.grid}}
 			dv-resize(@start-resize="onStartResize" @resizing="onResizing" @resize-end="onResizeEnd")
 </template>
 

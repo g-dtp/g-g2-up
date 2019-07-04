@@ -20,7 +20,7 @@
 
 	export default {
 		name: 'move',
-		components: { DvMove, DvMoveShadow },
+		components: {DvMove, DvMoveShadow},
 		data() {
 			return {
 				shadow: false,
@@ -148,7 +148,7 @@
 			doImpactChecking2(grid, widget) {
 				let targets = this.impactChecking(grid, widget)
 				targets.forEach(t => {
-					let { x, y, height, width } = widget.grid
+					let {x, y, height, width} = widget.grid
 					let tGrid = t.grid
 					let ex = tGrid.x
 					let ey = tGrid.y
@@ -171,9 +171,8 @@
 			// 循环检测
 			impactCheckingLoop(widget) {
 				let targets = this.impactChecking(widget.expectedGrid, widget)
-				console.log(/targets/, targets)
 				targets.forEach(t => {
-					let { y, height } = widget.expectedGrid
+					let {y, height} = widget.expectedGrid
 					t.expectedGrid = {
 						x: t.grid.x,
 						y: y + height,
@@ -186,19 +185,27 @@
 			doImpactChecking(grid, widget) {
 				// 可能碰撞到多个
 				let targets = this.impactChecking(grid, widget)
-				targets.forEach(t => {
-					let { y, height } = t.grid
-					if (y >= grid.y) {
-						// shadow占据碰撞块的位置, 被碰撞块移动
+				let prev
+				let add = 0
+				targets.forEach((t, index) => {
+					prev = targets[index - 1]
+					add = prev ? prev.grid.height : 0
+					if (prev) {
+						add = t.grid.y === prev.grid.y ? 0 : prev.grid.height
+					} else {
+						add = 0
+					}
+					if (t.grid.y >= grid.y) {
 						t.expectedGrid = {
 							x: t.grid.x,
-							y: t.grid.y + grid.height,
+							y: grid.y + grid.height + add,
 							width: t.grid.width,
 							height: t.grid.height
 						}
 						this.impactCheckingLoop(t)
 					} else {
-						grid.y = y + height
+						let _grid = t.expectedGrid || t.grid
+						grid.y = _grid.y + _grid.height
 						// 碰撞块不移动，shadow 被再次定位到碰撞快下方
 						this.doImpactChecking(grid, widget)
 					}
@@ -210,14 +217,15 @@
 				let has = []
 				this.widgets.forEach(w => {
 					if (widget.id !== w.id) {
-						let { x, y, width, height } = w.grid
+						let {x, y, width, height} = w.expectedGrid || w.grid
 						if (this.rectangleCol(grid.x, grid.y, grid.width, grid.height, x, y, width, height)) {
 							has.push(w)
 						}
 					}
 				})
-				console.log(/has/, has)
-				return has
+				return has.sort((a, b) => {
+					return a.grid.y > b.grid.y
+				})
 			},
 			// 判断两个矩形是否相交
 			rectangleCol(x1, y1, w1, h1, x2, y2, w2, h2) {
