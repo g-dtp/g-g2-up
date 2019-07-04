@@ -1,8 +1,8 @@
-<template lang="pug">
-	.dv-move(
+<template lang='pug'>
+	.dv-magnet(
 		:class="[{transition: !change}, {moving: change}]"
 		@mousedown="onMoveStart")
-		.dv-move__content(:class="{impact: widget.expectedGrid}")
+		.dv-magnet__content(:class="{impact: widget.expectedGrid}")
 			slot
 				div id:{{widget.id}}
 				div {{ widget.expectedGrid || widget.grid}}
@@ -13,7 +13,7 @@
 	import Config from './tools/move/config'
 	import DvResize from './tools/dv-resize'
 	export default {
-		name: 'dv-move',
+		name: 'dv-magnet',
 		components: { DvResize },
 		props: {
 			widget: {
@@ -136,8 +136,8 @@
 				}
 				this.$el.style.width = 	w + 'px'
 				this.$el.style.height = h + 'px'
-				this.sizeX = Math.ceil(w / Config.CELL.width)
-				this.sizeY = Math.ceil(h / Config.CELL.height)
+				this.sizeX = Math.ceil(w / Config.CELL.width - 0.1)
+				this.sizeY = Math.ceil(h / Config.CELL.height - 0.1)
 				this.$emit('resizing', this.getGrid())
 			},
 			onResizeEnd() {
@@ -148,7 +148,6 @@
 				this.$emit('resize-end', this.getGrid())
 				this.change = false
 			},
-
 			getGrid() {
 				return {
 					x: this.x,
@@ -160,9 +159,8 @@
 		}
 	}
 </script>
-
 <style lang="scss" scoped>
-	.dv-move {
+	.dv-magnet {
 		position: absolute;
 		padding: 5px;
 		background: transparent;

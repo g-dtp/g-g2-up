@@ -2,7 +2,7 @@
 	.move
 		.move-warp
 			dv-move-shadow(v-if='shadow' :grid="shadowGrid")
-			dv-move(
+			dv-magnet(
 				v-for="widget,index in widgets"
 				:widget="widget"
 				:key="index"
@@ -15,12 +15,12 @@
 </template>
 
 <script>
-	import DvMove from '../../packages/up/dv-move'
+	import DvMagnet from '../../packages/up/dv-magnet'
 	import DvMoveShadow from '../../packages/up/tools/dv-move-shadow'
 
 	export default {
 		name: 'move',
-		components: {DvMove, DvMoveShadow},
+		components: {DvMagnet, DvMoveShadow},
 		data() {
 			return {
 				shadow: false,
