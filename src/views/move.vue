@@ -224,7 +224,11 @@
 					}
 				})
 				return has.sort((a, b) => {
-					return a.grid.y > b.grid.y
+					if (a.grid.y >= b.grid.y) {
+						return 1
+					} else {
+						return 0
+					}
 				})
 			},
 			// 判断两个矩形是否相交

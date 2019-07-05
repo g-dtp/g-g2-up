@@ -54,11 +54,9 @@
 			},
 			'widget.grid.x' () {
 				this.initPosition()
-				this.$el.style.left = this.left + 'px'
 			},
 			'widget.grid.y' () {
 				this.initPosition()
-				this.$el.style.top = this.top + 'px'
 			},
 			'widget.grid.width' () {
 				this.initSize()
@@ -84,6 +82,8 @@
 				this.y = y
 				this.left = x * Config.CELL.width
 				this.top = y * Config.CELL.height
+				this.$el.style.left = this.left + 'px'
+				this.$el.style.top = this.top + 'px'
 			},
 			initSize() {
 				let { width, height } = this.widget.grid
@@ -100,11 +100,15 @@
 				document.addEventListener('mouseup', this.onEnd)
 				this.$emit('drag-start', this.getGrid())
 			},
-			onMoving(event) {
+			updatePosition(event) {
 				let left = event.clientX - this.diffX
 				let top = event.clientY - this.diffY
 				if (left < 0) left = 0
 				if (top < 0) top = 0
+				return { left, top }
+			},
+			onMoving(event) {
+				let { left, top } = this.updatePosition(event)
 				this.$el.style.left = left + 'px'
 				this.$el.style.top = top + 'px'
 				this.x = Math.round(left / Config.CELL.width)
@@ -114,12 +118,11 @@
 			onEnd() {
 				this.diffX = 0
 				this.diffY = 0
-				this.$el.style.left = (Config.CELL.width * this.x) + 'px'
-				this.$el.style.top = (Config.CELL.height * this.y) + 'px'
-				document.removeEventListener('mousemove', this.onMoving)
-				document.removeEventListener('mouseup', this.onEnd)
+				this.initPosition()
 				this.$emit('drag-end', this.getGrid())
 				this.change = false
+				document.removeEventListener('mousemove', this.onMoving)
+				document.removeEventListener('mouseup', this.onEnd)
 			},
 			onStartResize () {
 				this.$emit('resize-start', this.getGrid())
