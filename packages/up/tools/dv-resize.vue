@@ -51,10 +51,14 @@
 </script>
 <style lang="scss" scoped>
 	.dv-resize {
-		cursor:pointer;
+		cursor: nw-resize;
 		position: absolute;
-		width: 12px;
-		height: 12px;
-		background: blue;
+		right: 8px;
+		bottom: 8px;
+		width: 8px;
+		height: 8px;
+		border-width: 0 2px 2px 0;
+		border-color: rgba(0,0,0,0.45);
+		border-style: solid;
 	}
 </style>

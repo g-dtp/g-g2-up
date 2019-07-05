@@ -33,7 +33,6 @@
 	/*
 	* 绝对布局编辑器
 	* */
-	import { VPopover } from 'v-tooltip'
 	import DvChart from './dv-chart'
 	import DvUi from './dv-ui'
 	import DvMenu from './tools/dv-menu'
@@ -45,7 +44,7 @@
 	export default {
 		name: 'dv-edit',
 		inject: ['layout'],
-		components: { DvChart, DvUi, DvMenu, VPopover },
+		components: { DvChart, DvUi, DvMenu },
 		props: {
 			widget: {
 				type: Object,

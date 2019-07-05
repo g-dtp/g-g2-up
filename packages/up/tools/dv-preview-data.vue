@@ -10,8 +10,8 @@
 			:chartData="data"
 			:name='widget.name'
 			:id="widget.id+''"
-			:w="widget.grid.width"
-			:h="widget.grid.height"
+			:w="width"
+			:h="height"
 			:dimension="dimension"
 			:measure="measure"
 			:legend="legend"
@@ -36,6 +36,9 @@
 				default: function () {
 					return []
 				}
+			},
+			gap: {
+				default: 0
 			}
 		},
 		data() {
@@ -43,6 +46,12 @@
 			}
 		},
 		computed: {
+			width () {
+				return this.widget.grid.width - this.gap
+			},
+			height () {
+				return this.widget.grid.height - this.gap
+			},
 			dimension() {
 				let dimension = []
 				this.widget.data.dimension.forEach(item => {

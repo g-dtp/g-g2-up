@@ -23,10 +23,10 @@
 		computed: {
 			style() {
 				return {
-					width: (this.grid.width * Config.CELL.width) + 'px',
-					height: (this.grid.height * Config.CELL.height) + 'px',
-					left: (this.grid.x * Config.CELL.width) + 'px',
-					top: (this.grid.y * Config.CELL.height) + 'px'
+					width: (this.grid.width) + 'px',
+					height: (this.grid.height) + 'px',
+					left: (this.grid.x) + 'px',
+					top: (this.grid.y) + 'px'
 				}
 			}
 		}

@@ -11,14 +11,14 @@
 		:chartData="data"
 		:name='widget.name'
 		:id="widget.id+''"
-		:w="widget.grid.width"
-		:h="widget.grid.height"
+		:w="width"
+		:h="height"
 		:dimension="dimension"
 		:measure="measure"
 		:legend="legend"
 		:line="line"
 	)
-	dv-preview-data.preview-warp(v-else-if="data && data.length > 0 && showData" :widget ="widget" :data="data" :key="'table'")
+	dv-preview-data.preview-warp(v-else-if="data && data.length > 0 && showData" :widget ="widget" :data="data" :key="'table'" :gap="gap" )
 	.dv-chart.empty(v-else)
 		g-icon(:iconClass="`icon-default-${widget.typeName}`")
 </template>
@@ -40,6 +40,9 @@
 			showData: {
 				type: Boolean,
 				default: false
+			},
+			gap: {
+				default: 0
 			}
 		},
 		data() {
@@ -51,6 +54,12 @@
 		computed: {
 			showTitle() {
 				return this.widget.styleObject.showTitle
+			},
+			width () {
+				return this.widget.grid.width - this.gap
+			},
+			height () {
+				return this.widget.grid.height - this.gap
 			},
 			dimension() {
 				let dimension = []
@@ -89,11 +98,6 @@
 			this.$root.$off('update-charts', this.updateChart)
 		},
 		methods: {
-			// changeSize(w, h) {
-			// 	if (this.$children.length > 0 && this.$children[0].changeSize) {
-			// 		this.$children[0].changeSize(w, h)
-			// 	}
-			// },
 			updateChart(widget) {
 				if (widget && widget.id === this.widget.id) {
 					this.load()
@@ -115,7 +119,6 @@
 					console.error('根父容器需要注入url')
 					return
 				}
-				this.loading = true
 				if (!this.widget.data.line) {
 					this.widget.data.line = []
 				}
@@ -130,10 +133,8 @@
 				})
 					.then(res => {
 						this.data = res.data.data || []
-						this.loading = false
 					})
 					.catch(() => {
-						this.loading = false
 					})
 			}
 		}
