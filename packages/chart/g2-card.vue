@@ -51,8 +51,10 @@
 				default: ''
 			},
 			dimension: {
-				type: String,
-				default: 'dimension'
+				type: Array,
+				default: function () {
+					return []
+				}
 			},
 			measure: {
 				type: Array,
