@@ -1,10 +1,14 @@
 <template lang='pug'>
-	.div-box(:style="boxStyle")
+	.div-box(
+		:style="boxStyle"
+		@mouseenter.stop="onEnter"
+		@mouseleave.stop="onLeave"
+		)
 		.div-box-content
 			dv-chart(v-if="widget.category == 0" :widget ="widget" :gap="10" :forceFit="true")
 			dv-ui(v-else-if="widget.category == 1" :widget ="widget" )
-			dv-layout(v-else-if="widget.category == 2" :widget ="widget")
-				dv-box(v-for="subWidget in widget.children" :widget ="subWidget")
+			dv-layout(v-else-if="widget.category == 2" :widget ="widget" @drop-layout="onDropLayout")
+				dv-box.child(v-for="subWidget in widget.children" :widget ="subWidget")
 			dv-menu.dv-more-menu(:class="{over: !over}" @preview="onShowData" @delete="onDelete" :category="widget.category" :showDataDefault="showData" :mode="mode")
 			dv-resize(@start-resize="onStartResize" @resizing="onResizing" @resize-end="onResizeEnd")
 </template>
@@ -49,8 +53,20 @@
 			this.height = this.widget.grid.height
 		},
 		methods: {
+			onEnter() {
+				this.over = true
+			},
+			onLeave() {
+				this.over = false
+			},
 			onShowData() {},
 			onDelete() {},
+			onDropLayout(data) {
+				this.$emit('drop-box', {
+					parent: this.widget,
+					data
+				})
+			},
 			onStartResize () {
 			},
 			onResizing(data) {
@@ -78,10 +94,12 @@
 		box-sizing: border-box;
 		user-select: none;
 		.div-box-content {
-			background: #ffffff;
 			position: relative;
 			height: 100%;
 			overflow: hidden;
+			.child {
+				flex: 1;
+			}
 		}
 		.dv-resize {
 			display: none;
