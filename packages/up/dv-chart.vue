@@ -13,6 +13,7 @@
 		:id="widget.id+''"
 		:w="width"
 		:h="height"
+		:forceFit="forceFit"
 		:dimension="dimension"
 		:measure="measure"
 		:legend="legend"
@@ -36,6 +37,10 @@
 				default: function () {
 					return {}
 				}
+			},
+			forceFit: {
+				type: Boolean,
+				default: false
 			},
 			showData: {
 				type: Boolean,

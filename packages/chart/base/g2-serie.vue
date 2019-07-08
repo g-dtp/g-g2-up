@@ -16,7 +16,7 @@
 			},
 			forceFit: {
 				type: Boolean,
-				default: true
+				default: false
 			},
 			showTitle: {
 				type: Boolean,
@@ -168,6 +168,7 @@
 					width: this.w,
 					height: this.h,
 					padding: this.padding,
+					forceFit: this.forceFit,
 					autoPaddingAppend: 20
 				})
 				this.chart.coord(this.coord)

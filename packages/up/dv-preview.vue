@@ -1,7 +1,8 @@
 <template lang='pug'>
 	.dv-preview(:style="boxStyle" :class="[theme]")
-		dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :class="[layoutClass, style]" :showData="showData")
-		dv-ui.dv-edit-content(v-else-if="widget.category == 1" :widget ="widget" :class="[layoutClass, style]")
+		.dv-preview-content
+			dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :showData="showData" :gap="10")
+			dv-ui.dv-edit-content(v-else-if="widget.category == 1" :widget ="widget")
 </template>
 
 <script>
@@ -47,7 +48,9 @@
 </script>
 <style lang="scss" scoped>
 	.dv-preview {
-
+		.dv-preview-content {
+			margin: 5px;
+		}
 	}
 </style>
 <style lang="scss">
