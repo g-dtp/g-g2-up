@@ -76,6 +76,10 @@
 		},
 		mounted() {
 			this.height = this.widget.grid.height
+			window.addEventListener('resize', this.doRefresh.bind(this))
+		},
+		beforeDestroy() {
+			window.removeEventListener('resize', this.doRefresh.bind(this))
 		},
 		methods: {
 			doRefresh() {
