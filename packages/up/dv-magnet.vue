@@ -1,6 +1,6 @@
 <template lang='pug'>
 	.dv-magnet(
-		:class="[{transition: !change}, {moving: change}]"
+		:class="[{transition: !change}, {moving: change}, theme]"
 		@mouseenter.native="onEnter"
 		@mouseleave.native="onLeave"
 		@mousedown="onMoveStart")
@@ -26,6 +26,10 @@
 				default: function () {
 					return {}
 				}
+			},
+			theme: {
+				type: String,
+				default: 'blue'
 			}
 		},
 		data() {

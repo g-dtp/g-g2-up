@@ -1,7 +1,7 @@
 <template lang='pug'>
 	.dv-box(
 		:style="boxStyle"
-		:class="[{layout: widget.category == 2}, {transition: !change}, {moving: change}]"
+		:class="[{layout: widget.category == 2}, {transition: !change}, {moving: change}, theme]"
 		@mousedown.stop="onActive(widget)"
 		@mouseenter.stop="onEnter"
 		@mouseleave.stop="onLeave"
@@ -72,6 +72,10 @@
 				default: function () {
 					return null
 				}
+			},
+			theme: {
+				type: String,
+				default: 'blue'
 			}
 		},
 		mounted() {
