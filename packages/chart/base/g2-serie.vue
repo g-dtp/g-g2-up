@@ -4,7 +4,7 @@
 
 	export default {
 		name: 'base-serie',
-		components: { G2Title },
+		components: {G2Title},
 		props: {
 			chartData: {
 				type: Array,
@@ -113,8 +113,10 @@
 					this.reForceFit()
 				}
 			},
-			'w'() {
-				this.changeSize()
+			'w'(value) {
+				if (value) {
+					this.changeSize()
+				}
 			},
 			'h'() {
 				this.changeSize()
@@ -176,7 +178,11 @@
 			changeSize(w, h) {
 				if (this._changeSizeTimer) clearTimeout(this._changeSizeTimer)
 				this._changeSizeTimer = setTimeout(() => {
-					this.chart.changeSize(this.w, this.h)
+					if (this.w) {
+						this.chart.changeSize(this.w, this.h)
+					} else {
+						this.chart.changeHeight(this.h)
+					}
 				}, 100)
 			},
 			reForceFit() {
