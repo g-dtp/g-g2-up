@@ -5,7 +5,7 @@
 		:name='widget.name'
 		:id="widget.id"
 		)
-		.dv-layout-content
+		.dv-layout-content(v-if='refresh')
 			slot
 		drop.drop-cover(v-if="showDrop" @drop="onDrop")
 </template>
@@ -25,6 +25,10 @@
 				default: function () {
 					return {}
 				}
+			},
+			refresh: {
+				type: Boolean,
+				default: true
 			}
 		},
 		data() {
@@ -53,10 +57,13 @@
 <style lang="scss" scoped>
 	.dv-layout {
 		position: relative;
+		background: rgba(0, 0, 0, 0.05);
 		width: 100%;
 		height: 100%;
+
 		.dv-layout-content {
 			display: flex;
+			height: 100%;
 			.dv-box {
 				flex: 1;
 			}
