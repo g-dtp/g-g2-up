@@ -35,7 +35,6 @@
 				default: 70
 			},
 			w: {
-				type: Number,
 				default: 200
 			},
 			h: {
@@ -178,7 +177,7 @@
 			changeSize(w, h) {
 				if (this._changeSizeTimer) clearTimeout(this._changeSizeTimer)
 				this._changeSizeTimer = setTimeout(() => {
-					if (this.w) {
+					if (this.w >= 0) {
 						this.chart.changeSize(this.w, this.h)
 					} else {
 						this.chart.changeHeight(this.h)

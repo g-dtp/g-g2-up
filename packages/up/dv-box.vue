@@ -80,13 +80,13 @@
 		},
 		mounted() {
 			this.height = this.widget.grid.height
-			window.addEventListener('resize', this.doRefresh)
+			window.addEventListener('resize', this.doRefresh.bind(this))
 		},
 		beforeDestroy() {
-			window.removeEventListener('resize', this.doRefresh)
+			window.removeEventListener('resize', this.doRefresh.bind(this))
 		},
 		methods: {
-			doRefresh: () => {
+			doRefresh() {
 				this.refresh = false
 				this.$nextTick(() => {
 					this.refresh = true
