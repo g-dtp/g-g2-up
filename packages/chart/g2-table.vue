@@ -274,7 +274,6 @@
 			table-layout: fixed;
 			border: none;
 			width: 100%;
-			height: 100%;
 			text-align: center;
 		}
 		th.gutter {

@@ -6,7 +6,7 @@
 		.dv-report-content
 			dv-chart(v-if="widget.category == 0" :widget ="widget" :gap="10" :forceFit="true")
 			dv-ui(v-else-if="widget.category == 1" :widget ="widget" )
-			dv-layout(
+			dv-layout.report-dv-layout(
 				v-else-if="widget.category == 2"
 				:widget ="widget"
 				:class="{'empty-layout': widget.children.length == 0}" :refresh="refresh")
@@ -57,13 +57,13 @@
 		},
 		mounted() {
 			this.height = this.widget.grid.height
-			window.addEventListener('resize', this.doRefresh)
+			window.addEventListener('resize', this.doRefresh.bind(this))
 		},
 		beforeDestroy() {
-			window.removeEventListener('resize', this.doRefresh)
+			window.removeEventListener('resize', this.doRefresh.bind(this))
 		},
 		methods: {
-			doRefresh: () => {
+			doRefresh(){
 				this.refresh = false
 				this.$nextTick(() => {
 					this.refresh = true
@@ -73,7 +73,7 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.dv-box {
+	.dv-report {
 		position: relative;
 		flex: none;
 		width: 100%;
@@ -85,13 +85,14 @@
 		&.transition {
 			transition: transform .25s, width .25s, height .25s, left  .25s , top .25s ;
 		}
+		.dv-layout {
+			background: transparent !important;
+		}
 		&.layout {
 			padding: 0;
-			border: 1px dashed #dddddd;
 			min-height: 180px;
-			margin-bottom: 5px;
 		}
-		.div-box-content {
+		.dv-report-content {
 			position: relative;
 			height: 100%;
 			overflow: hidden;
