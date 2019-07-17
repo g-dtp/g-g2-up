@@ -1,9 +1,13 @@
 <template lang='pug'>
-	v-popover.dv-menu(placement="right" :open.sync="show" trigger="click" :hideOnTargetClick="true" offset="10")
-		g-icon.icon-menu-more(iconClass="icon-menu-more")
-		div(slot="popover")
-			dv-menu-item(v-if="category == 0 && mode == 1" @click.native="onMenu('preview')" :name="!showData ? '查看数据' : '返回图表'" iconClass="icon-link-preview")
-			dv-menu-item( @click.native="onMenu('delete')" name="删除" iconClass="icon-link-delete")
+	.dv-menu
+		.dv-menu__item(@click="onMenu('edit')" )
+			g-icon.icon-link-edit(iconClass="icon-link-edit")
+		.dv-menu__item(@click="onShow")
+			g-icon.icon-menu-more(iconClass="icon-menu-more")
+		v-popover.dv-menu(placement="bottom" :open.sync="show" trigger="manual" :hideOnTargetClick="true")
+			div(slot="popover")
+				dv-menu-item(v-if="category == 0 && mode == 1" @click.native="onMenu('preview')" :name="!showData ? '查看数据' : '返回图表'" iconClass="icon-link-preview")
+				dv-menu-item( @click.native="onMenu('delete')" name="删除" iconClass="icon-link-delete")
 </template>
 
 <script>
@@ -36,11 +40,16 @@
 		mounted() {
 		},
 		methods: {
+			onShow() {
+				this.show = !this.show
+			},
 			onMenu(type) {
 				if (type === 'preview') {
 					this.showData = !this.showData
 					this.$emit(type, this.showData)
 				} else if (type === 'delete') {
+					this.$emit(type)
+				} else if (type === 'edit') {
 					this.$emit(type)
 				}
 				this.show = false
@@ -79,15 +88,17 @@
 <style lang="scss" scoped>
 	.dv-menu {
 		z-index: 99;
-		img {
-			cursor: pointer;
-			width: 100%;
-		}
-		.icon-menu-more {
-			font-size: 12px;
+		font-size: 0;
+		&__item {
+			display: inline-block;
+			width: 18px;
+			height: 18px;
+			margin-left: 5px;
+			text-align: center;
+			line-height: 18px;
+			font-size: 14px;
 			color: rgba(0,0,0,0.45);
 			cursor: pointer;
 		}
-
 	}
 </style>

@@ -7,7 +7,15 @@
 		.dv-magnet__content(v-if="widget" :class="{impact: widget.expectedGrid}")
 			dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :showData="showData" :gap="10")
 			dv-ui.dv-edit-content(v-else-if="widget.category == 1" :widget ="widget")
-			dv-menu.dv-more-menu(:class="{over: !over}" @preview="onShowData" @delete="onDelete" :category="widget.category" :showDataDefault="showData" :mode="mode")
+			dv-menu.dv-more-menu(
+				:class="{over: !over}"
+				@preview="onShowData"
+				@delete="onDelete"
+				@edit="onEdit"
+				:category="widget.category"
+				:showDataDefault="showData"
+				:mode="mode"
+				)
 			dv-resize(@start-resize="onStartResize" @resizing="onResizing" @resize-end="onResizeEnd")
 </template>
 
@@ -193,6 +201,9 @@
 			onDelete () {
 				this.$emit('delete-self', this.widget)
 			},
+			onEdit () {
+				this.$emit('delete-self', this.widget)
+			},
 			onActivated () {
 				this.$emit('change-activated', this.widget)
 				this.emitBrandScroll(this.widget.grid)
@@ -253,7 +264,7 @@
 				position: absolute;
 				display: none;
 				right: 5px;
-				top: 5px;
+				top: 8px;
 			}
 			img {
 				pointer-events: none;
