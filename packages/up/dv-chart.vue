@@ -48,6 +48,16 @@
 			},
 			gap: {
 				default: 0
+			},
+			edit: {
+				type: Boolean,
+				default: false
+			},
+			editWidth: {
+				default: 0
+			},
+			editHeight: {
+				default: 0
 			}
 		},
 		data() {
@@ -61,10 +71,10 @@
 				return this.widget.styleObject.showTitle
 			},
 			width () {
-				return this.widget.grid.width - this.gap
+				return this.edit ? this.editWidth : this.widget.grid.width - this.gap
 			},
 			height () {
-				return this.widget.grid.height - this.gap
+				return this.edit ? this.editHeight : this.widget.grid.height - this.gap
 			},
 			dimension() {
 				let dimension = []

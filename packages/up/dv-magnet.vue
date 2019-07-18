@@ -1,6 +1,6 @@
 <template lang='pug'>
 	.dv-magnet(
-		:class="[{transition: !change}, {moving: change}, theme]"
+		:class="[{transition: !change}, {moving: change}, theme, {edit: edit}]"
 		@mouseenter.native="onEnter"
 		@mouseleave.native="onLeave"
 		@mousedown="onMoveStart")
@@ -12,6 +12,7 @@
 				@preview="onShowData"
 				@delete="onDelete"
 				@edit="onEdit"
+				@un-edit="closeEdit"
 				:category="widget.category"
 				:showDataDefault="showData"
 				:mode="mode"
@@ -38,6 +39,10 @@
 			theme: {
 				type: String,
 				default: 'blue'
+			},
+			edit: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -202,11 +207,10 @@
 				this.$emit('delete-self', this.widget)
 			},
 			onEdit () {
-				this.$emit('delete-self', this.widget)
+				this.$emit('edit-self', this.widget)
 			},
-			onActivated () {
-				this.$emit('change-activated', this.widget)
-				this.emitBrandScroll(this.widget.grid)
+			closeEdit () {
+				this.$emit('un-edit-self', this.widget)
 			},
 			onStop () {
 			},
@@ -246,6 +250,11 @@
 		&.moving {
 			/*box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);*/
 			z-index: 2;
+		}
+		&.edit {
+			.dv-magnet__content {
+				box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+			}
 		}
 		&__content {
 			background: #ffffff;

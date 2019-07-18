@@ -47,9 +47,7 @@
 				if (type === 'preview') {
 					this.showData = !this.showData
 					this.$emit(type, this.showData)
-				} else if (type === 'delete') {
-					this.$emit(type)
-				} else if (type === 'edit') {
+				} else {
 					this.$emit(type)
 				}
 				this.show = false
