@@ -71,10 +71,10 @@
 				return this.widget.styleObject.showTitle
 			},
 			width () {
-				return this.edit ? this.editWidth : this.widget.grid.width - this.gap
+				return this.edit ? this.editWidth - this.gap : this.widget.grid.width - this.gap
 			},
 			height () {
-				return this.edit ? this.editHeight : this.widget.grid.height - this.gap
+				return this.edit ? this.editHeight - this.gap : this.widget.grid.height - this.gap
 			},
 			dimension() {
 				let dimension = []
