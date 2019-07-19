@@ -67,7 +67,7 @@ export default {
 				zIndex: -1,
 				lineStyle: {
 					stroke: '#CCC',
-					lineWidth: 1,
+					lineWidth: 0,
 					lineDash: [4, 4]
 				},
 				hideFirstLine: true

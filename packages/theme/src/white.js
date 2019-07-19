@@ -35,6 +35,16 @@ export default {
 					fill: '#999',
 					fontSize: 11
 				}
+			},
+			grid: {
+				align: 'left',
+				zIndex: -1,
+				lineStyle: {
+					stroke: '#999',
+					lineWidth: 0,
+					lineDash: [4, 4]
+				},
+				hideFirstLine: true
 			}
 		},
 		bottom: {
@@ -50,6 +60,16 @@ export default {
 			},
 			tickLine: {
 				stroke: '#CCC'
+			},
+			grid: {
+				align: 'left',
+				zIndex: -1,
+				lineStyle: {
+					stroke: '#999',
+					lineWidth: 0,
+					lineDash: [4, 4]
+				},
+				hideFirstLine: true
 			}
 		},
 		left: {
@@ -70,7 +90,7 @@ export default {
 				zIndex: -1,
 				lineStyle: {
 					stroke: '#999',
-					lineWidth: 1,
+					lineWidth: 0,
 					lineDash: [4, 4]
 				},
 				hideFirstLine: true
@@ -82,6 +102,16 @@ export default {
 					fill: '#999',
 					fontSize: 11
 				}
+			},
+			grid: {
+				align: 'left',
+				zIndex: -1,
+				lineStyle: {
+					stroke: '#999',
+					lineWidth: 0,
+					lineDash: [4, 4]
+				},
+				hideFirstLine: true
 			}
 		}
 	},

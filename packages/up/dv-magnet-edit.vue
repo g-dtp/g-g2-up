@@ -1,11 +1,9 @@
 <template lang='pug'>
 	.dv-magnet-edit()
-		.dv-magnet-edit__content(v-if="show")
+		.dv-magnet-edit__content(v-loading="show")
 			dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :showData="showData" :gap="0" :edit="true" :editWidth="editWidth" :editHeight="editHeight")
 			dv-ui.dv-edit-content(v-else-if="widget.category == 1" :widget ="widget")
 			.tools-menu
-				.dv-menu__item(@click="onClose")
-					g-icon.icon-link-edit(iconClass="iconchexiao-b")
 				.dv-menu__item
 					g-icon.icon-menu-more(iconClass="icon-link-preview")
 </template>
@@ -41,16 +39,23 @@
 		watch: {
 		},
 		mounted() {
-			console.dir(this.$el)
-			this.$nextTick(() => {
-				this.editWidth = this.$el.clientWidth - 40
-				this.editHeight = this.$el.clientHeight - 40
-				this.show = true
-			})
+			this.refresh()
+			this.$root.$on('dv-resize', this.refresh)
+		},
+		beforeDestroy() {
+			this.$root.$off('dv-resize', this.refresh)
 		},
 		methods: {
 			onClose() {
 				this.$emit('un-edit-self', this.widget)
+			},
+			refresh() {
+				this.show = true
+				setTimeout( () => {
+					this.editWidth = this.$el.clientWidth - 40
+					this.editHeight = this.$el.clientHeight - 40
+					this.show = false
+				}, 200)
 			}
 		}
 	}
