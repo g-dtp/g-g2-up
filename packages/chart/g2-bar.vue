@@ -34,7 +34,7 @@
 				let dimension = fields.pop()
 				let scaleConfig = {}
 				scaleConfig[dimension] = {
-					sync: true
+					// sync: true
 				}
 				scaleConfig[this.legend] = {
 					sync: true
@@ -87,31 +87,31 @@
 						})
 					}
 				} else {
-					this.dv.transform({
-						type: 'map',
-						callback(row) {
-							row.count = 1
-							return row
-						}
-					})
-					this.chart.source(this.dv, scaleConfig)
-					if (this.legend) {
-						this.chart.facet('rect', {
-							fields: fields,
-							padding: 20,
-							eachView: (view) => {
-								view.intervalStack().position(`${dimension}*count`).color(this.legend).label('count', labelConfig)
-							}
-						})
-					} else {
-						this.chart.facet('rect', {
-							fields: fields,
-							padding: 20,
-							eachView: (view) => {
-								view.interval().position(`${dimension}*count`).label('count', labelConfig)
-							}
-						})
-					}
+					// this.dv.transform({
+					// 	type: 'map',
+					// 	callback(row) {
+					// 		row.count = 1
+					// 		return row
+					// 	}
+					// })
+					// this.chart.source(this.dv, scaleConfig)
+					// if (this.legend) {
+					// 	this.chart.facet('rect', {
+					// 		fields: fields,
+					// 		padding: 20,
+					// 		eachView: (view) => {
+					// 			view.intervalStack().position(`${dimension}*count`).color(this.legend).label('count', labelConfig)
+					// 		}
+					// 	})
+					// } else {
+					// 	this.chart.facet('rect', {
+					// 		fields: fields,
+					// 		padding: 20,
+					// 		eachView: (view) => {
+					// 			view.interval().position(`${dimension}*count`).label('count', labelConfig)
+					// 		}
+					// 	})
+					// }
 				}
 				this.chart.tooltip(`${this.dimension}*count`, {
 					useHtml: true

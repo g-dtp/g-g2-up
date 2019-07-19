@@ -19,7 +19,7 @@
 		:legend="legend"
 		:line="line"
 	)
-	dv-preview-data.preview-warp(v-else-if="data && data.length > 0 && showData" :widget ="widget" :data="data" :key="'table'" :gap="gap" )
+	dv-preview-data.preview-warp(v-else-if="data && data.length > 0 && showData" :widget ="widget" :data="data" :key="'table'" :gap="gap" :edit="edit" :editWidth="editWidth" :editHeight="editHeight")
 	.dv-chart.empty(v-else)
 		g-icon(:iconClass="`icon-default-${widget.typeName}`")
 </template>
