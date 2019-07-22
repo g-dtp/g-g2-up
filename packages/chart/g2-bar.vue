@@ -74,7 +74,7 @@
 							fields: fields,
 							padding: 20,
 							eachView: (view) => {
-								view.intervalStack().position(`${dimension}*${this.measure[0]}`).color(this.legend).label(this.measure[0], labelConfig)
+								view.intervalStack().position(`${dimension}*${this.measure[0]}`).color(this.legend)
 							}
 						})
 					} else {
@@ -86,32 +86,6 @@
 							}
 						})
 					}
-				} else {
-					// this.dv.transform({
-					// 	type: 'map',
-					// 	callback(row) {
-					// 		row.count = 1
-					// 		return row
-					// 	}
-					// })
-					// this.chart.source(this.dv, scaleConfig)
-					// if (this.legend) {
-					// 	this.chart.facet('rect', {
-					// 		fields: fields,
-					// 		padding: 20,
-					// 		eachView: (view) => {
-					// 			view.intervalStack().position(`${dimension}*count`).color(this.legend).label('count', labelConfig)
-					// 		}
-					// 	})
-					// } else {
-					// 	this.chart.facet('rect', {
-					// 		fields: fields,
-					// 		padding: 20,
-					// 		eachView: (view) => {
-					// 			view.interval().position(`${dimension}*count`).label('count', labelConfig)
-					// 		}
-					// 	})
-					// }
 				}
 				this.chart.tooltip(`${this.dimension}*count`, {
 					useHtml: true
