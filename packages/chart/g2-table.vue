@@ -5,22 +5,19 @@
 			.g2-table__content__thead(ref="thead")
 				table(border=0 cellpadding=0 cellspacing=0 :style='headerStyle')
 					colgroup
-						col(v-for='column,colIndex in dimension' v-if="column" :key="column"  :width='defaultWidth' :name="`column_d_${colIndex}`")
-						col(v-for='m,colIndex in measure' v-if="m" :key="m"  :width='defaultWidth' :name="`column_d_${colIndex}`")
-						col
+						col(v-for='column,colIndex in dimension' v-if="column" :key="column"  :width='colWidth' :name="`column_d_${colIndex}`")
+						col(v-for='m,colIndex in measure' v-if="m" :key="m"  :width='colWidth' :name="`column_d_${colIndex}`")
 						col(v-if="showGutter" :width="gutter" name="gutter" )
 					thead
 						tr
 							th(v-for='column,colIndex in dimension' v-if="column" :key="column" :class="[`column_d_${colIndex}`]") {{column}}
 							th(v-for='m,colIndex in measure' v-if="m" :key="m" :class="[`column_m_${colIndex}`]") {{m}}
-							th
 							th.gutter(v-if="showGutter" :style="{width: `${gutter}px`}")
 			.g2-table__content__tbody(ref="tbody")
 				table(border=0 cellpadding=0 cellspacing=0 :style='bodyStyle')
 					colgroup
-						col(v-for='column,colIndex in dimension' v-if="column" :key="column"  :width='defaultWidth' :name="`column_d_${colIndex}`")
-						col(v-for='column,colIndex in measure' v-if="column" :key="column"  :width='defaultWidth' :name="`column_d_${colIndex}`")
-						col
+						col(v-for='column,colIndex in dimension' v-if="column" :key="column"  :width='colWidth' :name="`column_d_${colIndex}`")
+						col(v-for='column,colIndex in measure' v-if="column" :key="column"  :width='colWidth' :name="`column_d_${colIndex}`")
 					tbody(ref="table")
 						g2-table-row(
 							v-for='row,rowIndex in list'
@@ -32,17 +29,18 @@
 							:measure="measure"
 							:fieldMap="fieldMap"
 							:list="list"
-							)
+						)
 </template>
 
 <script>
-	import { DataSet } from '@antv/data-set'
+	import {DataSet} from '@antv/data-set'
 	import G2Title from './base/g2-title'
 	import G2TableRow from './g2-table/g2-table-row'
+
 	const ds = new DataSet()
 	export default {
 		name: 'g2-table',
-		components: { G2Title, G2TableRow },
+		components: {G2Title, G2TableRow},
 		props: {
 			chartData: {
 				type: Array,
@@ -113,7 +111,8 @@
 				bodyWidth: '100%',
 				fieldMap: {},
 				realDimension: [],
-				realLegend: []
+				realLegend: [],
+				colWidth: this.defaultWidth
 			}
 		},
 		mounted() {
@@ -169,7 +168,7 @@
 					paddingTop: this.paddingTop
 				}
 			},
-			paddingTop () {
+			paddingTop() {
 				let top = '16px'
 				if (this.showTitle) {
 					top = '50px'
@@ -197,8 +196,9 @@
 			calculateWidth() {
 				if (!this.$refs.tbody) return
 				let w = this.columns.length * this.defaultWidth
-				if (w < this.$refs.thead.clientWidth) {
+				if (w + this.gutter < this.$refs.thead.clientWidth) {
 					this.headerWidth = this.bodyWidth = '100%'
+					this.colWidth = (this.$refs.thead.clientWidth - this.gutter) / this.columns.length
 				} else {
 					this.headerWidth = w + this.gutter + 'px'
 					this.bodyWidth = w + 'px'
@@ -261,11 +261,13 @@
 	.chart {
 
 	}
+
 	.g2-table {
 		/deep/ .g2-title {
 			left: 0;
 			top: 0;
 		}
+
 		background: #ffffff;
 		padding: 16px 16px 16px 16px;
 		box-sizing: border-box;
@@ -276,6 +278,7 @@
 			width: 100%;
 			text-align: center;
 		}
+
 		th.gutter {
 			padding: 0;
 			border-left: none
@@ -289,6 +292,7 @@
 			display: flex;
 			flex-direction: column;
 			box-sizing: border-box;
+
 			&__thead {
 				flex: none;
 				overflow: hidden;
@@ -302,6 +306,7 @@
 					border-right: 1px solid rgba(5, 19, 50, 0.08);
 					background: rgb(246, 247, 248);
 					box-sizing: border-box;
+
 					&:last-child {
 						border-right: none
 					}

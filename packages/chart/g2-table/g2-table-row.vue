@@ -10,7 +10,6 @@
 			) {{row[l]}}
 		td(v-for='d,colIndex in dimension' v-if="d" :key="d" :class="[`column_d_${colIndex}`]") {{row[d]}}
 		td(v-for='m,colIndex in measure' v-if="m" :key="m" :class="[`column_m_${colIndex}`]") {{row[m]}}
-		td
 </template>
 
 <script>
