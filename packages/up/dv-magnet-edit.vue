@@ -1,6 +1,6 @@
 <template lang='pug'>
 	.dv-magnet-edit()
-		.dv-magnet-edit__content(v-loading="show")
+		.dv-magnet-edit__content(v-if="!show")
 			dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :showData="showData" :gap="0" :edit="true" :editWidth="editWidth" :editHeight="editHeight")
 			dv-ui.dv-edit-content(v-else-if="widget.category == 1" :widget ="widget")
 			.tools-menu

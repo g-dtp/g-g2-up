@@ -46,10 +46,10 @@ const DefaultStyleConfig = {
 
 const ChartConfigMap = {}
 ChartConfig.forEach(config => {
-	ChartConfigMap[config.name] = config
+	ChartConfigMap[config.id] = config
 })
 UiConfig.forEach(config => {
-	ChartConfigMap[config.name] = config
+	ChartConfigMap[config.id] = config
 })
 
 const G2Table = ChartConfigMap['g2-table']
