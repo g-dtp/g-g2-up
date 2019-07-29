@@ -51,7 +51,7 @@
 		computed: {
 			boxStyle() {
 				return {
-					height: this.widget.category === 2 ? 'auto' : `${this.widget.grid.height}px`
+					height: this.widget.category * 1 === 2 ? 'auto' : `${this.widget.grid.height}px`
 				}
 			}
 		},

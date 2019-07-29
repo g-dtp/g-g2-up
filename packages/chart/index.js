@@ -17,6 +17,7 @@ import G2BarLine from './g2-bar-line'
 import G2WorldMap from './map/g2-world-map'
 import G2ChinaMap from './map/g2-china-map'
 import G2Province from './map/g2-province-map'
+import G2Point from './g2-point'
 
 export default {
 	G2Bar,
@@ -37,5 +38,6 @@ export default {
 	G2BarLine,
 	G2WorldMap,
 	G2ChinaMap,
-	G2Province
+	G2Province,
+	G2Point
 }

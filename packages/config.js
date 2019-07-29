@@ -9,6 +9,7 @@ const ChartConfig = [
 	{ category: 0, id: '1040', name: 'g2-pie', icon: 'icon-chart-pie', tooltip: '饼状图', dimension: 1 },
 	{ category: 0, id: '1041', name: 'g2-ring', icon: 'icon-chart-pie-ring', tooltip: '环形图', dimension: 1 },
 	{ category: 0, id: '1050', name: 'g2-line', icon: 'icon-chart-line', tooltip: '折线图' },
+	{ category: 0, id: '1051', name: 'g2-point', icon: 'icon-chart-heatmap', tooltip: '散点图', legend: 1},
 	{ category: 0, id: '1060', name: 'g2-area', icon: 'icon-chart-line-area', tooltip: '面积图' },
 	{ category: 0, id: '1070', name: 'g2-radar', icon: 'icon-chart-radar', tooltip: '雷达图', dimension: 1 },
 	{ category: 0, id: '1080', name: 'g2-funnel', icon: 'icon-chart-funnel', tooltip: '漏斗图', dimension: 1 },
