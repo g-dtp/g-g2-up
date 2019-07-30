@@ -15,6 +15,12 @@
 			legend: {
 				type: String,
 				default: ''
+			},
+			line: {
+				type: Array,
+				default: function () {
+					return []
+				}
 			}
 		},
 		mounted () {
@@ -33,11 +39,13 @@
 				let dimension = this.dimension[0]
 				let measure = this.measure[0]
 				let legend = this.legend
+				let z = this.line[0]
 				this.chart.source(this.dv)
 				this.chart.point()
 					.position(`${dimension}*${measure}`)
-					.size(10, [10, 40])
+					.size(z || 5, [5, 20])
 					.shape('circle')
+					.opacity(0.65)
 					.color(legend)
 				this.chart.render()
 			}
