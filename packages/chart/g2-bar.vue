@@ -49,11 +49,11 @@
 				this.dv.transform(this.getTransformMapNull())
 				if (this.measure.length > 1) {
 					this.dv.transform(this.getTransformFold())
-					this.dv.transform({
-						type: 'sort-by',
-						fields: [ 'value' ],
-						order: 'DESC'
-					})
+					// this.dv.transform({
+					// 	type: 'sort-by',
+					// 	fields: [ 'value' ],
+					// 	order: 'DESC'
+					// })
 					this.chart.source(this.dv, scaleConfig)
 					this.chart.facet('rect', {
 						fields: fields,
@@ -63,11 +63,11 @@
 						}
 					})
 				} else if (this.measure.length === 1) {
-					this.dv.transform({
-						type: 'sort-by',
-						fields: [this.measure[0]],
-						order: 'DESC'
-					})
+					// this.dv.transform({
+					// 	type: 'sort-by',
+					// 	fields: [this.measure[0]],
+					// 	order: 'DESC'
+					// })
 					this.chart.source(this.dv, scaleConfig)
 					if (this.legend) {
 						this.chart.facet('rect', {

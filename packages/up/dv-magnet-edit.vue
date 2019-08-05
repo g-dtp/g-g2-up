@@ -4,7 +4,7 @@
 			dv-chart.dv-edit-content(v-if="widget.category == 0" :widget ="widget" :showData="showData" :gap="0" :edit="true" :editWidth="editWidth" :editHeight="editHeight")
 			dv-ui.dv-edit-content(v-else-if="widget.category == 1" :widget ="widget")
 			.tools-menu
-				.dv-menu__item(@click="changeShowData")
+				.dv-menu__item(@click="switchShowData")
 					g-icon.icon-menu-more(iconClass="icon-link-preview")
 </template>
 <script>
@@ -57,6 +57,9 @@
 			this.$root.$off('dv-resize', this.refresh)
 		},
 		methods: {
+			switchShowData () {
+				this.showData = !this.showData
+			},
 			changeShowData () {
 				this.$nextTick(() => {
 					let { dimension, measure } = this.widget.data
@@ -65,7 +68,7 @@
 			},
 			refresh() {
 				this.show = true
-				setTimeout( () => {
+				setTimeout(() => {
 					this.editWidth = this.$el.clientWidth - 40
 					this.editHeight = this.$el.clientHeight - 40
 					this.show = false
