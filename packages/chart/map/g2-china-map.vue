@@ -1,5 +1,5 @@
 <template lang='pug'>
-	.g2-china-map
+	.chart.g2-china-map
 		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
 </template>
 
