@@ -1,5 +1,5 @@
 <template lang='pug'>
-	.chart.g2-table(:style="style")
+	.chart.g2-table(:style="style" v-if='show')
 		g2-title(v-if="showTitle" :title="title" :subTitle="subTitle")
 		.g2-table__content
 			.g2-table__content__thead(ref="thead")
@@ -102,6 +102,7 @@
 		},
 		data() {
 			return {
+				show: true,
 				timer: null,
 				columns: [],
 				list: [],
@@ -190,6 +191,12 @@
 			}
 		},
 		methods: {
+			refresh() {
+				this.show = false
+				this.$nextTick(() => {
+					this.show = true
+				})
+			},
 			scrollX() {
 				this.$refs.thead.scrollLeft = this.$refs.tbody.scrollLeft
 			},
@@ -203,6 +210,7 @@
 					this.headerWidth = w + this.gutter + 'px'
 					this.bodyWidth = w + 'px'
 				}
+				this.refresh()
 			},
 			calculateGutter() {
 				if (this.timer) clearTimeout(this.timer)
