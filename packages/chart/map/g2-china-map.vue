@@ -71,6 +71,8 @@
 						lineWidth: 2
 					})
 					.label(dimension, {
+						useHtml: true,
+						type: 'map',
 						textStyle: {
 							fill: '#000',
 							fontSize: 10
@@ -82,6 +84,17 @@
 		}
 	}
 </script>
+<style lang="scss">
+	.g2-china-map {
+		.g-labels {
+			div.g-label {
+				color: #3D89FF !important;
+				font-size: 12px !important;
+				width: 36px;
+			}
+		}
+	}
+</style>
 <style lang="scss" scoped>
 
 </style>

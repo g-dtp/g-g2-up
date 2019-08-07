@@ -59,7 +59,11 @@
 						fields: fields,
 						padding: 20,
 						eachView: (view) => {
-							view.intervalStack().position(`${dimension}*value`).color('type').label('value', labelConfig)
+							view.intervalStack()
+								.position(`${dimension}*value`)
+								.color(dimension, '#00FF00')
+								.color('type')
+								.label('value', labelConfig)
 						}
 					})
 				} else if (this.measure.length === 1) {
