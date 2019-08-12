@@ -32,7 +32,8 @@
 				show: false,
 				showData: false,
 				editWidth: 0,
-				editHeight: 0
+				editHeight: 0,
+				timer: null
 			}
 		},
 		watch: {
@@ -52,9 +53,11 @@
 		mounted() {
 			this.refresh()
 			this.$root.$on('dv-resize', this.refresh)
+			window.addEventListener('resize', this.refresh.bind(this))
 		},
 		beforeDestroy() {
 			this.$root.$off('dv-resize', this.refresh)
+			window.removeEventListener('resize', this.refresh.bind(this))
 		},
 		methods: {
 			switchShowData () {
@@ -68,7 +71,8 @@
 			},
 			refresh() {
 				this.show = true
-				setTimeout(() => {
+				if (this.timer) clearTimeout(this.timer)
+				this.timer = setTimeout(() => {
 					this.editWidth = this.$el.clientWidth - 40
 					this.editHeight = this.$el.clientHeight - 40
 					this.show = false
