@@ -71,13 +71,13 @@
 						lineWidth: 2
 					})
 					.label(dimension, {
-						useHtml: true,
-						type: 'map',
 						textStyle: {
 							fill: '#000',
 							fontSize: 10
 						}
 					})
+					.active(false)
+					.select(false)
 					.color(measure, '#ebedf0-#0050B3')
 				this.chart.render()
 			}
