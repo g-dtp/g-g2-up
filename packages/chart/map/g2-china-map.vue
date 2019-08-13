@@ -42,9 +42,11 @@
 						type: 'map',
 						callback(row) {
 							row[measure] = mapChartData[row.name] || 0
+							row[dimension] = row.name || 0
 							return row
 						}
 					})
+				console.log(this.dv)
 				this.chart && this.chart.clear()
 				this.chart.axis(false)
 				this.chart.legend({

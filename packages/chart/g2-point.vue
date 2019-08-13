@@ -41,6 +41,10 @@
 				let legend = this.legend
 				let z = this.line[0]
 				this.chart.source(this.dv)
+				this.chart.legend(legend, {
+					position: 'right-top',
+					layout: 'vertical'
+					})
 				this.chart.point()
 					.position(`${dimension}*${measure}`)
 					.size(z || 5, [5, 20])
