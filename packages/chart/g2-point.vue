@@ -41,6 +41,10 @@
 				let legend = this.legend
 				let z = this.line[0]
 				this.chart.source(this.dv)
+				this.chart.scale(legend, {
+					type: 'cat',
+					range: [0, 1]
+				})
 				this.chart.legend(legend, {
 					position: 'right-top',
 					layout: 'vertical'
