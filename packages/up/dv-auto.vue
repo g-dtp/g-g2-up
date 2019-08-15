@@ -59,8 +59,6 @@
 		methods: {
 			ondrop (e) {
 				e.preventDefault()
-
-				console.log(e)
 			},
 			ondragover (e) {
 				e.preventDefault()

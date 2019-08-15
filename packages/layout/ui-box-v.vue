@@ -20,7 +20,6 @@
 		},
 		methods: {
 			ondrop () {
-				console.log('xxxx')
 			}
 		}
 	}

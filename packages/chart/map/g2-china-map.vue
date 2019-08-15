@@ -46,7 +46,6 @@
 							return row
 						}
 					})
-				console.log(this.dv)
 				this.chart && this.chart.clear()
 				this.chart.axis(false)
 				this.chart.legend({

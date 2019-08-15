@@ -5,7 +5,6 @@
 <script>
 	import G2Serie from '../base/g2-serie'
 	import { ProvinceData } from 'china-map-geojson'
-	console.log(ProvinceData)
 	import { DataSet } from '@antv/data-set'
 	const ds = new DataSet()
 	export default {

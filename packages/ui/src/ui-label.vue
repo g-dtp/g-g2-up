@@ -5,7 +5,7 @@
 		tabindex='3'
 		:style="style"
 		@input.stop="onChange"
-		placeholder="请输入文本"
+		placeholder="双击输入文本"
 		@dblclick.stop="onEdit"
 		@keyup.native.stop.prevent ="stop"
 		@blur="outEdit")

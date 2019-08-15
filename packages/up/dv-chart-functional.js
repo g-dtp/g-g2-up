@@ -3,7 +3,6 @@ export default {
 	functional: true,
 	inject: ['axios', 'url'],
 	render(createElement, context) {
-		console.log(/context/, context)
 		const widget = context.props.widget
 		const { url, axios } = context.injections
 
@@ -27,7 +26,6 @@ export default {
 				legends: widget.data.legend
 			})
 				.then(res => {
-					console.log(res)
 				})
 				.catch(() => {
 

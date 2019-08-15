@@ -1,5 +1,6 @@
 <template lang='pug'>
 	.dv-box(
+		v-if="refresh"
 		:style="boxStyle"
 		:class="[{layout: widget.category == 2}, {transition: !change}, {moving: change}, theme]"
 		@mousedown.stop="onActive(widget)"
@@ -7,7 +8,7 @@
 		@mouseleave.stop="onLeave"
 		)
 		.div-box-content(:class="{active: activeWidget == widget}")
-			dv-chart(v-if="widget.category == 0" :widget ="widget" :gap="10" :forceFit="true")
+			dv-chart(v-if="widget.category == 0" :widget ="widget" :gap="10" :forceFit="true" :showData="showData")
 			dv-ui(v-else-if="widget.category == 1" :widget ="widget" )
 			dv-layout(
 				v-else-if="widget.category == 2"
@@ -20,9 +21,17 @@
 					@delete-self="onDelete"
 					:activeWidget = "activeWidget"
 					@change-activated="onActive"
+					@edit-self="onEdit(subWidget)"
 					)
 				.empty-link(v-if="widget.children.length == 0" @click="onDelete(widget)") 删除容器
-			dv-menu.dv-more-menu(v-if="widget.category != 2" @preview="onShowData" @delete="onDelete" :category="widget.category" :showDataDefault="showData" :mode="mode")
+			dv-menu.dv-more-menu(
+				v-if="widget.category != 2"
+				@preview="onShowData"
+				@delete="onDelete"
+				@edit="onEdit"
+				:category="widget.category"
+				:showDataDefault="showData"
+				:mode="mode")
 			dv-resize(v-if="widget.category != 2" @start-resize="onStartResize" @resizing="onResizing" @resize-end="onResizeEnd")
 </template>
 
@@ -42,7 +51,7 @@
 				layoutClass: this.layout,
 				over: false,
 				showData: false,
-				mode: false,
+				mode: true,
 				change: false,
 				height: 0,
 				refresh: true
@@ -81,8 +90,10 @@
 		mounted() {
 			this.height = this.widget.grid.height
 			window.addEventListener('resize', this.doRefresh.bind(this))
+			this.$root.$on('dv-resize', this.doRefresh)
 		},
 		beforeDestroy() {
+			this.$root.$off('dv-resize', this.doRefresh)
 			window.removeEventListener('resize', this.doRefresh.bind(this))
 		},
 		methods: {
@@ -100,13 +111,18 @@
 				e.stopPropagation()
 				this.over = false
 			},
-			onShowData() {},
+			onShowData (value) {
+				this.showData = value
+			},
 			onDelete(widget) {
 				if (widget) {
 					this.$emit('delete-self', widget)
 				} else {
 					this.$emit('delete-self', this.widget)
 				}
+			},
+			onEdit(widget) {
+				this.$emit('edit-self', widget || this.widget)
 			},
 			onActive(widget) {
 				this.$emit('change-activated', widget || this.widget)

@@ -36,7 +36,6 @@
 						sync: true
 					}
 				})
-				console.log(/scaleConfig/, scaleConfig)
 				this.chart && this.chart.clear()
 				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())

@@ -7,7 +7,6 @@
 	import G2Serie from '../base/g2-serie'
 	import WorldData from 'world-map-geojson'
 	import { DataSet } from '@antv/data-set'
-	console.log(/WorldData/, WorldData)
 	const ds = new DataSet()
 	export default {
 		extends: G2Serie,
