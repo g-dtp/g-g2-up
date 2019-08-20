@@ -120,6 +120,10 @@
 			},
 			load() {
 				// 维度和度量都没有时不请求后台
+				if (!this.widget.data.dimension && !this.widget.data.measure) {
+					this.data = []
+					return
+				}
 				if (this.widget.data.dimension.length === 0 && this.widget.data.measure.length === 0) {
 					this.data = []
 					return
@@ -147,7 +151,7 @@
 					legends: this.widget.data.legend
 				})
 					.then(res => {
-						this.data = res.data.data || []
+						this.data = res.data.data.result || []
 					})
 					.catch(() => {
 					})
