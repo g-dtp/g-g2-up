@@ -7,8 +7,8 @@
 		@mouseenter.stop="onEnter"
 		@mouseleave.stop="onLeave"
 		)
-		.div-box-content(:class="{active: activeWidget == widget}")
-			dv-chart(v-if="widget.category == 0" :widget ="widget" :gap="10" :forceFit="true" :showData="showData")
+		.div-box-content(:class="{active: activeWidget == widget}" )
+			dv-chart(v-if="widget.category == 0 && showContent" :widget ="widget" :gap="10" :forceFit="true" :showData="showData")
 			dv-ui(v-else-if="widget.category == 1" :widget ="widget" )
 			dv-layout(
 				v-else-if="widget.category == 2"
@@ -54,7 +54,8 @@
 				mode: true,
 				change: false,
 				height: 0,
-				refresh: true
+				refresh: true,
+				showContent: true
 			}
 		},
 		computed: {
@@ -134,6 +135,7 @@
 				})
 			},
 			onStartResize () {
+				this.showContent = false
 			},
 			onResizing(data) {
 				this.change = true
@@ -144,11 +146,13 @@
 				this.widget.grid.height = h
 			},
 			onResizeEnd() {
+
 				let h = this.widget.grid.height
 				let height = Math.ceil(h / 180 - 0.1) * 180
 				this.widget.grid.height = height
 				this.height = height
 				this.change = false
+				this.showContent = true
 			}
 		}
 	}

@@ -63,6 +63,8 @@
 				this.chart && this.chart.clear()
 				this.dv = ds.createView().source(this.chartData)
 				this.dv.transform(this.getTransformMapNull())
+				let pad = this.h - this.padding[0] - 24
+				let w = this.w > 0 ? this.w - 48 : this.$el.clientWidth - 48
 				if (dimension && measure) {
 					let range = this.dv.range(measure)
 					let min = range[0]
@@ -70,7 +72,7 @@
 					this.dv.transform({
 						type: 'tag-cloud',
 						fields: [dimension, measure],
-						size: [this.w - 48, this.h - this.padding[0] - 24],
+						size: [w, pad],
 						padding: 0,
 						font: 'Verdana',
 						timeInterval: 1000,
@@ -122,7 +124,7 @@
 					this.dv.transform({
 						type: 'tag-cloud',
 						fields: [dimension, 'count'],
-						size: [this.w - 48, this.h - this.padding[0] - 24],
+						size: [w, pad],
 						padding: 0,
 						font: 'Verdana',
 						timeInterval: 5000,
