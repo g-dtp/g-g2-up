@@ -83,7 +83,7 @@
 						.color(dimension)
 						.label('percent', (percent) => {
 							if (percent > 0.05){
-								return toFixed(percent)
+								return toFixed2(percent)
 							} else {
 								return ''
 							}
