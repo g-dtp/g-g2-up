@@ -11,7 +11,12 @@
 	export default {
 		extends: G2Serie,
 		name: 'g2-line',
-		props: {},
+		props: {
+			legend: {
+				type: String,
+				default: ''
+			}
+		},
 		mounted () {
 			this.drawChart()
 		},
@@ -26,12 +31,13 @@
 				this.dv.transform(this.getTransformMapNull())
 				this.dv.transform(this.getTransformFold())
 				this.chart.scale(dimension, { range: [0, 1] })
+				let legend = this.legend
 				this.chart.facet('rect', {
 					fields: fields,
 					autoSetAxis: false,
 					padding: 20,
 					eachView: function eachView(view) {
-						view.line().position(`${dimension}*value`).color('type').size(2).shape('circle')
+						view.line().position(`${dimension}*value`).color(legend || 'type').size(2).shape('circle')
 					}
 				})
 				this.chart.source(this.dv, config)

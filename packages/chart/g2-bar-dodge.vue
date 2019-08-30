@@ -11,7 +11,12 @@
 	export default {
 		extends: G2Serie,
 		name: 'g2-bar-dodge',
-		props: {},
+		props: {
+			legend: {
+				type: String,
+				default: ''
+			}
+		},
 		mounted () {
 			this.drawChart()
 		},
@@ -26,6 +31,7 @@
 				this.chart.source(this.dv, config)
 				let fields = [...this.dimension]
 				let dimension = fields.pop()
+				let legend = this.legend
 				this.chart.facet('rect', {
 					fields: fields,
 					autoSetAxis: false,
@@ -33,12 +39,12 @@
 					eachView: function eachView(view) {
 						view.interval()
 							.position(`${dimension}*value`)
-							.color('type')
+							.color(legend || 'type')
 							.adjust(
 								[
 									{
 										type: 'dodge',
-										dodgeBy: 'type',
+										dodgeBy: legend || 'type',
 										marginRatio: 0
 									}
 								]
