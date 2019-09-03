@@ -141,6 +141,7 @@
 				if (!this.widget.data.line) {
 					this.widget.data.line = []
 				}
+				console.log(this.widget)
 				this.axios.post(this.url, {
 					dataModelId: this.widget.resourceId,
 					type: this.widget.resourceType,
@@ -148,7 +149,8 @@
 					measures: [...this.widget.data.measure, ...this.widget.data.line],
 					line: this.widget.data.line,
 					queryColumns: this.widget.data.queryColumns,
-					legends: this.widget.data.legend
+					legends: this.widget.data.legend,
+					sort: this.widget.data.sort
 				})
 					.then(res => {
 						this.data = res.data.data.result || []
