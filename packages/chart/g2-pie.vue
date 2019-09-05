@@ -63,11 +63,6 @@
 						value: 'value'
 					})
 					this.dv.transform({
-						type: 'sort-by',
-						fields: 'value',
-						order: 'DESC'
-					})
-					this.dv.transform({
 						type: 'percent',
 						field: 'value',
 						dimension: dimension,
